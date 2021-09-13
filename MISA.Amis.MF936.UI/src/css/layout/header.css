@@ -1,0 +1,113 @@
+:root {
+    /* SIZE */
+    --header-height: 48px;
+}
+
+#header {
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* HEADER LEFT */
+.header__left {
+    display: flex;
+    align-items: center;
+}
+    /* HEADER TOGGLE */
+    .header__toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 16px;
+        margin: 0 10px;
+        cursor: pointer;
+    }
+        .header__toggle-icon {
+            background-image: url('../../assets/img/Sprites.64af8f61.svg');
+            background-position: -847px -35px;
+            width: 16px;
+            height: 14px;
+        }
+    /* HEADER DROPDOWN */
+    .header__dropdown {
+        margin-left: 4px;
+    }
+/* HEADER RIGHT */
+.header__right {
+    display: flex;
+    padding-right: 20px;
+}
+    /* HEADER NOTIFY */
+    .header__notify {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 100%;
+        cursor: pointer;
+        position: relative;
+    } 
+    .header__notify:hover {
+        background-color: #000;
+    }
+    .header__notify:hover:after {
+        display: block;
+        width: 0;
+        height: 0;
+        content: "";
+        border-bottom: 8px solid transparent;
+        border-left: 22px solid transparent;
+        border-right: 22px solid transparent;
+        border-top: 8px solid #000;
+        position: absolute;
+        top: 100%; 
+    }
+        /* HEADER NOTIFY ICON */
+        .header__notify-icon {
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -788px -30px;
+            width: 22px;
+            height: 25px;
+        }
+        .header__notify:hover .header__notify-icon {
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -257px -88px;
+            height: 25px;
+        }
+    /* HEADER ACCOUNT */
+    .header__account {
+        display: flex;
+        align-items: center;
+        padding: 0 8px 0 16px;
+        cursor: pointer;
+    }
+        /* HEADER AVATAR */
+        .header__avatar {
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -352px -894px;
+            width: 32px;
+            height: 32px; 
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        /* HEADER NAME */
+        .header__name {
+            font-family: MISANotoSan-Semibold;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* HEADER ACCOUNT ICON */
+        .header__account-dropdown {
+            padding-left: 6px; 
+        }
+        .header__account-dropdown::after {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -467px -414px;
+            width: 14px;
+            height: 8px;
+            position: relative;
+            top: 2px;
+        }

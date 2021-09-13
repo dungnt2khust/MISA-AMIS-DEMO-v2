@@ -1,0 +1,14 @@
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\MISA.Amis.Core.csproj.AssemblyReference.cache
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\MISA.Amis.Core.Resources.ResourcesVN.resources
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\MISA.Amis.Core.csproj.GenerateResource.cache
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\MISA.Amis.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\MISA.Amis.Core.AssemblyInfoInputs.cache
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\MISA.Amis.Core.AssemblyInfo.cs
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\MISA.Amis.Core.csproj.CoreCompileInputs.cache
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\bin\Debug\net5.0\MISA.Amis.Core.deps.json
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\bin\Debug\net5.0\MISA.Amis.Core.dll
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\bin\Debug\net5.0\ref\MISA.Amis.Core.dll
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\bin\Debug\net5.0\MISA.Amis.Core.pdb
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\MISA.Amis.Core.dll
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\ref\MISA.Amis.Core.dll
+C:\Workspace\INTERN\MISA-AMIS-DEMO\MISA.Amis.MF936.API\MISA.Amis.Core\obj\Debug\net5.0\MISA.Amis.Core.pdb

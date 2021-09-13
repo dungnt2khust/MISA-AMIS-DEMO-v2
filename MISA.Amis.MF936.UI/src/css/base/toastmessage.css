@@ -1,0 +1,54 @@
+.toast-message {
+    position: fixed;
+    z-index: 10000000;
+    bottom: 20px;
+    right: 20px;
+    background: #2CA01C;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-radius: 8px;
+    animation: 0.4s ease toastMessageFadeIn;
+}
+    .toast-message__main {
+        display: flex;
+        align-items: center;
+    }
+        .toast-message__check {
+        }
+            .toast-message__check::before {
+                display: block;
+                content: "";
+                background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1290px -409px;
+                width: 14px;
+                height: 14px;
+            }
+        .toast-message__content {
+            font-size: 16px;
+            color: #fff;
+            padding-left: 10px;
+        }
+    .toast-message__cancel {
+        margin: 5px 5px 5px 20px;
+        cursor: pointer;
+    }
+        .toast-message__cancel::before {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1322px -362px;
+            width: 12px;
+            height: 12px;
+        }
+
+@keyframes toastMessageFadeIn {
+    from {
+        opacity: 0.6;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

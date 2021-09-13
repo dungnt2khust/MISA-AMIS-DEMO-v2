@@ -1,0 +1,83 @@
+:root {
+    --pagination-height: 46px;
+}
+
+.pagination {
+    flex-shrink: 0;
+    height: var(--pagination-height);
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #FFF;
+    align-items: center;
+}
+/* Che phần dữ liệu đi qua phân trang */
+.pagination::before {
+    display: block;
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: calc(100% + 40px);
+    left: -10px;
+    bottom: 0;
+    background-color: var(--table-background-color);
+}
+.pagination::after {
+    display: block;
+    position: absolute;
+    content: "";
+    width: 30px;
+    height: calc(100% + 40px);
+    right: -30px;
+    bottom: 0;
+    background-color: var(--table-background-color);
+}
+    /* PAGINATION DESC */
+    .pagination__desc {
+        font-size: 13px;
+        font-family: MISANotoSan-Regular;
+        padding: 16px;
+    }
+    /* PAGINATION CONTROL */
+    .pagination__control {
+        display: flex;
+        align-items: center;
+    }
+        /* PAGINATION SELECT */
+        .pagination__select {
+            margin: 0 16px;
+        }
+        /* PAGINATION REDIRECT */
+        .pagination__redirect {
+            display: flex;
+            font-family: MISANotoSan-Regular;
+            font-size: 13px;
+        }
+            /* PAGINATION PREV */
+            .pagination__prev {
+                margin-right: 13px;
+                cursor: pointer;
+            }
+            /* PAGINATION NEXT */
+            .pagination__next {
+                margin-left: 13px;
+                cursor: pointer;
+            }
+            /* PAGINATION INDEX */
+            .pagination__index { 
+                padding: 0 7px;
+                cursor: pointer;
+            }
+            .pagination__index--selected {
+                color: #111;
+                border: 1px solid #e0e0e0;
+                font-weight: 700;
+            }
+            /* PAGINATION DISABLE */
+            .pagination--disable {
+                color: #9E9E9E !important;
+            }

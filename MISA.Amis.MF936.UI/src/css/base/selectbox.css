@@ -1,0 +1,67 @@
+.selectbox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+} 
+    /* SELECTBOX VALUE */
+    .selectbox__value {
+        font-size: 14px;
+        font-weight: 600;
+        font-family: MISANotoSan-Semibold;
+        max-width: 450px;
+        padding-left: 10px;
+    }
+    /* SELECTBOX ICON */
+    .selectbox__icon {
+        width: 34px;
+        height: 19px; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+        .selectbox__icon::after {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1129px -365px;
+            width: 14px;
+            height: 8px;
+            transform: scale(0.9)
+        }
+    /* SELECTBOX LIST */
+    .selectbox__list {
+        display: none;
+        list-style: none;
+        position: absolute;
+        z-index: 1000;
+        top: calc(100% + 4px);
+        right: 0;
+        left: 0;
+        min-width: fit-content;
+        background-color: #FFF;
+        border: 1px solid var(--border-color);
+        border-radius: 3px;
+    }
+    .selectbox--up .selectbox__list {
+        bottom: calc(100% + 4px);
+        top: unset;
+    }
+    .selectbox--show .selectbox__list {
+        display: block;
+    }
+        /* SELECTBOX ITEM */
+        .selectbox__item {
+            padding: 5px 10px;
+            white-space: nowrap;
+            font-weight: 550;
+            text-align: left;
+            font-size: 13px;
+        }
+        .selectbox__item:hover {
+            background: #E8E9EC;
+            color: #08BF1E;
+        }
+        .selectbox__item--selected {
+            background-color: #2ca01c;
+            color: #FFF;
+        }

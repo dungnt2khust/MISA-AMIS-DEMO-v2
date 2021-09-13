@@ -1,0 +1,130 @@
+:root {
+    /* SIZE */
+    --menu-width: 180px;
+    --menu-small-width: 52px;
+    --menu-home-height: 48px;
+    --menu-text-size: 13px;
+    --menu-icon-size: 24px;
+    --menu-item-height: 42px;
+    --menu-logo-height: 32px;
+    --menu-logo-width: 96px;
+
+    /* COLOR */
+    --menu-background-color: #38393D;
+    --menu-background-hover-color: #5D5E61;
+    --menu-text-color: #FFF;
+    --menu-icon-color: #55e61;
+}
+
+#menu {
+    flex-shrink: 0;
+    width: var(--menu-width);
+    background-color: var(--menu-background-color);
+    height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#menu.menu--small {
+    width: var(--menu-small-width);
+}
+
+/* MENU HOME */
+.menu__home {
+    height: var(--menu-home-height);
+    display: flex;
+    align-items: center;
+}
+    /* MENU GRID */
+    .menu__grid {
+        width: var(--menu-icon-size);
+        height: var(--menu-icon-size);
+        margin-right: 10px;
+        margin-left: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+        .menu__grid::after {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -428px -92px;
+            width: 16px;
+            height: 16px;
+        }
+    /* MENU TOGGLE */
+    .menu__toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 16px;
+        margin: 0 10px;
+        cursor: pointer;
+    }
+        .menu__toggle-icon {
+            background-image: url('../../assets/img/Sprites.64af8f61.svg');
+            background-position: -316px -37px;
+            width: 16px;
+            height: 14px;
+        }
+    /* MENU LOGO */
+    .menu__logo {
+        height: var(--menu-logo-height);
+        width: var(--menu-logo-width);
+        background: url('../../assets/img/Logo_Module_TiengViet_White.66947422.svg') no-repeat center;
+        background-size: contain;
+    }
+
+/* MENU LIST */
+.menu__list {
+    height: calc(100% - var(--menu-home-height));
+    padding-top: 14px;
+    overflow: auto;
+}
+.menu__list::-webkit-scrollbar {
+    width: 6px;
+}
+    /* MENU ITEM */
+    .menu__item {
+        text-decoration: none;
+        color: var(--menu-text-color);
+        font-size: var(--menu-text-size);
+        display: flex;
+        align-items: center;
+        height: var(--menu-item-height);
+        padding: 0 14px 0 14px;
+        position: relative;
+    }
+        .menu__item.menu__item--selected {
+            background-color: var(--menu-background-hover-color);
+            font-family: MISANotoSan-Bold;
+        }
+        .menu__item.menu__item.menu__item--selected::before {
+            display: block;
+            content: "";
+            width: 6px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #2CA01C;
+        }
+        .menu__item:hover {
+            background-color: var(--menu-background-hover-color);
+        }
+        /* MENU ICON */
+        .menu__icon-wrapper {
+            width: var(--menu-icon-size);
+            height: var(--menu-icon-size); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+            .menu__icon {
+                background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat;    
+            }
+        /* MENU LABEL */
+        .menu__label {
+            margin-left: 8px;
+        }

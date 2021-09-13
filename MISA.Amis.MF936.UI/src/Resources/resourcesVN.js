@@ -1,0 +1,22 @@
+module.exports = {
+    Replication: 'Nhân bản',
+    Delete: 'Xoá',
+    StopUsing: 'Ngừng sử dụng',
+    DeleteSuccess: 'Xoá thành công',
+    AddSuccess: 'Thêm mới thành công',
+    UpdateSuccess: 'Chỉnh sửa thành công',
+    EmployeeDeleteMsg: "Bạn có thực sự muốn xóa nhân viên <@> không ?",
+    FeatureNotAvaiable: 'Chức năng chưa phát triển.',
+    OverCurrentDate: 'Vượt quá ngày hiện tại. Vui lòng chọn lại.',
+    DataChanged: 'Dữ liệu đã thay đổi. Bạn có muốn cất luôn?',
+    EmployeeTableTitle: 'Nhân viên', 
+    EmployeeAddButton: 'Thêm mới nhân viên', 
+    CustomerTableTitle: 'Khách hàng', 
+    CustomerAddButton: 'Thêm mới khách hàng',
+    ControlMany: 'Thực hiện hàng loạt',
+    SearchInputPlaceholder: 'Tìm theo mã, họ tên, số điện thoại',
+    NotExist: '@ không tồn tại',
+    RequireField: '@ không được để trống',
+    WrongFormat: '@ sai định dạng',
+};
+

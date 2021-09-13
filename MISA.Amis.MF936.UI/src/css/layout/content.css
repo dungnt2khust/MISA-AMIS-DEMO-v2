@@ -1,0 +1,30 @@
+:root {
+    /* SIZE */
+    --content-header-height: 36px;
+    /* COLOR */
+    --content-background-color: #f8f8f8;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - var(--header-height));
+    background-color: var(--content-background-color);
+    padding-left: 20px;
+}
+
+/* CONTENT HEADER */
+.content__header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 30px 24px 0;
+    min-height: var(--content-header-height);
+}
+    /* CONTENT NAME */
+    .content__name {
+        font-size: 24px;
+        font-family: MISANotoSan-Semibold;
+        font-weight: 700;
+        line-height: var(--content-header-height);
+    } 

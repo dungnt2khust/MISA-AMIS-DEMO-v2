@@ -1,0 +1,147 @@
+:root {
+
+    /* color */
+    --form-overlay-color: rgba(0, 0, 0, 0.4);
+    --form-main-color: #FFF;
+}
+
+/* form */
+.form {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+    background-color: var(--form-overlay-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+    /* form main */
+    .form__main {
+        cursor: grab;
+        width: 900px;
+        height: 625px;
+        min-width: 900px;
+        min-height: 625px;
+        background-color: var(--form-main-color);
+        display: flex;
+        flex-direction: column;
+        animation: 0.2s formIn;
+        position: relative;
+    }
+    .form__main:active {
+        cursor: grab !important;
+    }
+        /* form header */
+        .form__header {
+            height: 73px;
+            display: flex;
+            justify-content: space-between;
+        }
+            /* form header content */
+            .form__header-content {
+                padding: 20px 12px 20px 32px;
+                display: flex;
+            }
+                /* form title */
+                .form__title {
+                    font-size: 24px;
+                    font-weight: 800;
+                    font-family: MISANotoSan-Bold;
+                }
+                /* form checklist */
+                .form__checklist {
+                    margin-left: 20px;
+                }
+                    .form__checklist .checkbox {
+                        margin-right: 40px;
+                    }
+            /* form action*/
+            .form__action {
+                height: 100%;
+                width: 78px;
+                padding: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+            }
+                /* form help */
+                .form__help {
+                    width: 24px;
+                    height: 24px;
+                    cursor: pointer;
+                }
+                    .form__help:after {
+                        display: block;
+                        content: "";
+                        background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -732px -31px;
+                        width: 22px;
+                        height: 22px;
+                    }
+                /* form cancel */
+                .form__cancel {
+                    width: 24px;
+                    height: 24px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-left: 10px;
+                    cursor: pointer;
+                }
+                    .form__cancel:after {
+                        display: block;
+                        content: "";
+                        background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -147px -147px;
+                        width: 18px;
+                        height: 18px;
+                    }
+        /* form body */
+        .form__body {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+            margin: 0 calc(32px - 13px);
+        }
+            .form__body-item {
+                flex-basis: 50%;
+                padding: 0 13px 12px;
+                height: fit-content;
+            }
+            .form__body-item.fx div {
+                margin-right: 6px;
+            }
+            .form__body-item.fx div:last-child {
+                margin-right: 0;
+            }
+        /* form footer */
+        .form__footer {
+            padding: 20px 32px 32px;
+            display: flex;
+            justify-content: space-between;
+        }
+            /* form button cancel */
+            .form__button-cancel {
+
+            }
+            /* form control */
+            .form__control {
+                display: flex;
+            }
+                .form__control .button:nth-child(1){
+                    margin: 0 10px;
+                }
+
+@keyframes formIn {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

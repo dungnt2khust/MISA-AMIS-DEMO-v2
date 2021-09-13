@@ -1,0 +1,27 @@
+.tooltip {
+    display: block;
+    position: fixed;
+    background-color: #505050;
+    font-size: 12px;
+    font-weight: 550;
+    font-family: MISANotoSan-Regular;
+    padding: 6px 8px;
+    line-height: 11px;
+    border-radius: 4px;
+    white-space: nowrap;
+    color: #FFF;
+    z-index: 9999;
+}
+/* .tooltip.tooltip--arrow::after {
+    display: block;
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-right: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-bottom: 4px solid #505050;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+} */

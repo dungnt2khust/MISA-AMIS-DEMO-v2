@@ -1,0 +1,20 @@
+/* BOLD */
+@font-face {
+    font-family: MISANotoSan-Bold;
+    src: url('../../assets/fonts/notosans-bold.3ede5aff.woff2');
+}
+/* ITALIC */
+@font-face {
+    font-family: MISANotoSan-Italic;
+    src: url('../../assets/fonts/notosans-italic.1c1aaac9.woff2');
+}
+/* REGULAR */
+@font-face {
+    font-family: MISANotoSan-Regular;
+    src: url('../../assets/fonts/notosans-regular.2cb88a13.woff2');
+}
+/* SEMIBOLD */
+@font-face {
+    font-family: MISANotoSan-Semibold;
+    src: url('../../assets/fonts/notosans-semibold.df3e6dc4.woff2');
+}

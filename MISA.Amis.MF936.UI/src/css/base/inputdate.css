@@ -1,0 +1,34 @@
+
+/* INPUT MAIN */
+.input__main {
+    position: relative;
+}
+    /* INPUT DATE */
+    .input.input--date {
+        font-family: MISANotoSan-Regular;
+        font-size: 13px;
+    }
+    /* INPUT ICON */
+    .input__icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 32px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+        .input__icon:hover {
+            background-color: #e0e0e0;
+        }
+        .input__icon::after {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -128px -312px;
+            width: 16px;
+            height: 16px;
+        }
