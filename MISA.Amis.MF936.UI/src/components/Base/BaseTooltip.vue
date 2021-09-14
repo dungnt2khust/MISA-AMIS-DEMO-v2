@@ -76,4 +76,6 @@
 		},
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../css/base/checkbox.css');
+</style>

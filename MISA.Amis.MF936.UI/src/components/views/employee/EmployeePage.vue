@@ -75,9 +75,9 @@
 <script>
 	// LIBRARY
 	import employeeAPI from "../../../js/components/employeeAPI"
-	import Table from "../../../Mixins/table.js"
-	import listeners from "../../../Mixins/listeners.js"
-	import methods from '../../../Mixins/methods.js'
+	import Table from "../../../mixins/table.js"
+	import listeners from "../../../mixins/listeners/listeners.js"
+	import methods from '../../../mixins/methods.js'
 
 	// COMPONENT
 	import BaseTable from "../../Base/BaseTable.vue"

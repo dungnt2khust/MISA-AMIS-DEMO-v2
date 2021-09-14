@@ -32,7 +32,7 @@
 </template>
 <script>
 	// LIBRARY
-	import Mixin from "../../Mixins/listeners.js";
+	import Mixin from "../../mixins/listeners/listeners.js";
 
 	export default {
 		name: "BaseSelectBox",
@@ -46,7 +46,7 @@
 		data() {
 			return {
 				currIdx: 0,
-				selectboxData: ["CÔNG TY CỔ PHẦN MISA", "CÔNG TY KHÁC"],
+				selectboxData: [this.$resourcesVN.COMPANY_NAME.Misa, this.$resourcesVN.COMPANY_NAME.Other],
 				selectboxState: false,
 			};
 		},
@@ -63,4 +63,6 @@
 		},
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../css/base/selectbox.css');
+</style>

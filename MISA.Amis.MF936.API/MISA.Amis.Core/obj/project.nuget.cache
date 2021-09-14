@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yyonurinXUy/edKd66vU/9tIBuhGCjVNOHh8vGPBsWKFcniImtLwRawM+l9xjvXzCwYQRJW+Pz94X71fxZh6UQ==",
+  "dgSpecHash": "A+Xv5ymbvhWFoCNXbe8V8vpYW2fPu/gIfOsRl+5cEGwMG5pCPInN+7GK9C4ML1hxsH4BusFKZgoE+V7cxkM0/g==",
   "success": true,
-  "projectFilePath": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj",
+  "projectFilePath": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dungg\\.nuget\\packages\\epplus\\5.7.4\\epplus.5.7.4.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\microsoft.extensions.configuration\\5.0.0\\microsoft.extensions.configuration.5.0.0.nupkg.sha512",

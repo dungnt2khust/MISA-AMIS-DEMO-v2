@@ -4902,11 +4902,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Infrastucture\\MISA.Amis.Infrastucture.csproj",
+      "projectUniqueName": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Infrastucture\\MISA.Amis.Infrastucture.csproj",
       "projectName": "MISA.Amis.Infrastucture",
-      "projectPath": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Infrastucture\\MISA.Amis.Infrastucture.csproj",
+      "projectPath": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Infrastucture\\MISA.Amis.Infrastucture.csproj",
       "packagesPath": "C:\\Users\\dungg\\.nuget\\packages\\",
-      "outputPath": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Infrastucture\\obj\\",
+      "outputPath": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Infrastucture\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\dungg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4923,8 +4923,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj": {
-              "projectPath": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj"
+            "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj": {
+              "projectPath": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj"
             }
           }
         }

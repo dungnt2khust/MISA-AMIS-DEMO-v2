@@ -153,7 +153,7 @@
 <script>
 	// LIBRARY
 	import axios from "axios";
-	import Mixin from "../../Mixins/listeners.js";
+	import Mixin from "../../mixins/listeners/listeners.js";
 
 	// COMPONENTS
 	import BaseInput from "./BaseInput.vue";
@@ -328,4 +328,6 @@
 		},
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../css/base/form.css');
+</style>

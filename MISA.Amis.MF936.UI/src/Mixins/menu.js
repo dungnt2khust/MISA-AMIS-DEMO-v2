@@ -1,0 +1,116 @@
+export default {
+    data() {
+        return {
+            menuList: [
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Overview,
+                    position: "-33px -1630px",
+                    position2: "-33px -1587px",
+                    width: "18px",
+                    height: "20px",
+                    href: "/customers",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Cash,
+                    position: "-78px -1631px",
+                    position2: "-78px -1588px",
+                    width: "14px",
+                    height: "18px",
+                    href: "/employees",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Deposits,
+                    position: "-121px -1633px",
+                    width: "16px",
+                    height: "18px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Purchase,
+                    position: "-165px -1632px",
+                    width: "16px",
+                    height: "18px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Sell,
+                    position: "-206px -1631px",
+                    width: "20px",
+                    height: "18px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.OrderManagement,
+                    position: "-254px -1632px",
+                    width: "14px",
+                    height: "17px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Warehouse,
+                    position: "-294px -1632px",
+                    position2: "-294px -1589px",
+                    width: "18px",
+                    height: "17px",
+                    href: "/warehouse",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Tools,
+                    position: "-339px -1633px",
+                    width: "17px",
+                    height: "17px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.FixedAssets,
+                    position: "-382px -1631px",
+                    width: "17px",
+                    height: "18px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Tax,
+                    position: "-427px -1634px",
+                    width: "16px",
+                    height: "16px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Price,
+                    position: "-471px -1633px",
+                    width: "17px",
+                    height: "17px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Summary,
+                    position: "-514px -1633px",
+                    width: "15px",
+                    height: "16px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Budget,
+                    position: "-382px -1664px",
+                    width: "16px",
+                    height: "16px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.Report,
+                    position: "-552px -1636px",
+                    width: "14px",
+                    height: "13px",
+                    href: "#",
+                },
+                {
+                    name: this.$resourcesVN.TITLE_MENU_NAVS.FinancialAnalysis,
+                    position: "-207px -1667px",
+                    width: "17px",
+                    height: "14px",
+                    href: "#",
+                },
+            ],
+        }
+    }
+}

@@ -100,4 +100,6 @@
 		}
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../css/base/dialog.css');
+</style>

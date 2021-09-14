@@ -27,7 +27,7 @@
 </template>
 <script>
 	// LIBRARY
-	import methods from "../../Mixins/methods"
+	import methods from "../../mixins/methods"
 	// COMPONENTS
 	import BaseDatePicker from "./BaseDatePicker.vue";
 
@@ -152,4 +152,6 @@
 		},
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../css/base/inputdate.css');
+</style>

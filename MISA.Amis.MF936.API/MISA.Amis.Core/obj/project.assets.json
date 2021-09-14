@@ -4490,11 +4490,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj",
+      "projectUniqueName": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj",
       "projectName": "MISA.Amis.Core",
-      "projectPath": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj",
+      "projectPath": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Core\\MISA.Amis.Core.csproj",
       "packagesPath": "C:\\Users\\dungg\\.nuget\\packages\\",
-      "outputPath": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Core\\obj\\",
+      "outputPath": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\dungg\\AppData\\Roaming\\NuGet\\NuGet.Config",

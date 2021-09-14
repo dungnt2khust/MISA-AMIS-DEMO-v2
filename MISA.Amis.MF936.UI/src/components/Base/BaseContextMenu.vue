@@ -18,7 +18,7 @@
 </template>
 <script>
 	// LIBRARY
-	import listeners from "../../Mixins/listeners.js";
+	import listeners from "../../mixins/listeners/listeners.js";
 	import baseAPI from "../../js/base/baseAPI.js";
 
 	export default {
@@ -127,4 +127,6 @@
 		},
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../css/base/contextmenu.css');
+</style>

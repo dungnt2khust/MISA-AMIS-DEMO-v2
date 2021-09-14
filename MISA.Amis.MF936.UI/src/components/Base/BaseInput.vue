@@ -16,7 +16,7 @@
 </template>
 <script>
     // LIBRARY
-    import listeners from '../../Mixins/listeners.js'
+    import listeners from '../../mixins/listeners/listeners.js'
 
 	export default {
 		name: "BaseInput",
@@ -183,4 +183,6 @@
         }
 	};
 </script>
-<style lang=""></style>
+<style>
+    @import url('../../css/base/input.css');
+</style>

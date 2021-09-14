@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MaHzbtE2nw4Ox2gaQjWf9RAWE1GivSfYHgQw9fC6KYILB03Qv4qnuVLdyypW+2gillZurEKpK3kp3ez79IaHrQ==",
+  "dgSpecHash": "+pkZHUgtJVkw6ONG4I+OhojCjuB1S8i88tW+ZdNT5y0vI+aMSNbVXwk9oGHUlROy4w4jUvkOciuNjHJ2EsvSOQ==",
   "success": true,
-  "projectFilePath": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.MF936\\MISA.Amis.MF936.csproj",
+  "projectFilePath": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.MF936\\MISA.Amis.MF936.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dungg\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\epplus\\5.7.4\\epplus.5.7.4.nupkg.sha512",
@@ -21,6 +21,7 @@
     "C:\\Users\\dungg\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\mysqlconnector\\1.3.11\\mysqlconnector.1.3.11.nupkg.sha512",
+    "C:\\Users\\dungg\\.nuget\\packages\\npgsql\\5.0.7\\npgsql.5.0.7.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
@@ -67,6 +68,7 @@
     "C:\\Users\\dungg\\.nuget\\packages\\system.reflection.typeextensions\\4.3.0\\system.reflection.typeextensions.4.3.0.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\system.resources.resourcemanager\\4.3.0\\system.resources.resourcemanager.4.3.0.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
+    "C:\\Users\\dungg\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.6.0\\system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\system.runtime.extensions\\4.3.0\\system.runtime.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\system.runtime.handles\\4.3.0\\system.runtime.handles.4.3.0.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\system.runtime.interopservices\\4.3.0\\system.runtime.interopservices.4.3.0.nupkg.sha512",

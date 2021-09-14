@@ -27,6 +27,6 @@ export default {
     }
 }
 </script>
-<style lang="">
-    
+<style>
+    @import url('../../css/base/toastmessage.css'); 
 </style>

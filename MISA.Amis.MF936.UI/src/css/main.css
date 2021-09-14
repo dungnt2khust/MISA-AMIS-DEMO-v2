@@ -6,29 +6,10 @@
 @import url('./common/placeholder.css');
 @import url('./common/scrollbar.css');
 @import url('./common/function.css');
-
-/* BASE */
-@import url('./base/table.css');
-@import url('./base/combobox.css');
-@import url('./base/selectbox.css');
-@import url('./base/contextmenu.css');
-@import url('./base/pagination.css');
-@import url('./base/tooltip.css');
-@import url('./base/form.css');
 @import url('./base/button.css');
-@import url('./base/input.css');
-@import url('./base/checkbox.css');
-@import url('./base/radio.css');
-@import url('./base/inputdate.css');
-@import url('./base/datepicker.css');
-@import url('./base/dialog.css');
-@import url('./base/toastmessage.css');
 
 /* LAYOUT */
-@import url('./layout/menu.css');
-@import url('./layout/header.css');
 @import url('./layout/content.css');
-@import url('./layout/loading.css');
 
 
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "laDyI5CSc4iMsnaPi5Ea3t4Ca5e9wocgPMA25gpjlRrVq+ovpDFaa/EF4JJXU0vpLQJVa3+bSpy2ORNQoBnS7g==",
+  "dgSpecHash": "CTuQPIDehZaRR/OItFQNGFkAg3EMn6llHaK2THrRFdMOR2cP9fJGJrATo44aI8dbJUdV+7D3fA9qvdYCnRNL+Q==",
   "success": true,
-  "projectFilePath": "C:\\Workspace\\INTERN\\MISA-AMIS-DEMO\\MISA.Amis.MF936.API\\MISA.Amis.Infrastucture\\MISA.Amis.Infrastucture.csproj",
+  "projectFilePath": "C:\\Workspace\\INTERN\\Đánh giá giai đoạn 2\\Repos\\MISA.Amis.MF936.API\\MISA.Amis.Infrastucture\\MISA.Amis.Infrastucture.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dungg\\.nuget\\packages\\dapper\\2.0.90\\dapper.2.0.90.nupkg.sha512",
     "C:\\Users\\dungg\\.nuget\\packages\\epplus\\5.7.4\\epplus.5.7.4.nupkg.sha512",

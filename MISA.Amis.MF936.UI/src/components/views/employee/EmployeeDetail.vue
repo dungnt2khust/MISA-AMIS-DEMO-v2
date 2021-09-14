@@ -242,10 +242,10 @@
 </template>
 <script>
 	// LIBRARY
-	import listeners from "../../../Mixins/listeners.js";
+	import listeners from "../../../mixins/listeners/listeners.js";
 	import employeeAPI from "../../../js/components/employeeAPI";
 	import baseAPI from "../../../js/base/baseAPI";
-	import methods from "../../../Mixins/methods.js";
+	import methods from "../../../mixins/methods.js";
 
 	// COMPONENTS
 	import BaseInput from "../../Base/BaseInput.vue";
@@ -688,4 +688,6 @@
 		},
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../../css/base/form.css');
+</style>

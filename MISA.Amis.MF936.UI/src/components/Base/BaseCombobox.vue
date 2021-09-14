@@ -46,7 +46,7 @@
 </template>
 <script>
 	// LIBRARY
-	import methods from "../../Mixins/methods.js";
+	import methods from "../../mixins/methods.js";
 	export default {
 		name: "BaseComboboxBox",
 		mixins: [methods],
@@ -380,4 +380,6 @@
 		},
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../css/base/combobox.css');
+</style>

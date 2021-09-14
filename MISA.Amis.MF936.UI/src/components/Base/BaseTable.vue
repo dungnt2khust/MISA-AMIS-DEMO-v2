@@ -70,8 +70,8 @@
 </template>
 <script>
 	// LIBRARY
-	import Table from "../../Mixins/table.js";
-	import methods from "../../Mixins/methods";
+	import Table from "../../mixins/table.js";
+	import methods from "../../mixins/methods";
 
 	// COMPONENTS
 	import BaseContextMenu from "./BaseContextMenu.vue";
@@ -269,4 +269,6 @@
 		}
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../css/base/table.css');
+</style>

@@ -152,4 +152,6 @@
 		},
 	};
 </script>
-<style lang=""></style>
+<style>
+	@import url('../../css/base/pagination.css');
+</style>

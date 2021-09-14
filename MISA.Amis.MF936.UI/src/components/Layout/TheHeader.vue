@@ -14,7 +14,7 @@
             </div>
             <div class="header__account">
                 <div class="header__avatar"></div>
-                <div class="header__name">Nguyễn Tiến Dũng</div>
+                <div class="header__name"> {{ $resourcesVN.ACCOUNT_NAME }} </div>
                 <div class="header__account-dropdown"></div>
             </div>
         </div>
@@ -37,6 +37,6 @@
         }
     }
 </script>
-<style lang="">
-    
+<style>
+    @import url('../../css/layout/header.css'); 
 </style>
