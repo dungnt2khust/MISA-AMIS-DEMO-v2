@@ -4,6 +4,17 @@
 .text-red {
     color: red;
 }
+.text-blue {
+    color: #0075c0;
+    font-size: 13px;
+}
+.text-blue:hover {
+    text-decoration: underline; 
+    cursor: pointer;
+}
+.text-green {
+
+}
 .text-align-left {
     text-align: left;
 }

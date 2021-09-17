@@ -18,12 +18,12 @@
 </template>
 <script>
 	// LIBRARY
-	import listeners from "../../mixins/listeners/listeners.js";
+	import globalComponents from "../../mixins/globalComponents/globalComponents.js";
 	import baseAPI from "../../js/base/baseAPI.js";
 
 	export default {
 		name: "BaseContextMenu",
-		mixins: [listeners],
+		mixins: [globalComponents],
 		props: {
 			contextMenuState: {
 				type: Boolean,

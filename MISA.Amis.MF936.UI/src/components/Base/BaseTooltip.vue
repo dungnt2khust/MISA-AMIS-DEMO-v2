@@ -77,5 +77,5 @@
 	};
 </script>
 <style>
-	@import url('../../css/base/checkbox.css');
+	@import url('../../css/base/tooltip.css');
 </style>

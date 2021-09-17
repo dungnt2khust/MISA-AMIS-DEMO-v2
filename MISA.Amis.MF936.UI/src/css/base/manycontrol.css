@@ -1,0 +1,80 @@
+/* Table control many */
+.manycontrol {
+position: relative;
+display: flex;
+align-items: center;
+margin-left: 12px;
+}
+    .manycontrol::before {
+    display: block;
+    content: "";
+    background: url('../../assets/img/Sprites.6114dba8.svg') no-repeat -259px -147px;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 50%;
+    }
+    .manycontrol__label {
+        margin-left: 30px;
+        height: 36px;
+        width: 180px;
+        border: 2px solid #b1b2b3;
+        border-radius: 18px;
+        padding: 0 16px!important;
+        background: transparent;
+        color: #afafaf;
+        font-size: 13px;
+        font-weight: 700;
+        font-family: MISANotoSan-Semibold;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+    .manycontrol--selected .manycontrol__label:hover {
+        background-color: #d2d3d6;
+    }
+    .manycontrol--selected .manycontrol__label:active {
+        background-color: #bbbcbc;
+    }
+        .manycontrol__label::after {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1756px -317px;
+            width: 8px;
+            height: 5px;
+            opacity: 0.6;
+        }
+        .manycontrol--selected .manycontrol__label {
+            color: #111;
+            border: 1px solid #111;
+            font-weight: 400;
+        }
+        .manycontrol--selected .manycontrol__label::after {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -564px -365px;
+            width: 8px;
+            height: 5px; 
+        }
+        .manycontrol__list {
+            list-style: none;
+            position: absolute;
+            z-index: inherit;
+            top: calc(100% + 4px);
+            right: 10px;
+            background-color: var(--table-background-color);
+            padding: 2px 1px;
+            border-radius: 2px;
+            border: 1px solid #babec5;
+            cursor: pointer;
+        }
+            .manycontrol__item {
+                min-width: 100px;
+                padding: 5px 10px;
+                font-size: 13px;
+                font-family: MISANotoSan-Regular;
+            }
+            .manycontrol__item:hover {
+                background-color:#E8E9EC;
+            }

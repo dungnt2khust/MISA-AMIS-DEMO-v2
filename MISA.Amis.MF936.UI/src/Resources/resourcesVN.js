@@ -1,12 +1,41 @@
 module.exports = {
-    // ACCOUNT 
+    //#region COMMON
+    COMMON: {
+        Tutorial: 'Hướng dẫn'
+    },
+    Replication: 'Nhân bản',
+    Delete: 'Xoá',
+    StopUsing: 'Ngừng sử dụng',
+    DeleteSuccess: 'Xoá thành công',
+    AddSuccess: 'Thêm mới thành công',
+    UpdateSuccess: 'Chỉnh sửa thành công',
+    EmployeeDeleteMsg: "Bạn có thực sự muốn xóa nhân viên <@> không ?",
+    FeatureNotAvaiable: 'Chức năng chưa phát triển.',
+    OverCurrentDate: 'Vượt quá ngày hiện tại. Vui lòng chọn lại.',
+    DataChanged: 'Dữ liệu đã thay đổi. Bạn có muốn cất luôn?',
+    EmployeeTableTitle: 'Nhân viên', 
+    EmployeeAddButton: 'Thêm mới nhân viên', 
+    CustomerTableTitle: 'Khách hàng', 
+    CustomerAddButton: 'Thêm mới khách hàng',
+    ControlMany: 'Thực hiện hàng loạt',
+    SearchInputPlaceholder: 'Tìm theo mã, họ tên, số điện thoại',
+    NotExist: '@ không tồn tại',
+    RequireField: '@ không được để trống',
+    WrongFormat: '@ sai định dạng',
+    //#endregion
+
+    //#region ACCOUNT 
     ACCOUNT_NAME: 'Nguyễn Tiến Dũng',
-    // COMPANY
+    //#endregion
+    
+    //#region COMPANY
     COMPANY_NAME: {
         Misa: 'CÔNG TY CỔ PHẦN MISA',
         Other: 'CÔNG TY KHÁC'
     },
-    // MENU
+    //#endregion
+
+    //#region MENU
     TITLE_MENU_NAVS: {
         Overview: 'Tổng quan',
         Cash: 'Tiền mặt',
@@ -24,7 +53,9 @@ module.exports = {
         Report: 'Báo cáo',
         FinancialAnalysis: 'Phân tích tài chính'
     },
-    // WAREHOUSE
+    //#endregion
+
+    //#region WAREHOUSE
     WAREHOUSE_TABS: {
         Process: 'Quy trình',
         InwardOutwardList: 'Nhập, xuất kho',
@@ -50,25 +81,22 @@ module.exports = {
         OutwardPrice: 'Tính giá xuất kho',
         Audit: 'Kiểm kê'
     },
+    WAREHOUSE_ADD: 'Thêm phiếu nhập',
+    //#endregion
 
-    Replication: 'Nhân bản',
-    Delete: 'Xoá',
-    StopUsing: 'Ngừng sử dụng',
-    DeleteSuccess: 'Xoá thành công',
-    AddSuccess: 'Thêm mới thành công',
-    UpdateSuccess: 'Chỉnh sửa thành công',
-    EmployeeDeleteMsg: "Bạn có thực sự muốn xóa nhân viên <@> không ?",
-    FeatureNotAvaiable: 'Chức năng chưa phát triển.',
-    OverCurrentDate: 'Vượt quá ngày hiện tại. Vui lòng chọn lại.',
-    DataChanged: 'Dữ liệu đã thay đổi. Bạn có muốn cất luôn?',
-    EmployeeTableTitle: 'Nhân viên', 
-    EmployeeAddButton: 'Thêm mới nhân viên', 
-    CustomerTableTitle: 'Khách hàng', 
-    CustomerAddButton: 'Thêm mới khách hàng',
-    ControlMany: 'Thực hiện hàng loạt',
-    SearchInputPlaceholder: 'Tìm theo mã, họ tên, số điện thoại',
-    NotExist: '@ không tồn tại',
-    RequireField: '@ không được để trống',
-    WrongFormat: '@ sai định dạng',
+    //#region FUNCTION 
+    FUNCTION: {
+        SearchByCodeNamePhone: 'Tìm theo mã, họ tên, số điện thoại',
+        ReloadData: 'Tải lại dữ liệu',
+        ExportExcel: 'Xuất file Excel',
+        TableFunction: 'Chức năng'
+    },
+    //#endregion
+
+    //#region TABLE
+    TABLE: {
+        Watch: 'Xem'
+    }
+    //#endregion
 };
 

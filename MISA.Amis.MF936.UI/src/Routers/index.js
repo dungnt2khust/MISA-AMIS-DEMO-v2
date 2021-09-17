@@ -14,7 +14,7 @@ import WarehouseReport from "../components/views/warehouse/tabs/WarehouseReport"
 Vue.use(VueRouter);
 
 const routes = [
-	{ path: "/", redirect: "/employees" },
+	{ path: "/", redirect: "/warehouse" },
 	{ path: "/employees", component: EmployeePage },
 	{ path: "/customers", component: CustomerPage },
 	{

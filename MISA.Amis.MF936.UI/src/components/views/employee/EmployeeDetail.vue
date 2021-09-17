@@ -242,7 +242,7 @@
 </template>
 <script>
 	// LIBRARY
-	import listeners from "../../../mixins/listeners/listeners.js";
+	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
 	import employeeAPI from "../../../js/components/employeeAPI";
 	import baseAPI from "../../../js/base/baseAPI";
 	import methods from "../../../mixins/methods.js";
@@ -256,7 +256,7 @@
 
 	export default {
 		name: "EmployeeDetail",
-		mixins: [listeners, methods],
+		mixins: [globalComponents, methods],
 		components: {
 			BaseInput,
 			BaseCombobox,

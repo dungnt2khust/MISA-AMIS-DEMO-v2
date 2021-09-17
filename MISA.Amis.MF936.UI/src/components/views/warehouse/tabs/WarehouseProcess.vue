@@ -1,5 +1,5 @@
 <template lang="">
-	<div class="warehouse">
+	<div id="warehouse">
 		<div class="warehouse__process">
 			<div class="warehouse__tutorial">
 				<div class="warehouse__tutorial-title"> {{ $resourcesVN.WAREHOUSE_TUTORIAL_TITLE }}</div>

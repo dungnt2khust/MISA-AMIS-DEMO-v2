@@ -1,0 +1,20 @@
+.tutorial {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+    .tutorial__icon {
+        background: url('../../assets/img/Sprites.6114dba8.svg');
+        background-position: -984px -144px;
+        height: 24px;
+        width: 24px;
+    }
+    .tutorial__text {
+        white-space: nowrap;
+        padding-left: 5px;
+        color: #0075c0;
+        font-size: 13px;
+    }
+    .tutorial__text:hover {
+        text-decoration: underline;
+    }

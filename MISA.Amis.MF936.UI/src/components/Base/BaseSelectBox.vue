@@ -32,11 +32,11 @@
 </template>
 <script>
 	// LIBRARY
-	import Mixin from "../../mixins/listeners/listeners.js";
+	import globalComponents from "../../mixins/globalComponents/globalComponents.js";
 
 	export default {
 		name: "BaseSelectBox",
-		mixins: [Mixin],
+		mixins: [globalComponents],
 		props: {
 			selectboxType: {
 				type: String,

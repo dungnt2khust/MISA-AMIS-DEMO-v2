@@ -22,19 +22,38 @@
     .table__control { 
         position: sticky;
         left: 0;
-        z-index: 9999;
+        z-index: 2000;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 16px 0px 26px;
         background-color: var(--table-background-color);
     }
+        .table__control-left {
+            display: flex;
+        } 
+        .table__control-left div:nth-child(1) {
+            margin-right: 4px;
+        }
 
         /* Table control many */
         .table__control-many {
             position: relative;
+            display: flex;
+            align-items: center;
+            margin-left: 12px;
+        }
+        .table__control-many::before {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.6114dba8.svg') no-repeat -259px -147px;
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            top: 50%;
         }
             .table__control-many-label {
+                margin-left: 30px;
                 height: 36px;
                 width: 180px;
                 border: 2px solid #b1b2b3;
@@ -188,8 +207,8 @@
             z-index: 100;
             top: 0;
             font-family: MISANotoSan-Semibold;
-            font-size: 14px;
-            text-transform: capitalize;
+            font-size: 12px;
+            text-transform: uppercase;
         }
             /* TH*/
             .table th {

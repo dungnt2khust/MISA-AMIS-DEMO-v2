@@ -41,12 +41,12 @@
 </template>
 <script>
 	// LIBRARY
-	import listeners from "../../mixins/listeners/listeners.js";
+	import globalComponents from "../../mixins/globalComponents/globalComponents.js";
 	import menu from '../../mixins/menu.js'
 
 	export default {
 		name: "TheMenu",
-		mixins: [listeners, menu],
+		mixins: [globalComponents, menu],
 		props: {
 			menuState: {
 				type: Boolean,

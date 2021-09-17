@@ -1,0 +1,33 @@
+.filter {
+    position: relative;
+    font-family: MISANotoSan-Semibold;
+}
+    .filter__btn {
+        height: 36px;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }  
+        .filter__btn::after {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.6114dba8.svg') no-repeat -564px -365px;
+            width: 8px;
+            height: 5px;
+            margin-left: 8px;
+        }
+    .filter__popup {
+        position: fixed;
+        width: 590px;
+        background-color: #fff;
+        border: 1px solid var(--border-color);
+        border-radius: 3px;
+        padding: 16px 16px 20px;
+    }
+        .filter__popup-item {
+            padding-bottom: 10px;
+        }
+        .filter__popup-btns {
+            margin-top: 20px;
+        }

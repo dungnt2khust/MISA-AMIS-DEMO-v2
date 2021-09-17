@@ -39,12 +39,29 @@
     border-radius: 6px;
 }
 
-
 /* BUTTON GREEN */
 .button.button--green {
     background-color: var(--button-green-color);
     color: #FFF;
     border: 0;
+}
+.button.button--dark {
+    background-color: inherit;
+    color: #fff; 
+}
+.button.button--dark:focus {
+    border: 2px solid #fff;
+}
+/* BUTTON HALF */
+.button.button--half-left {
+    border-radius: 0;
+    border-top-left-radius: 36px;
+    border-bottom-left-radius: 36px;
+}
+.button.button--half-right {
+    border-radius: 0;
+    border-top-right-radius: 36px;
+    border-bottom-right-radius: 36px;
 }
     .button.button--green:hover {
         background-color: var(--button-green-hover-color);

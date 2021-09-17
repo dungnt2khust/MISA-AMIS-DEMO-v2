@@ -153,7 +153,7 @@
 <script>
 	// LIBRARY
 	import axios from "axios";
-	import Mixin from "../../mixins/listeners/listeners.js";
+	import Mixin from "../../mixins/globalComponents/globalComponents.js";
 
 	// COMPONENTS
 	import BaseInput from "./BaseInput.vue";

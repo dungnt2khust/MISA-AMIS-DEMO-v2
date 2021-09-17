@@ -1,17 +1,20 @@
 <template lang="">
 	<div id="content">
 		<base-tab :currTab="currTab" :listTab="listTab" v-model="currTab" />
-		<router-view />
+		<router-view/>
+		<warehouse-detail/>
 	</div>
 </template>
 <script>
 	// COMPONENTS
 	import BaseTab from "../../Base/BaseTab.vue";
+	import WarehouseDetail from "./tabs/WarehouseDetail.vue";
 
 	export default {
 		name: "WarehousePage",
 		components: {
 			BaseTab,
+			WarehouseDetail,
 		},
 		data() {
 			return {

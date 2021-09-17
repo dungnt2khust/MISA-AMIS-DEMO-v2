@@ -70,11 +70,11 @@
 </template>
 <script>
 	// LIBRARY
-	import listeners from '../../mixins/listeners/listeners.js'
+	import globalComponents from '../../mixins/globalComponents/globalComponents.js'
 
 	export default {
 		name: "BaseDatePicker",
-		mixins: [listeners],
+		mixins: [globalComponents],
 		props: {
 			datePickerState: {
 				type: Boolean,

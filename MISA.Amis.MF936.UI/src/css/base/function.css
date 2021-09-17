@@ -1,0 +1,76 @@
+/* function control query */
+.function__control-query {
+    display: flex;
+    align-items: center;
+}
+    /* function SEARCH */
+    .function__search {
+        height: 30px;
+        width: 240px;
+        position: relative;
+    }
+        .function__search-input {
+            width: 100%;
+            height: 100%;
+            padding: 6px 23px 6px 11px;
+            outline: none;
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
+        }
+        .function__search-input:focus {
+            border: 1px solid var(--input-focus-color);
+        }
+        .function__search::after {
+            display: block;
+            content: "";
+            background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -425px -33px;
+            width: 22px;
+            height: 22px;
+            transform: scale(0.7);
+            position: absolute;
+            top: 4px;
+            right: 6px;
+        }
+
+/* function RELOAD */
+.function__reload {
+    width: 24px;
+    height: 24px;
+    margin-left: 6px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    cursor: pointer;
+}
+    .function__reload-icon {
+        display: block;
+        content: "";
+        background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -425px -201px;
+        width: 21px;
+        height: 23px;
+    }
+    .function__reload:hover .function__reload-icon {
+        display: block;
+        content: "";
+        background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1098px -90px;
+        width: 20px;
+        height: 21px;
+    }
+/* function export */
+.function__export {
+    width: 24px;
+    height: 24px;
+    margin-left: 6px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    cursor: pointer;
+}
+    .function__export-icon {
+        background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -705px -202px;
+        width: 23px;
+        height: 20px;
+    }
+    .function__export:hover .function__export-icon {
+        background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -705px -258px;
+    }

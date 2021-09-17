@@ -53,7 +53,7 @@
 					</div>
 				</div>
 			</div>
-			<base-table
+			<base-table-old
 				:tableId="tableId"
 				:tableStyle="tableCustomerStyle"
 				:tableData="tableData"
@@ -76,18 +76,18 @@
 	// LIBRARY
 	import customerAPI from "../../../js/components/customerAPI"
 	import Table from "../../../mixins/table.js"
-	import listeners from "../../../mixins/listeners/listeners.js"
+	import globalComponents from "../../../mixins/globalComponents/globalComponents.js"
 	import methods from '../../../mixins/methods.js'
 
 	// COMPONENT
-	import BaseTable from "../../Base/BaseTable.vue"
+	import BaseTableOld from "../../Base/BaseTableOld.vue"
 	import BasePagination from "../../Base/BasePagination.vue"
 
 	export default {
 		name: "CustomerPage",
-		mixins: [Table, listeners, methods],
+		mixins: [Table, globalComponents, methods],
 		components: {
-			BaseTable,
+			BaseTableOld,
 			BasePagination,
 		},
 		data() {
@@ -211,7 +211,7 @@
 						filterString
 					)
 					.then((res) => {
-						// Gán dữ liệu vào biến prop sang BaseTable
+						// Gán dữ liệu vào biến prop sang BaseTableOld
 						this.tableData = res.data.Data;
 						this.totalPage = res.data.TotalPage;
 						this.totalRecord = res.data.TotalRecord;

@@ -24,7 +24,38 @@
     /* CONTENT NAME */
     .content__name {
         font-size: 24px;
-        font-family: MISANotoSan-Semibold;
+        font-family: MISANotoSan-Bold;
         font-weight: 700;
         line-height: var(--content-header-height);
     } 
+
+
+    .content__control {
+        display: flex;
+    }  
+        .content__function {
+            display: flex;
+            margin-left: 20px;
+        }
+            .content__add {
+                position: relative;
+            }
+                .content__add::after {
+                    display: block;
+                    content: "";
+                    width: 1px;
+                    height: calc(100% - 16px);
+                    background-color: #fff;
+                    position: absolute;
+                    right: 0;
+                }   
+            .content__import {
+                height: 100%;
+            }
+                .content__import::after {
+                    display: block;
+                    content: "";
+                    background: url('../../assets/img/Sprites.6114dba8.svg') no-repeat -852px -365px;
+                    width: 8px;
+                    height: 5px;
+                }
