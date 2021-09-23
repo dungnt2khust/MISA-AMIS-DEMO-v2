@@ -153,14 +153,14 @@
 <script>
 	// LIBRARY
 	import axios from "axios";
-	import Mixin from "../../mixins/globalComponents/globalComponents.js";
+	import Mixin from "../../../mixins/globalComponents/globalComponents.js";
 
 	// COMPONENTS
-	import BaseInput from "./BaseInput.vue";
-	import BaseInputDate from "./BaseInputDate.vue";
-	import BaseCombobox from "./BaseCombobox.vue";
-	import BaseCheckbox from "./BaseCheckbox.vue";
-	import BaseRadio from "./BaseRadio.vue";
+	import BaseInput from "./Input/BaseInput.vue";
+	import BaseInputDate from "./Input/BaseInputDate.vue";
+	import BaseCombobox from "../BaseCombobox.vue";
+	import BaseCheckbox from "../BaseCheckbox.vue";
+	import BaseRadio from "../BaseRadio.vue";
 
 	export default {
 		name: "BaseForm",
@@ -329,5 +329,5 @@
 	};
 </script>
 <style>
-	@import url('../../css/base/form.css');
+	@import url('../../../css/base/form/form.css');
 </style>

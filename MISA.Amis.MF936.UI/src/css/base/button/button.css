@@ -52,17 +52,7 @@
 .button.button--dark:focus {
     border: 2px solid #fff;
 }
-/* BUTTON HALF */
-.button.button--half-left {
-    border-radius: 0;
-    border-top-left-radius: 36px;
-    border-bottom-left-radius: 36px;
-}
-.button.button--half-right {
-    border-radius: 0;
-    border-top-right-radius: 36px;
-    border-bottom-right-radius: 36px;
-}
+
     .button.button--green:hover {
         background-color: var(--button-green-hover-color);
     }

@@ -8,7 +8,7 @@
 </template>
 <script>
 	// COMPONENTS
-	import BaseFormLarge from "../../../Base/BaseFormLarge.vue";
+	import BaseFormLarge from "../../../Base/Form/BaseFormLarge.vue";
 
 	export default {
 		name: "WarehouseDetail",

@@ -75,12 +75,12 @@
 <script>
 	// LIBRARY
 	import employeeAPI from "../../../js/components/employeeAPI"
-	import Table from "../../../mixins/table.js"
+	import Table from "../../../mixins/tableMethods.js"
 	import globalComponents from "../../../mixins/globalComponents/globalComponents.js"
 	import methods from '../../../mixins/methods.js'
 
 	// COMPONENT
-	import BaseTableOld from "../../Base/BaseTableOld.vue"
+	import BaseTableOld from "../../Base/Old/BaseTableOld.vue"
 	import BasePagination from "../../Base/BasePagination.vue"
 
 	export default {

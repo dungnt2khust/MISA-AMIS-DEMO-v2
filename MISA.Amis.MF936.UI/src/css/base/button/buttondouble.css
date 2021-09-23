@@ -1,0 +1,30 @@
+.button-double {
+    display: flex;
+}
+    .button.button--half-left {
+        border-radius: 0;
+        border-top-left-radius: 36px;
+        border-bottom-left-radius: 36px;
+        position: relative;
+    }
+        .button.button--half-left::after {
+            display: block;
+            content: "";
+            width: 1px;
+            height: calc(100% - 16px);
+            background-color: #fff;
+            position: absolute;
+            right: 0;
+        }
+    .button.button--half-right {
+        border-radius: 0;
+        border-top-right-radius: 36px;
+        border-bottom-right-radius: 36px;
+    }
+        .button.button--half-right::after {
+            display: block;
+            content: "";
+            background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat -852px -365px;
+            width: 8px;
+            height: 5px;
+        }

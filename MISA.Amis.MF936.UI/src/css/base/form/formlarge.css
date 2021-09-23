@@ -1,0 +1,49 @@
+.formlarge {
+    position: fixed;
+    z-index: 3000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #FFF;
+}
+    .formlarge__header {
+        box-sizing: content-box;
+        padding: 9px 16px;
+        height: 36px;
+        background-color: #F4F5F8;
+    }
+        .formlarge__title {
+            font-size: 24px;
+            font-family: MISANotoSan-Bold;
+        }
+        .formlarge__function {
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+        }
+    .formlarge__body {
+    }
+
+        .formlarge__body-part1 {
+            height: 300px;
+            display: flex;
+            padding: 0 30px;
+            background-color: #F4F5F8;
+        }
+            .formlarge__body-part1-1 {
+
+            }
+        .formlarge__body-part2 {
+            height: 300px;
+            background-color: #fff;
+        }
+    .formlarge__footer {
+        position: fixed; 
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 8px 16px;
+        background-color: #38393D;
+    }
+        

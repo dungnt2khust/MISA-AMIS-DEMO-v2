@@ -689,5 +689,5 @@
 	};
 </script>
 <style>
-	@import url('../../../css/base/form.css');
+	@import url('../../../css/base/form/form.css');
 </style>

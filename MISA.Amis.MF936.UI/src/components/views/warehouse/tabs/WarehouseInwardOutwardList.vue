@@ -4,25 +4,18 @@
 			<div class="content__name">
 				{{ WAREHOUSE_TABLE["InwardOutwardListTitle"] }}
 			</div>
-			<div class="content__control">
-				<base-tutorial />
-				<div class="content__function">
-					<div
-						@click="addOnClick()"
-						class="content__add button button--green button--half-left"
-					>
-						{{ $resourcesVN.WAREHOUSE_ADD }}
-					</div>
-					<div
-						class="content__import button button--green button--half-right"
-					></div>
-				</div>
+			<div class="fx">
+				<base-tutorial class="mr-20"/>
+				<base-button-double
+					:label="$resourcesVN.WAREHOUSE_ADD"
+					:method="addRecord"
+					/>	
 			</div>
 		</div>
 		<div class="table-wrapper">
 			<div class="table__control">
 				<div class="fx">
-					<base-many-control style="margin-right: 8px;" />
+					<base-many-control class="mr-8"/>
 					<base-filter />
 				</div>
 				<base-function />
@@ -55,8 +48,8 @@
 	import BaseManyControl from "../../../Base/BaseManyControl.vue";
 	import BaseFunction from "../../../Base/BaseFunction.vue";
 	import BaseTutorial from "../../../Base/BaseTutorial.vue";
-	import BaseFilter from "../../../Base/BaseFilter.vue";
-
+	import BaseFilter from "../../../Base/BaseFilter.vue";	
+	import BaseButtonDouble from "../../../Base/Button/BaseButtonDouble.vue";
 	export default {
 		name: "WarehouseInwardOutwardList",
 		mixins: [warehouseTable, pagination, globalComponents, methods],
@@ -67,6 +60,7 @@
 			BaseFunction,
 			BaseTutorial,
 			BaseFilter,
+			BaseButtonDouble
 		},
 		props: {
 			warehouseDetailState: {
@@ -263,7 +257,7 @@
 			 * Ấn vào nút thêm mới
 			 * CreatedBy: NTDUNG (17/09/2021)
 			 */
-			addOnClick() {
+			addRecord() {
 				this.$bus.$emit('showWarehouseDetail');
 			},
 		},

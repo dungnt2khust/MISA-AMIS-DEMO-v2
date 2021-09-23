@@ -89,13 +89,29 @@ module.exports = {
         SearchByCodeNamePhone: 'Tìm theo mã, họ tên, số điện thoại',
         ReloadData: 'Tải lại dữ liệu',
         ExportExcel: 'Xuất file Excel',
-        TableFunction: 'Chức năng'
+        TableFunction: 'Chức năng',
+        Watch: 'Xem',
+        Replication: 'Nhân bản',
+        Delete: 'Xoá',
+        StopUsing: 'Ngưng sử dụng',
+        UnCommit: 'Bỏ ghi'
     },
     //#endregion
 
     //#region TABLE
     TABLE: {
         Watch: 'Xem'
+    },
+    //#endregion
+
+    //#region FORM
+    FORM: {
+        Cancel: 'Huỷ',
+        Store: 'Cất',
+        StoreAndPrint: 'Cất và In',
+        Close: 'Đóng',
+        Help: 'Trợ giúp',
+        Setting: 'Cài đặt'
     }
     //#endregion
 };

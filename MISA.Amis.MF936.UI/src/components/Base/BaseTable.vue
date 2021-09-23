@@ -14,7 +14,7 @@
 		<tbody>
 			<tr v-for="(itemData, indexData) in tableData" :key="indexData">
 				<td>
-					<base-checkbox/>
+					<base-checkbox />
 				</td>
 				<td
 					v-for="(itemStyle, indexStyle) in tableStyle"
@@ -29,35 +29,49 @@
 						:class="{ 'table--loading': tableLoading }"
 					>
 						<div class="table__update">
-							{{ $resourcesVN.TABLE.Watch}}
+							{{ $resourcesVN.TABLE.Watch }}
 						</div>
-						<div tabindex="1" class="context-menu">
+						<div
+							v-on="
+								contextMenuListeners([
+									{
+										name: $resourcesVN.FUNCTION.UnCommit,
+										function: () => {
+											functionTest($resourcesVN.FUNCTION.UnCommit);
+										},
+									},
+									{
+										name: $resourcesVN.FUNCTION.Replication,
+										function: () => {
+											functionTest($resourcesVN.FUNCTION.Replication);
+										},
+									},
+								])
+							"
+							class="context-menu"
+							tabindex="0"
+						>
 							<div class="context-menu__icon"></div>
 						</div>
 					</div>
 				</td>
 			</tr>
 		</tbody>
-		<base-context-menu
-			:contextMenuState="contextMenuState"
-			v-model="contextMenuState"
-		/>
 	</table>
 </template>
 <script>
 	// LIBRARY
-	import Table from "../../mixins/table.js";
 	import methods from "../../mixins/methods";
+	import tableMethods from "../../mixins/tableMethods";
+	import globalComponents from "../../mixins/globalComponents/globalComponents.js";
 
 	// COMPONENTS
-	import BaseContextMenu from "./BaseContextMenu.vue";
 	import BaseCheckbox from "./BaseCheckbox.vue";
 
 	export default {
-		name: "BaseTableOld",
-		mixins: [Table, methods],
+		name: "BaseTable",
+		mixins: [globalComponents, methods, tableMethods],
 		components: {
-			BaseContextMenu,
 			BaseCheckbox,
 		},
 		props: {
@@ -79,9 +93,7 @@
 			},
 		},
 		data() {
-			return {
-				contextMenuState: false,
-			};
+			return {};
 		},
 		computed: {},
 		methods: {
@@ -111,6 +123,9 @@
 						break;
 				}
 				return styleClass;
+			},
+			functionTest(index) {
+				console.log("option" + index);
 			},
 		},
 	};

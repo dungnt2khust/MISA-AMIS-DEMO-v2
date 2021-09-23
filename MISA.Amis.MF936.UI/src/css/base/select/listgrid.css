@@ -1,0 +1,54 @@
+.listgrid {
+    margin: 0;
+    padding: 0;
+    position: absolute;  
+    z-index: 10;  
+    top: calc(100% + 4px);
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #babec5;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 -8px 34px 0 rgb(0 0 0 / 5%);
+    white-space: nowrap;
+    text-align: left;
+    color: #111;
+}
+    .listgrid__header {
+        color: #212121;
+        height: 32px;
+        font-size: 13px;
+        font-family: MISANotoSan-Bold;
+        background-color: #F4F5F8;
+        margin: 0;
+    }
+    .listgrid thead {
+        height: 32px;
+    }
+        .listgrid th {
+            padding: 0 10px;
+        }
+    .listgrid__body::-webkit-scrollbar {
+        width: 10px !important;
+        height: 10px !important;
+    }
+    .listgrid__body {
+        max-height: 256px;
+        overflow: auto;
+    }
+        .listgrid__body tr:hover {
+            background-color: #ebedf0;
+            color: #2ca01c;
+        }
+        .listgrid--selected {
+            color: #fff;
+            background-color: #2ca01c;
+        }
+        .listgrid td {
+            padding: 0 10px;
+            font-size: 13px;
+            font-family: MISANotoSan-Regular;
+            height: 32px;
+            cursor: pointer;
+        }
+    

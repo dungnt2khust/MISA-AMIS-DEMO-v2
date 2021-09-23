@@ -1,3 +1,8 @@
+/* LIBS */
+@import url('./libs/size.css');
+@import url('./libs/position.css');
+@import url('./libs/border.css');
+
 /* COMMON */
 @import url('./common/color.css');
 @import url('./common/font.css');
@@ -5,8 +10,6 @@
 @import url('./common/resetcss.css');
 @import url('./common/placeholder.css');
 @import url('./common/scrollbar.css');
-@import url('./common/function.css');
-@import url('./base/button.css');
 
 /* LAYOUT */
 @import url('./layout/content.css');

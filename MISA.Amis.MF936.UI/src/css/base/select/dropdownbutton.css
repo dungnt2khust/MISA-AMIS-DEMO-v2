@@ -1,0 +1,22 @@
+.dropdownbutton {
+    width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-left: 1px solid #BABEC5;
+    transition: all 0.2s ease;
+}
+.dropdownbutton:hover {
+    background-color: #E0E0E0;
+}
+    .dropdownbutton--selected .dropdownbutton__icon {
+        transform: rotate(180deg);
+    }
+    .dropdownbutton__icon {
+        background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat -564px -365px;
+        width: 8px;
+        height: 5px;
+        transition: all 0.2s ease;
+        transform: rotate(0);
+    }

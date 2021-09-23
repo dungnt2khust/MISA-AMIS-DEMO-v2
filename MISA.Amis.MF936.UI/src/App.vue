@@ -10,19 +10,21 @@
 		<base-dialog />
 		<the-loading />
 		<base-toast-message/>
+		<base-context-menu/>
 	</div>
 </template>
 
 <script>
 	// LIBRARY
 	// COMPONENT
-	import TheMenu from "./components/Layout/TheMenu.vue";
-	import TheHeader from "./components/Layout/TheHeader.vue";
-	import BaseTooltip from "./components/Base/BaseTooltip.vue";
-	import BaseDialog from "./components/Base/BaseDialog.vue";
-	import TheLoading from "./components/Layout/TheLoading.vue";
-	import EmployeeDetail from "./components/views/employee/EmployeeDetail.vue";
+	import TheMenu from "./components/Layout/TheMenu.vue"
+	import TheHeader from "./components/Layout/TheHeader.vue"
+	import BaseTooltip from "./components/Base/BaseTooltip.vue"
+	import BaseDialog from "./components/Base/BaseDialog.vue"
+	import TheLoading from "./components/Layout/TheLoading.vue"
+	import EmployeeDetail from "./components/views/employee/EmployeeDetail.vue"
 	import BaseToastMessage from "./components/Base/BaseToastMessage.vue"
+	import BaseContextMenu from "./components/Base/BaseContextMenu.vue"
 
 	export default {
 		name: "App",
@@ -33,7 +35,8 @@
 			TheLoading,
 			BaseTooltip,
 			BaseDialog,
-			BaseToastMessage
+			BaseToastMessage,
+			BaseContextMenu
 		},
 		data() {
 			return {

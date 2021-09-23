@@ -59,7 +59,7 @@
 				</td>
 			</tr>	
 		</tbody>
-		<base-context-menu
+		<base-context-menu-old
 			:contextMenuState="contextMenuState"
 			v-model="contextMenuState"
 			:contextMenuPosition="contextMenuPosition"
@@ -70,18 +70,18 @@
 </template>
 <script>
 	// LIBRARY
-	import Table from "../../mixins/table.js";
-	import methods from "../../mixins/methods";
+	import Table from "../../../mixins/tableMethods.js";
+	import methods from "../../../mixins/methods";
 
 	// COMPONENTS
-	import BaseContextMenu from "./BaseContextMenu.vue";
-	import BaseCheckbox from "./BaseCheckbox.vue";
+	import BaseContextMenuOld from "./BaseContextMenuOld.vue";
+	import BaseCheckbox from "../BaseCheckbox.vue";
 
 	export default {
 		name: "BaseTableOld",
 		mixins: [Table, methods],
 		components: {
-			BaseContextMenu,
+			BaseContextMenuOld,
 			BaseCheckbox,
 		},
 		props: {
@@ -270,5 +270,5 @@
 	};
 </script>
 <style>
-	@import url('../../css/base/table.css');
+	@import url('../../../css/base/table.css');
 </style>
