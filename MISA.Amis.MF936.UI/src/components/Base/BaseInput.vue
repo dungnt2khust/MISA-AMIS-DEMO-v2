@@ -1,17 +1,23 @@
 <template lang="">
-	<div class="input-wrapper">
-		<span class="label">
+	<div class="input-main">
+		<span v-if="label != ''" class="label">
 			{{ label }} <span v-if="required" class="text-red">*</span></span
 		>
-		<input
-			v-on="inputListeners"
-			:title="isError ? errorMsg : ''"
-			:value="value"
-            :class="{'border-error': isError}"
-			type="text"
-			class="input"
-            :tabindex="tabindex"
-		/>
+        <div class="fx-center-ver">
+            <input
+                v-on="inputListeners"
+                :title="isError ? errorMsg : ''"
+                :value="value"
+                :class="{'border-error': isError}"
+                type="text"
+                class="input"
+                :tabindex="tabindex"
+                :style="{'width': width}"
+            />
+            <span v-if="unit != ''" class="input-unit ml-10">
+                {{ unit }}
+            </span>
+        </div>	
 	</div>
 </template>
 <script>
@@ -49,6 +55,14 @@
             tabindex: {
                 type: Number,
                 default: -1
+            },
+            unit: {
+                type: String,
+                default: ''
+            },
+            width: {
+                type: String,
+                default: ''
             }
 		},
 		data() {

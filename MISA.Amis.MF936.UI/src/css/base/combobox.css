@@ -14,6 +14,7 @@
         border-radius: var(--combobox-border-radius);
         display: flex;
         height: 32px;
+        background-color: #fff;
     }
     .combobox.combobox--focus .combobox__main{
         border: var(--input-focus);

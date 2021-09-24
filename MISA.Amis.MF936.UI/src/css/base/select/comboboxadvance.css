@@ -1,7 +1,10 @@
+.comboboxadvance-wrapper {
+    flex-shrink: 0;
+}
 .comboboxadvance {
     width: 100%;
     display: flex;
-    max-height: 32px;
+    min-height: 32px;
     border: 1px solid #babec5;
     border-radius: 2px;
     background-color: #fff;
@@ -25,20 +28,25 @@
                width: 100%;
                outline: none; 
             }
-        .comboboxadvance__add {
+        .comboboxadvance__icon {
             width: 32px;
             display: flex; 
             align-items: center;
             justify-content: center;
             cursor: pointer;
         }
-        .comboboxadvance__add:hover { 
+        .comboboxadvance__icon:hover { 
             background-color: #E0E0E0;
-        }
-            .comboboxadvance__add::after {
+        } 
+            .comboboxadvance__icon::after {
                 display: block;
                 content: "";
                 background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat -34px -314px;
                 width: 12px;
                 height: 12px;
+            }
+            .comboboxadvance--search .comboboxadvance__icon::after {
+                background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat -992px -360px;
+                width: 16px;
+                height: 16px;
             }

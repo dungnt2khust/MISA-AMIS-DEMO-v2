@@ -22,21 +22,57 @@
             display: flex;
             align-items: center;
         }
+        .formlarge__type {
+            display: flex;
+        }
     .formlarge__body {
     }
 
         .formlarge__body-part1 {
-            height: 300px;
             display: flex;
-            padding: 0 30px;
+            padding: 20px 30px 0;
             background-color: #F4F5F8;
         }
-            .formlarge__body-part1-1 {
-
-            }
+            .formlarge__body-main-info {
+                display: flex;
+            } 
+                .formlarge__body-cash {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: flex-end;
+                }
+                    .formlarge__body-cash-title {
+                        font-size: 13px;
+                    }
+                    .formlarge__body-cash-number {
+                        font-family: MISANotoSan-Bold;
+                        font-size: 36px;
+                        font-weight: 700;
+                    }
+                    .formlarge__reference {
+                        font-size: 13px;
+                        display: flex;
+                        align-items: center;
+                    }
+                        .formlarge__reference-icon {
+                            width: 10px;
+                            height: 6px;
+                            cursor: pointer;    
+                            display: flex;
+                            align-items: center;
+                            margin-left: 16px;
+                        }
+                            .formlarge__reference-icon::after {
+                                display: block;
+                                content: "";
+                                background: url('../../../assets/img/Sprites.64af8f61.svg') no-repeat -1510px -481px;
+                                width: 10px;
+                                height: 2px;
+                            }
         .formlarge__body-part2 {
-            height: 300px;
             background-color: #fff;
+            padding: 20px 30px 0;
         }
     .formlarge__footer {
         position: fixed; 

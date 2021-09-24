@@ -270,5 +270,5 @@
 	};
 </script>
 <style>
-	@import url('../../../css/base/table.css');
+	@import url('../../../css/base/table/table.css');
 </style>

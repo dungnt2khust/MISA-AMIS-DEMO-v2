@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     position: absolute;  
-    z-index: 10;  
+    z-index: 200;  
     top: calc(100% + 4px);
     left: 0;
     background-color: #fff;
@@ -27,6 +27,7 @@
     }
         .listgrid th {
             padding: 0 10px;
+            border: none !important;
         }
     .listgrid__body::-webkit-scrollbar {
         width: 10px !important;
@@ -36,13 +37,13 @@
         max-height: 256px;
         overflow: auto;
     }
-        .listgrid__body tr:hover {
-            background-color: #ebedf0;
-            color: #2ca01c;
+        .listgrid__body tr:hover td {
+            background-color: #ebedf0 !important;
+            color: #2ca01c !important;
         }
-        .listgrid--selected {
-            color: #fff;
-            background-color: #2ca01c;
+        .listgrid--selected td{
+            color: #fff !important;
+            background-color: #2ca01c !important;
         }
         .listgrid td {
             padding: 0 10px;
@@ -50,5 +51,6 @@
             font-family: MISANotoSan-Regular;
             height: 32px;
             cursor: pointer;
+            border: none !important;
         }
     

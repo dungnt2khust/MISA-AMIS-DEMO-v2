@@ -1,0 +1,74 @@
+.tableinput-wrapper {
+    overflow-x: scroll;
+    overflow-y: visible;
+}
+    .tableinput__title {
+        position: sticky;
+        top: 0;
+        left: 0;
+        font-size: 13px;
+        font-family: MISANotoSan-Bold;
+        padding-bottom: 36px;
+    }
+    .tableinput {
+        table-layout: auto;
+        width: 100%;
+        min-width: 0;
+        overflow: auto;
+    }
+    .tableinput__delete {
+        height: 18px;
+        width: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+        .tableinput__delete::after {
+            display: block;
+            content: "";
+            background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat -464px -313px;
+            width: 15px;
+            height: 15px;
+        }
+    .tableinput__function {
+        display: flex;
+        position: sticky;
+        left: 0;
+    }
+
+/* STICKY COLUMN */
+/* COLUMN 1 */
+.tableinput th:nth-child(1) {
+    position: sticky;
+    left: 0;
+}
+.tableinput tr td:nth-child(1) {
+    min-width: 40px;
+    z-index: 10;
+    position: sticky;
+    left: 0;
+}
+/* COLUMN 2 */
+.tableinput th:nth-child(2) {
+    position: sticky;
+    left: 40px;
+}
+.tableinput tr td:nth-child(2) {
+    z-index: 10;
+    position: sticky;
+    left: 40px;
+}
+/* LAST COLUMN */
+.tableinput th:last-child {
+    position: sticky;
+    right: 0;
+    border-left: 1px dotted var(--border-color);
+}
+.tableinput tr td:last-child {
+    min-width: 40px;
+    z-index: 10;
+    position: sticky;
+    right: 0;
+    border-left: 1px dotted var(--border-color); 
+}

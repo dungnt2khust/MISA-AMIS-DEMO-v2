@@ -2,3 +2,8 @@
     display: flex;
     align-items: center
 }
+
+.fx-end-ver {
+    display: flex;
+    align-items: flex-end;
+}

@@ -13,13 +13,13 @@
             <div class="fx-100 filter__popup-item">
                 <base-input label="Loại nhập"/>
             </div>
-            <div class="fx-50 filter__popup-item">
+            <div class="fx-1/2 filter__popup-item">
                 <base-input label="Kỳ báo cáo"/>
             </div>
-            <div class="fx-25 filter__popup-item">
+            <div class="fx-1/4 filter__popup-item">
                 <base-input-date label="Từ ngày"/>
             </div>
-            <div class="fx-25 filter__popup-item">
+            <div class="fx-1/4 filter__popup-item">
                 <base-input-date label="Đến ngày"/>
             </div>
             <div class="fx-100 filter__popup-item text-blue">

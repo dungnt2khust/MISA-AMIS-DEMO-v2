@@ -1,0 +1,174 @@
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.AssemblyReference.cache
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.GeneratedMSBuildEditorConfig.editorconfig
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.AssemblyInfoInputs.cache
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.AssemblyInfo.cs
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.CoreCompileInputs.cache
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.MvcApplicationPartsAssemblyInfo.cs
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.MvcApplicationPartsAssemblyInfo.cache
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\appsettings.Development.json
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\appsettings.json
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.exe
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.deps.json
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.runtimeconfig.json
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.runtimeconfig.dev.json
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\ref\Misa.Web.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.pdb
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Dapper.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Microsoft.OpenApi.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\MySqlConnector.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.ApplicationCore.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.Infrastructure.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.ApplicationCore.pdb
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Misa.Infrastructure.pdb
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\staticwebassets\Misa.Web.StaticWebAssets.Manifest.cache
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\staticwebassets\Misa.Web.StaticWebAssets.xml
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\scopedcss\bundle\Misa.Web.styles.css
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.RazorTargetAssemblyInfo.cache
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.CopyComplete
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\ref\Misa.Web.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.pdb
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.genruntimeconfig.cache
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.Properties.Resources.resources
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.GenerateResource.cache
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\EPPlus.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Microsoft.IO.RecyclableMemoryStream.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\System.Xml.XPath.XmlDocument.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Features.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+F:\MISA\MISA training\MisaCukcuk\MisaCukcukApi\bin\Debug\net5.0\System.IO.Pipelines.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.AssemblyReference.cache
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.Properties.Resources.resources
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.GenerateResource.cache
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.GeneratedMSBuildEditorConfig.editorconfig
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.AssemblyInfoInputs.cache
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.AssemblyInfo.cs
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.CoreCompileInputs.cache
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.MvcApplicationPartsAssemblyInfo.cs
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.MvcApplicationPartsAssemblyInfo.cache
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\ref\Misa.Web.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.pdb
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\appsettings.Development.json
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\appsettings.json
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.exe
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.deps.json
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.runtimeconfig.json
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.runtimeconfig.dev.json
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\ref\Misa.Web.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.pdb
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Dapper.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\EPPlus.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Features.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Microsoft.IO.RecyclableMemoryStream.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Microsoft.OpenApi.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\MySqlConnector.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\System.IO.Pipelines.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\System.Xml.XPath.XmlDocument.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.ApplicationCore.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Infrastructure.dll
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.ApplicationCore.pdb
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Infrastructure.pdb
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\staticwebassets\Misa.Web.StaticWebAssets.Manifest.cache
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\staticwebassets\Misa.Web.StaticWebAssets.xml
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\scopedcss\bundle\Misa.Web.styles.css
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.RazorTargetAssemblyInfo.cache
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.CopyComplete
+F:\MISA\MISA Test\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.genruntimeconfig.cache
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\appsettings.json
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.exe
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.deps.json
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.runtimeconfig.json
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.runtimeconfig.dev.json
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\ref\Misa.Web.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.pdb
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Dapper.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\EPPlus.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\MySqlConnector.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Npgsql.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\System.IO.Pipelines.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\System.Xml.XPath.XmlDocument.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.ApplicationCore.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Infrastructure.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.ApplicationCore.pdb
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\bin\Debug\net5.0\Misa.Infrastructure.pdb
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.AssemblyReference.cache
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.Properties.Resources.resources
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.GenerateResource.cache
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.AssemblyInfoInputs.cache
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.AssemblyInfo.cs
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.CoreCompileInputs.cache
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\staticwebassets\Misa.Web.StaticWebAssets.Manifest.cache
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\staticwebassets\Misa.Web.StaticWebAssets.xml
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\scopedcss\bundle\Misa.Web.styles.css
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.RazorTargetAssemblyInfo.cache
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.CopyComplete
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\ref\Misa.Web.dll
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.pdb
+C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.genruntimeconfig.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\appsettings.Development.json
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\appsettings.json
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.exe
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.deps.json
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.runtimeconfig.json
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.runtimeconfig.dev.json
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\ref\Misa.Web.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.Web.pdb
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Dapper.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\EPPlus.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Microsoft.AspNetCore.Http.Features.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Microsoft.Extensions.Primitives.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\MySqlConnector.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Npgsql.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\System.IO.Pipelines.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\System.Xml.XPath.XmlDocument.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.ApplicationCore.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.Infrastructure.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.ApplicationCore.pdb
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\bin\Debug\net5.0\Misa.Infrastructure.pdb
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.AssemblyReference.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.Properties.Resources.resources
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.GenerateResource.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.AssemblyInfoInputs.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.AssemblyInfo.cs
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.CoreCompileInputs.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\staticwebassets\Misa.Web.StaticWebAssets.Manifest.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\staticwebassets\Misa.Web.StaticWebAssets.xml
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\scopedcss\bundle\Misa.Web.styles.css
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.RazorTargetAssemblyInfo.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.csproj.CopyComplete
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\ref\Misa.Web.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.pdb
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\MisaCukcukApi\obj\Debug\net5.0\Misa.Web.genruntimeconfig.cache

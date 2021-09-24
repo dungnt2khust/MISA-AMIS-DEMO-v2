@@ -46,7 +46,7 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						class="w-40"
+						class="w-2/5"
 						:tabindex="1"
 					/>
 					<base-input
@@ -57,7 +57,7 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						class="w-60"
+						class="w-3/5"
 						:tabindex="2"
 					/>
 				</div>
@@ -66,7 +66,7 @@
 						label="Ngày sinh"
 						:value="data['DateOfBirth']"
 						v-model="data['DateOfBirth']"
-						class="w-40"
+						class="w-2/5"
 						:tabindex="5"
 					/>
 					<base-radio
@@ -78,7 +78,7 @@
 					/>
 				</div>
 				<div class="form__body-item">
-					<base-combobox
+					<base-combobox-old
 						label="Đơn vị"
 						:required="true"
 						:comboboxData="departmentData"
@@ -100,14 +100,14 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						class="w-60"
+						class="w-3/5"
 						:tabindex="7"
 					/>
 					<base-input-date
 						label="Ngày cấp"
 						:value="data['IdentityDate']"
 						v-model="data['IdentityDate']"
-						class="w-40"
+						class="w-2/5"
 						:tabindex="8"
 					/>
 				</div>
@@ -153,7 +153,7 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						class="w-25"
+						class="w-1/4"
 						:tabindex="11"
 					/>
 					<base-input
@@ -164,7 +164,7 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						class="w-25"
+						class="w-1/4"
 						:tabindex="12"
 					/>
 					<base-input
@@ -175,7 +175,7 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						class="w-25"
+						class="w-1/4"
 						:tabindex="13"
 					/>
 				</div>
@@ -187,7 +187,7 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						class="w-25"
+						class="w-1/4"
 						:tabindex="14"
 					/>
 					<base-input
@@ -197,7 +197,7 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						class="w-25"
+						class="w-1/4"
 						:tabindex="15"
 					/>
 					<base-input
@@ -207,7 +207,7 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						class="w-25"
+						class="w-1/4"
 						:tabindex="16"
 					/>
 				</div>
@@ -250,7 +250,7 @@
 	// COMPONENTS
 	import BaseInput from "../../Base/BaseInput.vue";
 	import BaseInputDate from "../../Base/BaseInputDate.vue";
-	import BaseCombobox from "../../Base/BaseCombobox.vue";
+	import BaseComboboxOld from "../../Base/Old/BaseComboboxOld.vue";
 	import BaseCheckbox from "../../Base/BaseCheckbox.vue";
 	import BaseRadio from "../../Base/BaseRadio.vue";
 
@@ -259,7 +259,7 @@
 		mixins: [globalComponents, methods],
 		components: {
 			BaseInput,
-			BaseCombobox,
+			BaseComboboxOld,
 			BaseInputDate,
 			BaseCheckbox,
 			BaseRadio,

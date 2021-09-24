@@ -1,0 +1,5 @@
+F:\MISA\MISA Test\MisaAMISBackend\Misa.Infrastructure\obj\Debug\net5.0\MisaAMIS.Infrastructure.csproj.AssemblyReference.cache
+F:\MISA\MISA Test\MisaAMISBackend\Misa.Infrastructure\obj\Debug\net5.0\MisaAMIS.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+F:\MISA\MISA Test\MisaAMISBackend\Misa.Infrastructure\obj\Debug\net5.0\MisaAMIS.Infrastructure.AssemblyInfoInputs.cache
+F:\MISA\MISA Test\MisaAMISBackend\Misa.Infrastructure\obj\Debug\net5.0\MisaAMIS.Infrastructure.AssemblyInfo.cs
+F:\MISA\MISA Test\MisaAMISBackend\Misa.Infrastructure\obj\Debug\net5.0\MisaAMIS.Infrastructure.csproj.CoreCompileInputs.cache

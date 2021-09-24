@@ -27,14 +27,14 @@
 						:required="true"
 						:value="data['EmployeeCode']"
 						v-model="data['EmployeeCode']"
-						class="w-40"
+						class="w-2/5"
 					/>
 					<base-input
 						label="Tên"
 						:required="true"
 						:value="data['FullName']"
 						v-model="data['FullName']"
-						class="w-60"
+						class="w-3/5"
 					/>
 				</div>
 				<div class="form__body-item fx">
@@ -42,7 +42,7 @@
 						label="Ngày sinh"
 						:value="data['DateOfBirth']"
 						v-model="data['DateOfBirth']"
-						class="w-40"
+						class="w-2/5"
 					/>
 					<base-radio
 						label="Giới tính"
@@ -66,13 +66,13 @@
 						label="Số CMND"
 						:value="data['IdentityNumber']"
 						v-model="data['IdentityNumber']"
-						class="w-60"
+						class="w-3/5"
 					/>
 					<base-input-date
 						label="Ngày cấp"
 						:value="data['IdentityDate']"
 						v-model="data['IdentityDate']"
-						class="w-40"
+						class="w-2/5"
 					/>
 				</div>
 				<div class="form__body-item">
@@ -102,19 +102,19 @@
 						:value="data['PhoneNumber']"
 						v-model="data['PhoneNumber']"
 						field="PhoneNumber"
-						class="w-25"
+						class="w-1/4"
 					/>
 					<base-input
 						label="ĐT cố định"
 						:value="data['LandlineNumber']"
 						v-model="data['LandlineNumber']"
-						class="w-25"
+						class="w-1/4"
 					/>
 					<base-input
 						label="Email"
 						:value="data['Email']"
 						field="Email"
-						class="w-25"
+						class="w-1/4"
 					/>
 				</div>
 				<div class="form__body-item fx fx-100">
@@ -122,19 +122,19 @@
 						label="Tài khoản ngân hàng"
 						:value="data['BankAccount']"
 						v-model="data['BankAccount']"
-						class="w-25"
+						class="w-1/4"
 					/>
 					<base-input
 						label="Tên ngân hàng"
 						:value="data['BankName']"
 						v-model="data['BankName']"
-						class="w-25"
+						class="w-1/4"
 					/>
 					<base-input
 						label="Chi nhánh"
 						:value="data['BankBranch']"
 						v-model="data['BankBranch']"
-						class="w-25"
+						class="w-1/4"
 					/>
 				</div>
 			</div>
@@ -158,7 +158,7 @@
 	// COMPONENTS
 	import BaseInput from "./Input/BaseInput.vue";
 	import BaseInputDate from "./Input/BaseInputDate.vue";
-	import BaseCombobox from "../BaseCombobox.vue";
+	import BaseCombobox from "../Old/BaseComboboxOld.vue";
 	import BaseCheckbox from "../BaseCheckbox.vue";
 	import BaseRadio from "../BaseRadio.vue";
 

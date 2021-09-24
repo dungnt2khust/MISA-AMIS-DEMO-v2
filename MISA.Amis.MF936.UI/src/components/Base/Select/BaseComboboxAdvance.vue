@@ -1,5 +1,9 @@
 <template lang="">
-	<div class="comboboxadvance-wrapper">
+	<div
+		class="comboboxadvance-wrapper"
+		:style="{ width: width }"
+		:class="'comboboxadvance--' + type"
+	>
 		<span v-if="label != ''" class="label">
 			{{ label }} <span v-if="required" class="text-red">*</span>
 		</span>
@@ -14,9 +18,11 @@
 						v-on="inputListeners"
 						type="text"
 						class="comboboxadvance__input"
+						:tabindex="tabindex"
+						:placeholder="placeholder"
 					/>
 				</div>
-				<div class="comboboxadvance__add"></div>
+				<div class="comboboxadvance__icon"></div>
 			</div>
 			<base-dropdown-button v-model="showList" />
 			<base-list-grid v-show="showList" :showList="showList" />
@@ -43,6 +49,22 @@
 				type: Boolean,
 				default: false,
 			},
+			width: {
+				type: String,
+				default: "",
+			},
+			type: {
+				type: String,
+				default: "",
+			},
+			placeholder: {
+				type: String,
+				default: ''
+			},
+			tabindex: {
+				type: Number,
+				default: -1
+			}
 		},
 		data() {
 			return {
@@ -63,21 +85,21 @@
 					},
 					blur: () => {
 						this.focusState = false;
-                        setTimeout(() => {
-                            if (this.showList) {
-                                this.showList = false;
-                            }
-                        }, 100);
+						setTimeout(() => {
+							if (this.showList) {
+								this.showList = false;
+							}
+						}, 100);
 					},
 				});
 			},
 		},
 		watch: {
-            /**
-             * Bắt sự kiện thay đổi trạng thái
-             * @param {Boolean} value
-             * CreatedBy: NTDUNG (23/09/2021)
-             */
+			/**
+			 * Bắt sự kiện thay đổi trạng thái
+			 * @param {Boolean} value
+			 * CreatedBy: NTDUNG (23/09/2021)
+			 */
 			showList: function(value) {
 				if (value) {
 					this.$refs.comboboxInput.focus();

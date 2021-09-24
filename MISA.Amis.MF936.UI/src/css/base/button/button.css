@@ -39,6 +39,12 @@
     border-radius: 6px;
 }
 
+/* BUTTON SMALL */
+.button.button--small {
+    padding: 2px 20px !important;
+    height: unset;
+}
+
 /* BUTTON GREEN */
 .button.button--green {
     background-color: var(--button-green-color);

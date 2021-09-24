@@ -1,0 +1,7 @@
+F:\MISA\MISA Test\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\MisaAMIS.ApplicationCore.csproj.AssemblyReference.cache
+F:\MISA\MISA Test\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\MisaAMIS.ApplicationCore.Resources.ResourceVN.resources
+F:\MISA\MISA Test\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\MisaAMIS.ApplicationCore.csproj.GenerateResource.cache
+F:\MISA\MISA Test\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\MisaAMIS.ApplicationCore.GeneratedMSBuildEditorConfig.editorconfig
+F:\MISA\MISA Test\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\MisaAMIS.ApplicationCore.AssemblyInfoInputs.cache
+F:\MISA\MISA Test\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\MisaAMIS.ApplicationCore.AssemblyInfo.cs
+F:\MISA\MISA Test\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\MisaAMIS.ApplicationCore.csproj.CoreCompileInputs.cache

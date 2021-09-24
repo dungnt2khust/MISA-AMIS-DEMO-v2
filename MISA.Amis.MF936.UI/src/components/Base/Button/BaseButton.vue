@@ -1,5 +1,5 @@
 <template lang="">
-	<div tabindex="0" @click="method()" class="button" :class="'button--' + type">
+	<div tabindex="20" @click="method()" class="button" :class="'button--' + type">
 		{{ label }}
 	</div>
 </template>

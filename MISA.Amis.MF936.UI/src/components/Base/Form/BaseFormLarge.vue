@@ -3,8 +3,9 @@
         <div class="formlarge__header fx-space-between">
             <div class="fx-center">
                 <base-history class="mr-16"/>
-                <div class="formlarge__title">Phiếu nhập kho BK026</div>
-            </div>
+                <div class="formlarge__title">Phiếu nhập kho BK026</div> 
+                <slot name="header"></slot>
+            </div> 
             <div class="form__function fx-center-ver">
                 <base-tutorial class="mr-16"/>
                 <base-setting class="mr-10"/>
@@ -13,34 +14,7 @@
             </div>
         </div>
         <div class="formlarge__body">
-            <div class="formlarge__body-part1">
-                <div class="formlarge__body-main-info w-75">
-                    <div class="w-80 fx-wrap pr-10 border-right">
-                        <div class="fx-40">
-                            <base-combobox-advance label="Khách hàng"/>
-                        </div>
-                        <div class="fx-60">
-                            <base-input label="Địa chỉ"/>
-                        </div>
-                        <div class="fx-40">
-                            <base-input label="Người giao hàng"/>
-                        </div>
-                        <div class="fx-60">
-                            <base-input label="Diễn giải"/>
-                        </div>
-                    </div>
-                    <div class="w-20"></div>
-                </div>
-                <div class="formlarge__body-cash w-25"></div>
-            </div>
-            <div class="formlarge__body-part2">
-                <div class="formlarge__table-header fx-space-between fx-center-ver">
-                    <span class="formlarge__table-title">Hàng tiền</span>
-                    <div class="fx-center">
-                        <span class="formlarge__table-filter-title"> Đơn giá nhập kho</span>
-                    </div>
-                </div>
-            </div>
+            <slot name="body"></slot> 
         </div>  
         <div class="formlarge__footer fx-space-between">
             <base-button 
@@ -69,8 +43,7 @@ import BaseHelp from './components/BaseHelp.vue'
 import BaseCancel from './components/BaseCancel.vue'
 import BaseSetting from './components/BaseSetting.vue'
 import BaseHistory from './components/BaseHistory.vue'
-import BaseInput from '../BaseInput.vue'
-import BaseComboboxAdvance from '../Select/BaseComboboxAdvance.vue'
+
 
 export default {
     name: 'BaseFormLarge',
@@ -81,8 +54,6 @@ export default {
         BaseCancel,
         BaseSetting,
         BaseHistory,
-        BaseInput,
-        BaseComboboxAdvance
     },
     props: {
         formLargeState: {

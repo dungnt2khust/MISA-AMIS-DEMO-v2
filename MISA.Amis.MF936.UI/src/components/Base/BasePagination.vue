@@ -4,7 +4,7 @@
 			Tổng số: <span class="text-bold"> {{ totalRecord }}</span> bản ghi
 		</div>
 		<div class="pagination__control">
-			<base-combobox
+			<base-combobox-old
 				:comboboxData="paginationData"
 				field="Pagination"
 				class="pagination__select"
@@ -43,12 +43,12 @@
 </template>
 <script>
 	// COMPONENTS
-	import BaseCombobox from "./BaseCombobox.vue";
+	import BaseComboboxOld from "./Old/BaseComboboxOld.vue";
 
 	export default {
 		name: "BasePagination",
 		components: {
-			BaseCombobox,
+			BaseComboboxOld,
 		},
 		props: {
 			totalPage: {

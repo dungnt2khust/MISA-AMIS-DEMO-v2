@@ -43,7 +43,7 @@
 	import methods from "../../../../mixins/methods.js";
 
 	// COMPONENT
-	import BaseTable from "../../../Base/BaseTable.vue";
+	import BaseTable from "../../../Base/Table/BaseTable.vue";
 	import BasePagination from "../../../Base/BasePagination.vue";
 	import BaseManyControl from "../../../Base/BaseManyControl.vue";
 	import BaseFunction from "../../../Base/BaseFunction.vue";
