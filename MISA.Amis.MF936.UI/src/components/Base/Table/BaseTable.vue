@@ -5,7 +5,11 @@
 				<th>
 					<base-checkbox />
 				</th>
-				<th v-for="(item, index) in tableStyle" :key="index">
+				<th
+					v-for="(item, index) in tableStyle"
+					:style="{ 'min-width': item['width'] }"
+					:key="index"
+				>
 					{{ item["name"] }}
 				</th>
 				<th>{{ $resourcesVN.FUNCTION.TableFunction }}</th>
@@ -21,7 +25,9 @@
 					:class="recordStyle(itemStyle)"
 					:key="indexStyle"
 				>
-					{{ tdValue(itemData, itemStyle) }}
+					{{
+						formatTableData(itemData[itemStyle["field"]], itemStyle["field"])
+					}}
 				</td>
 				<td>
 					<div
@@ -62,15 +68,15 @@
 <script>
 	// LIBRARY
 	import methods from "../../../mixins/methods";
-	import tableMethods from "../../../mixins/tableMethods";
 	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
+	import TableDataStyle from "../../../js/enum/tableDataStyle.js"
 
 	// COMPONENTS
 	import BaseCheckbox from "../BaseCheckbox.vue";
 
 	export default {
 		name: "BaseTable",
-		mixins: [globalComponents, methods, tableMethods],
+		mixins: [globalComponents, methods],
 		components: {
 			BaseCheckbox,
 		},
@@ -104,25 +110,41 @@
 			 */
 			recordStyle(itemStyle) {
 				var styleClass = {};
-				// Kiểu text đặc biệt
-				switch (itemStyle["type"]) {
-					case 2:
+				// Kiểu text đặc biệT
+				switch (itemStyle["color"]) {
+					case TableDataStyle.COLOR.Blue:
 						styleClass["text-blue"] = true;
 						break;
 				}
 				// Vị trí cho dữ liệu trong ô
 				switch (itemStyle["pos"]) {
-					case 0:
+					case TableDataStyle.POS.Left:
 						styleClass["text-align-left"] = true;
 						break;
-					case 1:
+					case TableDataStyle.POS.Center:
 						styleClass["text-align-center"] = true;
 						break;
-					case 2:
+					case TableDataStyle.POS.Right:
 						styleClass["text-align-right"] = true;
 						break;
 				}
 				return styleClass;
+			},
+			/**
+			 * Định dạng dữ liệu trước khi bind lên giao diện
+			 * @param {Number, String} value
+			 * @param {String} field
+			 * @return {Number, String}
+			 */
+			formatTableData(value, field) {
+				var formatedValue;
+
+				if (field.includes("date")) {
+					formatedValue = this.formatDate(value);
+				} else {
+					formatedValue = value;
+				}
+				return formatedValue;
 			},
 			functionTest(index) {
 				console.log("option" + index);

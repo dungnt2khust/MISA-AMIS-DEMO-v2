@@ -40,3 +40,17 @@ C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\Misa.ApplicationCore\
 C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.dll
 C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\ref\Misa.ApplicationCore.dll
 C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.pdb
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\bin\Debug\net5.0\Misa.ApplicationCore.deps.json
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\bin\Debug\net5.0\Misa.ApplicationCore.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\bin\Debug\net5.0\ref\Misa.ApplicationCore.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\bin\Debug\net5.0\Misa.ApplicationCore.pdb
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.csproj.AssemblyReference.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.Resources.ResourceVN.resources
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.csproj.GenerateResource.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.AssemblyInfoInputs.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.AssemblyInfo.cs
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.csproj.CoreCompileInputs.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\ref\Misa.ApplicationCore.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.ApplicationCore\obj\Debug\net5.0\Misa.ApplicationCore.pdb

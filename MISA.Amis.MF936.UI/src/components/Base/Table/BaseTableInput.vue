@@ -31,8 +31,8 @@
         <base-pagination/>
         <div class="tableinput__function mb-20">
             <base-button :method="addRecord" label="Thêm dòng" type="small"/>
-            <base-button class="ml-10" label="Thêm ghi chú" type="small"/>
-            <base-button class="ml-10" label="Xoá hết dòng" type="small"/>
+            <base-button :method="openSelectCommodity" class="ml-10" label="Thêm ghi chú" type="small"/>
+            <base-button :method="deleteAllRecords" class="ml-10" label="Xoá hết dòng" type="small"/>
         </div>
 	</div>
 </template>
@@ -140,6 +140,12 @@
 						price: 10000000,
 						summary: 10000000,
 					});
+			},
+			deleteAllRecords() {
+				this.tableData = [];
+			},
+			openSelectCommodity() {
+				this.$emit('input', true);
 			}
 		}
 	};

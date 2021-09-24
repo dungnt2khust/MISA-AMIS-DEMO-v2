@@ -1,84 +1,53 @@
-.selectcommodity__overlay {
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+.selectcommodity__header {
+    padding: 14px 0 12px 20px;
 }
-    .selectcommodity {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #fff;
-        width: 800px;
-        transition: all 0.3s ease;
+    .selectcommodity__title {
+        font-size: 16px;
+        font-family: MISANotoSan-Bold;
+        margin-bottom: 8px;
     }
-    .selectcommodity.selectcommodity--fullscreen {
-        width: calc(100% - 8px);
-    }
-        .selectcommodity__header {
-            border-bottom: 1px solid #e5e5e5;
-        }
-            .selectcommodity__title {
-                padding: 14px 0 12px 20px;
-                font-size: 24px;
-                font-family: MISANotoSan-Bold;
-            }
-            .selectcommodity__close {
-                display: flex;
-                padding: 12px;
-            }
-        .selectcommodity__list {
-
-        }
-            .selectcommodity__item {
-                display: flex;
-                padding: 16px 16px 20px 20px;
-                border-bottom: 1px solid #e5e5e5;
-                display: flex;
-                align-items: center;
-            }
-                .selectcommodity__item-icon {
-                    width: 84px;
-                    height: 84px;
-                    background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat;
-                    transition: all 0.2s ease;
-                }
-                .selectcommodity__item-content {
-                    padding-left: 16px;
-                    text-align: left;
-                }
-                    .selectcommodity__item-title {
-                        font-family: MISANotoSan-Bold;
-                        font-size: 13px;
-                        font-weight: 700;
-                    }
-                    .selectcommodity__item-desc {
-                        font-size: 13px;
-                        font-family: MISANotoSan-Regular;
-                        margin-top: 8px;
-                    }
-        .selectcommodity__extend {
-            width: 12px;
+    .selectcommodity__curr {
+        display: flex;
+        align-items: center;
+    } 
+        .selectcommodity__curr-icon {
+            width: 50px;
             height: 50px;
-            background: #fff;
-            border: 1px solid #d4d7dc;
-            border-radius: 8px;
-            position: absolute;
-            display: flex;
-            align-items: center;
-            left: -6px;
-            top: 43%;
-            z-index: 99;
-            cursor: pointer;
+            background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat;
         }
-            .selectcommodity__extend::after {
-                display: block;
-                content: "";
-                width: 9px;
-                height: 14px;
-                background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat -35px -360px;
+        .selectcommodity__curr-title {
+            font-size: 18px;
+        }
+        .selectcommodity__back {
+            font-size: 13px;
+        }
+.selectcommodity__list {
+
+}
+    .selectcommodity__item {
+        cursor: pointer;
+        display: flex;
+        padding: 16px 16px 20px 20px;
+        border-bottom: 1px solid #e5e5e5;
+        display: flex;
+        align-items: center;
+    }
+        .selectcommodity__item-icon {
+            width: 84px;
+            height: 84px;
+            background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat;
+        }
+        .selectcommodity__item-content {
+            padding-left: 16px;
+            text-align: left;
+        }
+            .selectcommodity__item-title {
+                font-family: MISANotoSan-Bold;
+                font-size: 13px;
+                font-weight: 700;
+            }
+            .selectcommodity__item-desc {
+                font-size: 13px;
+                font-family: MISANotoSan-Regular;
+                margin-top: 8px;
             }

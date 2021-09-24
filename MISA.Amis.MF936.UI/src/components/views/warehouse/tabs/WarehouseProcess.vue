@@ -31,7 +31,6 @@
 						v-for="(item, index) in WarehouseProcessFunction"
 						class="warehouse__tutorial-function-item"
 						:key="index"
-						@click="redirect(item['href'])"
 					>
 						<div
 							class="warehouse__tutorial-function-icon"
@@ -67,12 +66,7 @@
 
 	export default {
 		name: "WarehouseProcess",
-		mixins: [WarehouseProcessFunction],
-		methods: {
-			redirect(href) {
-				this.$router.push(href);
-			}
-		}
+		mixins: [WarehouseProcessFunction]	
 	};
 </script>
 <style>

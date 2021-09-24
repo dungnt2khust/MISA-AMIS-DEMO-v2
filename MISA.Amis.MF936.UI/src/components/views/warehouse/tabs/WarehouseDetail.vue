@@ -54,17 +54,20 @@
 						<h1 class="formlarge__body-cash-number">0,0</h1>
 					</div>
 					<div class="formlarge__reference w-2/5 mb-20 mt-20">
-                        Tham chiếu
-                        <div class="formlarge__reference-icon"></div>
-                    </div>
+						Tham chiếu
+						<div class="formlarge__reference-icon"></div>
+					</div>
 				</div>
 				<!-- Escap -->
 				<div class="formlarge__body-part2">
-                    <base-table-input/>
+					<base-table-input v-model="selectCommodityState" />
 				</div>
 			</template>
 		</base-form-large>
-		<warehouse-select-commodity/>
+		<warehouse-select-commodity
+			v-if="selectCommodityState"
+			v-model="selectCommodityState"
+		/>	
 	</div>
 </template>
 <script>
@@ -74,8 +77,8 @@
 	import BaseInputDate from "../../../Base/BaseInputDate.vue";
 	import BaseComboboxAdvance from "../../../Base/Select/BaseComboboxAdvance.vue";
 	import BaseComboboxOld from "../../../Base/Old/BaseComboboxOld.vue";
-    import BaseTableInput from "../../../Base/Table/BaseTableInput.vue"
-	import WarehouseSelectCommodity from "../tabs/WarehouseSelectCommodity.vue"
+	import BaseTableInput from "../../../Base/Table/BaseTableInput.vue";
+	import WarehouseSelectCommodity from "../formextend/WarehouseSelectCommodity.vue";
 
 	export default {
 		name: "WarehouseDetail",
@@ -85,12 +88,14 @@
 			BaseInputDate,
 			BaseComboboxAdvance,
 			BaseComboboxOld,
-            BaseTableInput,
+			BaseTableInput,
 			WarehouseSelectCommodity
 		},
 		data() {
 			return {
 				formLargeState: false,
+				selectCommodityState: false,
+				createCommodityState: false,
 			};
 		},
 		created() {
@@ -100,7 +105,7 @@
 			this.$bus.$on("hideWarehouseDetail", () => {
 				this.formLargeState = false;
 			});
-		},
+		},	
 		destroyed() {
 			this.$bus.$off("showWarehouseDetail");
 			this.$bus.$off("hideWarehouseDetail");

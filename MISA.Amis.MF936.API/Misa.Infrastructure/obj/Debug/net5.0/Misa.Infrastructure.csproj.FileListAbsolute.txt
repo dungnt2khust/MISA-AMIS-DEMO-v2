@@ -43,3 +43,18 @@ C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\Misa.Infrastructure\o
 C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.dll
 C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\Misa.Infrastructure\obj\Debug\net5.0\ref\Misa.Infrastructure.dll
 C:\Users\dungg\Desktop\BtDien\MisaAMIS2021\MisaAMISBackend\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.pdb
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\bin\Debug\net5.0\Misa.Infrastructure.deps.json
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\bin\Debug\net5.0\Misa.Infrastructure.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\bin\Debug\net5.0\ref\Misa.Infrastructure.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\bin\Debug\net5.0\Misa.Infrastructure.pdb
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\bin\Debug\net5.0\Misa.ApplicationCore.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\bin\Debug\net5.0\Misa.ApplicationCore.pdb
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.csproj.AssemblyReference.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.AssemblyInfoInputs.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.AssemblyInfo.cs
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.csproj.CopyComplete
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\obj\Debug\net5.0\ref\Misa.Infrastructure.dll
+C:\Workspace\INTERN\Đánh giá giai đoạn 2\Repos\MISA.Amis.MF936.API\Misa.Infrastructure\obj\Debug\net5.0\Misa.Infrastructure.pdb
