@@ -20,7 +20,7 @@
 					<td class="fx-center">{{ indexData }}</td>
 					<td v-for="(itemStyle, indexStyle) in tableStyle" :key="indexStyle">
 						<base-input v-if="indexStyle % 2 == 0"/>
-						<base-combobox-advance type="" v-if="indexStyle % 2 != 0"/>
+						<base-combobox-advance type="small" v-if="indexStyle % 2 != 0"/>
 					</td>
 					<td>
 						<div class="tableinput__delete"></div>
@@ -28,8 +28,7 @@
 				</tr>
 			</tbody>
 		</table>
-        <base-pagination/>
-        <div class="tableinput__function mb-20">
+        <div class="tableinput__function mt-20 mb-20">
             <base-button :method="addRecord" label="Thêm dòng" type="small"/>
             <base-button :method="openSelectCommodity" class="ml-10" label="Thêm ghi chú" type="small"/>
             <base-button :method="deleteAllRecords" class="ml-10" label="Xoá hết dòng" type="small"/>
@@ -42,7 +41,6 @@
     // COMPONENTS 
     import BaseInput from '../BaseInput.vue'
     import BaseComboboxAdvance from '../Select/BaseComboboxAdvance.vue'
-    import BasePagination from "../BasePagination.vue"
     import BaseButton from "../Button/BaseButton.vue"
 
 	export default {
@@ -50,7 +48,6 @@
         components: {
             BaseInput,
             BaseComboboxAdvance,
-            BasePagination,
             BaseButton
         },
 		data() {
@@ -87,7 +84,6 @@
 						width: "150px",
 						enable: true,
 					},
-					{ name: "Quy cách", field: "rules", width: "150px", enable: false },
 					{ name: "ĐVT", field: "unit", width: "150px", enable: true },
 					{ name: "Số lượng", field: "amount", width: "150px", enable: true },
 					{ name: "Đơn giá", field: "price", width: "150px", enable: true },

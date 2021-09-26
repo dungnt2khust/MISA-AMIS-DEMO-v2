@@ -47,12 +47,17 @@
 						</div>
 					</li>
 				</ul>
-				<div v-if="currIdx != -1">
-					<warehouse-commodity v-if="currIdx == 0"/>
-					<warehouse-service v-if="currIdx == 1"/>
-					<warehouse-matarial v-if="currIdx == 2"/>
-					<warehouse-product v-if="currIdx == 3"/>
-					<warehouse-tool v-if="currIdx == 4"/>
+				<div class="selectcommodity__main" v-if="currIdx != -1">
+					<warehouse-commodity/>
+				</div>	
+			</div>
+		</template>
+		<template v-if="currIdx != -1" v-slot:footer>
+			<div class="fx-space-between">
+				<base-button label="Huỷ"/>
+				<div class="fx">
+					<base-button label="Cất" class="mr-10"/>
+					<base-button label="Cất và Thêm" type="green"/>
 				</div>
 			</div>
 		</template>
@@ -62,20 +67,14 @@
 	// COMPONENTS
 	import BaseFormExtend from "../../../Base/Form/BaseFormExtend.vue";
 	import WarehouseCommodity from "./WarehouseCommodity.vue"
-	import WarehouseService from "./WarehouseService.vue"
-	import WarehouseMatarial from "./WarehouseMatarial.vue"
-	import WarehouseProduct from "./WarehouseProduct.vue"
-	import WarehouseTool from "./WarehouseTool.vue"
+	import BaseButton from "../../../Base/Button/BaseButton.vue"
 
 	export default {
 		name: "WarehouseSelectCommodity",
 		components: {
 			BaseFormExtend,
 			WarehouseCommodity,
-			WarehouseService,
-			WarehouseMatarial,
-			WarehouseProduct,
-			WarehouseTool
+			BaseButton
 		},
 		data() {
 			return {

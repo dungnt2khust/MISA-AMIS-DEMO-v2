@@ -34,6 +34,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            border-right: 1px solid #BABEC5;
         }
         .comboboxadvance__icon:hover { 
             background-color: #E0E0E0;
@@ -50,3 +51,48 @@
                 width: 16px;
                 height: 16px;
             }
+            .comboboxadvance__add {
+                padding-right: 10px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                font-size: 13px;
+                color: #35bf22;
+                border-right: 1px solid #ccc;
+            }
+        .comboboxadvance__selection {
+            display: flex;
+            flex-basis: 100%;
+            flex-grow: 1;
+            flex-wrap: wrap;
+        }
+            .comboboxadvance__selection-item {
+                display: flex;
+                align-items: center;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                background-color: #f0f0f0;
+                padding: 2px 3px 2px 5px;
+                margin: 3px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+                .comboboxadvance__selection-title {
+                    font-size: 13px;
+                }
+                .comboboxadvance__selection-icon {
+                    cursor: pointer;
+                    width: 16px;
+                    height: 16px;
+                    margin-left: 4px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                    .comboboxadvance__selection-icon::after {
+                        display: block;
+                        content: "";
+                        background: url('../../../assets/img/Sprites.64af8f61.svg') no-repeat -84px -316px;
+                        width: 8px;
+                        height: 8px;
+                    }

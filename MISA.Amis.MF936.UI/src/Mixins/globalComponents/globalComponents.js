@@ -20,6 +20,7 @@ export default {
 			var show = false;
 			return Object.assign({}, this.$listener, {
 				click: (event) => {
+					console.log(event.target);
 					if (!show)  {
 						show = true;
 

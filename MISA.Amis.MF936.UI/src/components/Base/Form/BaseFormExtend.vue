@@ -14,6 +14,9 @@
 			<div class="formextend__body">
 				<slot name="body"></slot>
             </div>
+			<div class="formextend__footer">
+				<slot name="footer"></slot>
+			</div>
 			<div
 				@click="fullscreen = !fullscreen"
 				class="formextend__extend"

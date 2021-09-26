@@ -3,6 +3,7 @@
 @import url('./libs/position.css');
 @import url('./libs/border.css');
 @import url('./libs/marginandpadding.css');
+@import url('./libs/basiccomponets.css');
 
 /* COMMON */
 @import url('./common/color.css');

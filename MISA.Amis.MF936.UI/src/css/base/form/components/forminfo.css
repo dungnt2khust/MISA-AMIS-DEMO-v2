@@ -1,0 +1,24 @@
+.forminfo {
+    display: flex;
+    align-items: center;
+}
+    .forminfo__icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+    }
+        .forminfo__icon::after {
+            display: block;
+            content: "";
+            background: url('../../../../assets/img/Sprites.6114dba8.svg') no-repeat -482px -146px;
+            width: 20px;
+            height: 20px;
+        }
+    .forminfo__content {
+        font-size: 13px;
+        color: #757575;
+        font-style: italic;
+    }

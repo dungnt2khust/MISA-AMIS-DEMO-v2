@@ -15,12 +15,13 @@
         background-color: #fff;
         width: 800px;
         transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
     }
     .formextend.formextend--fullscreen {
         width: calc(100% - 8px);
     }
         .formextend__header {
-            border-bottom: 1px solid #e5e5e5;
         }
             .formextend__title {
                 padding: 14px 0 12px 20px;
@@ -31,6 +32,19 @@
                 display: flex;
                 padding: 12px;
             }
+        .formextend__body {
+            border-top: 1px solid #e5e5e5;
+            height: 100%;
+            padding: 0 20px;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .formextend__footer {
+            padding: 16px;
+            position: sticky;
+            bottom: 0;
+        }
 
 
 .formextend__extend {

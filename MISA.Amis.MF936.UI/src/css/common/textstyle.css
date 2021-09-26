@@ -5,15 +5,15 @@
     color: red;
 }
 .text-blue {
-    color: #0075c0;
+    color: #0075c0 !important;
     font-size: 13px;
 }
 .text-blue:hover {
     text-decoration: underline; 
     cursor: pointer;
 }
-.text-green {
-
+.text--green {
+    color: #14a200;
 }
 .text-align-left {
     text-align: left;

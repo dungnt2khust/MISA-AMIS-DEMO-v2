@@ -39,34 +39,36 @@ namespace Misa.Infrastructure
             {
                 DynamicParameters dynamicParameters = new DynamicParameters();
                 var voucherFilter = searchData == null ? string.Empty : searchData;
-                
+
                 var typeVoucher = voucherType == null ? string.Empty : voucherType;
                 dynamicParameters.Add("@search_data", voucherFilter);
                 dynamicParameters.Add("@mention_state", mentionState);
                 dynamicParameters.Add("@type_voucher", typeVoucher);
                 dynamicParameters.Add("@start_date", startDate);
                 dynamicParameters.Add("@end_date", endDate);
-                dynamicParameters.Add("@page_index", pageIndex);
+                dynamicParameters.Add("@offset", (pageIndex - 1) * pageSize);
                 dynamicParameters.Add("@page_size", pageSize);
 
-                var sql = "select * from  public.func_get_voucher_paging_filter(@search_data, @mention_state,@type_voucher, @start_date, @end_date,  @page_index, @page_size);";
-                sql += "select count(*) from (select * from  public.func_get_voucher_paging_filter(@search_data, @mention_state, @type_voucher,  @start_date, @end_date, @page_index, @page_size)) as filtertable;";
+                var sql = "select * from  public.func_get_voucher_paging_filter(@search_data, @mention_state,@type_voucher, @start_date, @end_date) limit @page_size offset @offset;";
+                sql += "select count(*) from (select * from  public.func_get_voucher_paging_filter(@search_data, @mention_state, @type_voucher,  @start_date, @end_date)) as filtertable;";
+                sql += "select coalesce(sum(filtertable.total_price),0) as total_prices from (select * from  public.func_get_voucher_paging_filter(@search_data, @mention_state, @type_voucher,  @start_date, @end_date)) as filtertable;";
                 var response = _dbConnection.QueryMultiple(sql, param: dynamicParameters, commandType: CommandType.Text);
 
                 //var vmodel = Activator.CreateInstance<Employee>();
-                var vouchers = response.Read<AccountVoucher>().ToList();
+                var vouchers = response.Read<AccountVoucher>();
                 var totalRecord = response.Read<int>().FirstOrDefault();
+                var totalPrices = response.Read<decimal>().FirstOrDefault();
                 var totalPage = Math.Ceiling((double)totalRecord / pageSize);
                 var result = new
                 {
                     Vouchers = vouchers,
+                    TotalPrices = totalPrices,
                     TotalRecord = totalRecord,
                     TotalPage = totalPage,
+
                 };
                 return result;
             }
         }
-        
-
     }
 }

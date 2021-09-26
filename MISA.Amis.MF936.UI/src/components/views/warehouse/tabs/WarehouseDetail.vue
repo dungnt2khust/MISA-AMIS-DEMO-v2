@@ -68,6 +68,9 @@
 			v-if="selectCommodityState"
 			v-model="selectCommodityState"
 		/>	
+		<warehouse-add width="500px" v-if="false"/>
+		<warehouse-add-commodity-group width="600px" v-if="false"/>
+		<warehouse-add-unit width="500px" v-if="false"/>
 	</div>
 </template>
 <script>
@@ -79,6 +82,9 @@
 	import BaseComboboxOld from "../../../Base/Old/BaseComboboxOld.vue";
 	import BaseTableInput from "../../../Base/Table/BaseTableInput.vue";
 	import WarehouseSelectCommodity from "../formextend/WarehouseSelectCommodity.vue";
+	import WarehouseAdd from "../formsmall/WarehouseAdd.vue"
+	import WarehouseAddCommodityGroup from "../formsmall/WarehouseAddCommodityGroup.vue"
+	import WarehouseAddUnit from "../formsmall/WarehouseAddUnit.vue"
 
 	export default {
 		name: "WarehouseDetail",
@@ -89,7 +95,10 @@
 			BaseComboboxAdvance,
 			BaseComboboxOld,
 			BaseTableInput,
-			WarehouseSelectCommodity
+			WarehouseSelectCommodity,
+			WarehouseAdd,
+			WarehouseAddCommodityGroup,
+			WarehouseAddUnit
 		},
 		data() {
 			return {

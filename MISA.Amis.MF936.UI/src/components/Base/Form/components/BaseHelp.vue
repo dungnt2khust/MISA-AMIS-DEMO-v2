@@ -11,5 +11,5 @@
 	};
 </script>
 <style>
-	@import url("../../../../css/base/form/components.css");
+	@import url("../../../../css/base/form/components/components.css");
 </style>

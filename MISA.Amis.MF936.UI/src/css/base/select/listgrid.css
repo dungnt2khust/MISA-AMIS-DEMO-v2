@@ -21,6 +21,7 @@
         font-family: MISANotoSan-Bold;
         background-color: #F4F5F8;
         margin: 0;
+        background-color: #ECEEF1;
     }
     .listgrid thead {
         height: 32px;
@@ -53,4 +54,16 @@
             cursor: pointer;
             border: none !important;
         }
+        .listgrid__checked {
+            background: url('../../../assets/img/Sprites.6114dba8.svg') no-repeat -899px -316px;
+            width: 11px;
+            height: 8px;
+        }
+    .listgrid__footer {
+        height: 30px;
+        width: 100%;
+        background-color: #EBEDF0;
+        display: flex;
+        align-items: center;
+    }
     

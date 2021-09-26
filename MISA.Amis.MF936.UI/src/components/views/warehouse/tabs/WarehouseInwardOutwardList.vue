@@ -24,6 +24,7 @@
 				:tableStyle="WAREHOUSE_TABLE['InwardOutwardList']"
 				:tableData="tableData"
 				:tableLoading="tableLoading"
+				:totalPrices="totalPrices"
 			/>
 			<base-pagination
 				:totalPage="totalPage"
@@ -80,6 +81,7 @@
 				totalRecord: 0,
 				currPage: 1,
 				currOption: 0,
+				totalPrices: 0
 			};
 		},
 		mounted() {
@@ -102,6 +104,7 @@
 						this.tableData = res.data['Vouchers'];
 						this.totalPage = res.data['TotalPage'];
 						this.totalRecord = res.data['TotalRecord'];
+						this.totalPrices = res.data['TotalPrices'];
 					})
 					.catch((res) => {
 						console.log(res);

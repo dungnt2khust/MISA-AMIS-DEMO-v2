@@ -14,11 +14,22 @@
 			showList: {
 				type: Boolean,
 				default: false
+			},
+			focusState: {
+				type: Boolean,
+				default: false
+			},
+			method: {
+				type: Function,
+				default: () => {}
 			}
 		},
 		methods: {
 			dropdownButtonOnClick() {
-                this.$emit('input', !this.showList);
+				this.method();
+            
+				this.$emit('input', !this.showList);
+				
 			},
 		},
 	};

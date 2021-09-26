@@ -1,0 +1,13 @@
+.textarea {
+    outline: none;
+    border: 1px solid #babec5;
+    border-radius: 2px;
+    font-size: 13px;
+    resize: none;
+    width: 100%;
+    font-family: MISANotoSan-Regular;
+    padding: 9px;
+}
+.textarea:focus {
+    border: var(--input-focus);
+}

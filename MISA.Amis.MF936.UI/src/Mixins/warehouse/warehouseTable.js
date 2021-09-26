@@ -49,6 +49,7 @@ export default {
 						field: "voucher_date",
 						type: TableDataStyle.TYPE.Text,
 						pos: TableDataStyle.POS.Left,
+						color: TableDataStyle.COLOR.AllGreen
 					},
 					{
 						name: "Loại chứng từ",

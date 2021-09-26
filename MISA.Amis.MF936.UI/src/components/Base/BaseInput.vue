@@ -1,5 +1,5 @@
 <template lang="">
-	<div class="input-main">
+	<div class="input-main" :style="{'width': width}">
 		<span v-if="label != ''" class="label">
 			{{ label }} <span v-if="required" class="text-red">*</span></span
 		>
@@ -11,8 +11,7 @@
                 :class="{'border-error': isError}"
                 type="text"
                 class="input"
-                :tabindex="tabindex"
-                :style="{'width': width}"
+                :tabindex="tabindex" 
             />
             <span v-if="unit != ''" class="input-unit ml-10">
                 {{ unit }}

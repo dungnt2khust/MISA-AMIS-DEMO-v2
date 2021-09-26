@@ -1,6 +1,6 @@
 .tableinput-wrapper {
-    overflow-x: scroll;
-    overflow-y: visible;
+    height: 100%;
+    overflow: auto;
 }
     .tableinput__title {
         position: sticky;
@@ -13,8 +13,6 @@
     .tableinput {
         table-layout: auto;
         width: 100%;
-        min-width: 0;
-        overflow: auto;
     }
     .tableinput__delete {
         height: 18px;
@@ -35,7 +33,7 @@
         display: flex;
         position: sticky;
         left: 0;
-    }
+    } 
 
 /* STICKY COLUMN */
 /* COLUMN 1 */

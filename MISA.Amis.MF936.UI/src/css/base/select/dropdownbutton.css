@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-left: 1px solid #BABEC5;
     transition: all 0.2s ease;
 }
 .dropdownbutton:hover {

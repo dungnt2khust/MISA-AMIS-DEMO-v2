@@ -1,6 +1,7 @@
 const TableDataStyle = {
     COLOR: {
-        Blue: 0
+        Blue: 0,
+        AllGreen: 4
     },
     TYPE: {
         Text: 0,

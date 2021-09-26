@@ -16,7 +16,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="(itemData, indexData) in tableData" :key="indexData">
+			<tr
+				v-for="(itemData, indexData) in tableData"
+				:class="{ 'text--green': itemData['is_mention'] }"
+				:key="indexData"
+			>
 				<td>
 					<base-checkbox />
 				</td>
@@ -38,22 +42,7 @@
 							{{ $resourcesVN.TABLE.Watch }}
 						</div>
 						<div
-							v-on="
-								contextMenuListeners([
-									{
-										name: $resourcesVN.FUNCTION.UnCommit,
-										function: () => {
-											functionTest($resourcesVN.FUNCTION.UnCommit);
-										},
-									},
-									{
-										name: $resourcesVN.FUNCTION.Replication,
-										function: () => {
-											functionTest($resourcesVN.FUNCTION.Replication);
-										},
-									},
-								])
-							"
+							v-on="contextMenuListeners(contextFunction)"
 							class="context-menu"
 							tabindex="0"
 						>
@@ -63,13 +52,20 @@
 				</td>
 			</tr>
 		</tbody>
+		<tfoot>
+			<tr>
+				<th v-for="(item, index) in (tableStyle.length + 2)" :key="index">
+					{{ footerTable(index)}}
+				</th>
+			</tr>
+		</tfoot>
 	</table>
 </template>
 <script>
 	// LIBRARY
 	import methods from "../../../mixins/methods";
 	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
-	import TableDataStyle from "../../../js/enum/tableDataStyle.js"
+	import TableDataStyle from "../../../js/enum/tableDataStyle.js";
 
 	// COMPONENTS
 	import BaseCheckbox from "../BaseCheckbox.vue";
@@ -97,11 +93,29 @@
 				type: Boolean,
 				default: false,
 			},
+			totalPrices: {
+				type: Number,
+				default: 0
+			}
 		},
-		data() {
-			return {};
+		computed: {
+			contextFunction() {
+				return [
+					{
+						name: this.$resourcesVN.FUNCTION.UnCommit,
+						function: () => {
+							this.functionTest(this.$resourcesVN.FUNCTION.UnCommit);
+						},
+					},
+					{
+						name: this.$resourcesVN.FUNCTION.Replication,
+						function: () => {
+							this.functionTest(this.$resourcesVN.FUNCTION.Replication);
+						},
+					},
+				];
+			},
 		},
-		computed: {},
 		methods: {
 			/**
 			 * Đặt kiểu cho ô dữ liệu
@@ -145,6 +159,14 @@
 					formatedValue = value;
 				}
 				return formatedValue;
+			},
+			footerTable(index) {
+				if (index == 1) {
+					return 'Tổng';
+				}
+				if (index == 4) {
+					return this.totalPrices;
+				}
 			},
 			functionTest(index) {
 				console.log("option" + index);
