@@ -25,5 +25,5 @@
 	};
 </script>
 <style>
-	@import url("../../css/base/tab.css");
+	@import url("../../../css/base/tab/tab.css");
 </style>

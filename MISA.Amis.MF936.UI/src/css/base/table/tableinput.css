@@ -35,6 +35,46 @@
         left: 0;
     } 
 
+    .tableinput {
+        width: 100%;
+        table-layout: auto;
+        border-collapse: separate;
+        border-spacing: 0;
+        position: relative;
+    }
+        .tableinput > thead {
+            font-family: MISANotoSan-Semibold;
+            font-size: 12px;
+            text-transform: uppercase;
+            text-align: left;
+        }
+            .tableinput > thead th {
+                padding: 0 10px;
+                white-space: nowrap;
+                height: 34px;
+                background-color: var(--table-header-color) !important;
+                border-right: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--border-color); 
+            }
+        .tableinput > tbody {
+            display: contents;
+        }
+            .tableinput > tbody > tr > td {
+                height: 47px;
+                padding: 5px 10px;
+                font-family: MISANotoSan-Regular;
+                font-size: 13px;
+                font-weight: 400;
+                background-color: #FFF;
+                white-space: nowrap;
+                border-right: 1px dotted var(--border-color);
+                border-bottom: 1px dotted var(--border-color);
+                position: relative;
+            }
+            .tableinput > tbody > tr:hover > td {
+                background-color: var(--table-background-hover-color);
+            }
+
 /* STICKY COLUMN */
 /* COLUMN 1 */
 .tableinput th:nth-child(1) {

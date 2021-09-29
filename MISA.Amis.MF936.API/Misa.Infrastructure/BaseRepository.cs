@@ -57,24 +57,28 @@ namespace Misa.Infrastructure
         /// <summary>
         /// Xóa nhiều 
         /// </summary>
-        /// <param name="entityIds">chuỗi chứa các Id</param>
+        /// <param name="entityIds"> mảng chứa các Id</param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(19/8/2021)
         /// ModifiedBy: NTDUNG(19/8/2021)
-        public int DeleteMultiple(string entityIds)
+        public int DeleteMultiple(List<Guid> entityIds)
         {
-            var entityIdList = entityIds.Split('$');
-            string tmp = "(";
-            foreach(var entityId in entityIdList)
+            var parameters = new DynamicParameters();
+            var paramName = new List<string>();
+
+            for (int i = 0; i < entityIds.Count; i++)
             {
-                tmp += $"'{entityId}',";
+                var id = entityIds[i];
+                // Đặt tên cho param
+                paramName.Add($"@m_Id{i}");
+                // Đặt giá trị cho param bằng id 
+                parameters.Add($"@m_Id{i}", id);
             }
-            tmp = tmp.Remove(tmp.Length - 1);
-            tmp += ")";
+            // Join mảng để tạo ra câu truy vấn xoá nhiều
             using (_dbConnection = new NpgsqlConnection(_connectionString))
             {
-                var sqlCommand = $"DELETE FROM {_className} WHERE {_className}Id IN {tmp}";
-                var rowEffects = _dbConnection.Execute(sqlCommand);
+                var sqlCommand = $"DELETE FROM {_className} WHERE {_className}_id IN ({String.Join(", ", paramName.ToArray())})";
+                var rowEffects = _dbConnection.Execute(sqlCommand, param: parameters);
                 return rowEffects;
             }
         }
@@ -104,7 +108,7 @@ namespace Misa.Infrastructure
         /// <returns></returns>
         /// CreatedBy: NTDUNG(17/8/2021)
         /// ModifiedBy: NTDUNG(17/8/2021) 
-        public TEntity GetEntityById(Guid entityId)
+        public virtual TEntity GetEntityById(Guid entityId)
         {
             using (_dbConnection = new NpgsqlConnection(_connectionString))
             {
@@ -182,18 +186,18 @@ namespace Misa.Infrastructure
                     if (property.IsDefined(typeof(MisaNotMap), false)) continue;
                     var propName = property.Name;
                     var propValue = property.GetValue(entity);
-                    var propId = $"{_className}Id";
+                    var propId = $"{_className}_id";
                     if (propName == propId)
                     {
-                        dynamicParameters.Add($"{propName}", entityId);
+                        dynamicParameters.Add($"{propName}_update", entityId);
                     }
                     else
                     {
-                        dynamicParameters.Add($"{propName}", propValue);
+                        dynamicParameters.Add($"{propName}_update", propValue);
                     }
                 }
 
-                var proceduce = $"Proc_Update{_className}";
+                var proceduce = $"func_update_{_className}";
                 var rowEffects = _dbConnection.Execute(proceduce, param: dynamicParameters, commandType: CommandType.StoredProcedure);
                 return rowEffects;
             }

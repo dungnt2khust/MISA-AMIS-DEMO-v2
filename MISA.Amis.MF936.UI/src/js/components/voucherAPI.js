@@ -27,5 +27,35 @@ class VoucherAPI extends BaseAPI {
 		url += `&voucherType=${voucherType}&startDate=${startDate}&endDate=${endDate}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
 		return axios.get(url);
 	}
+	/**
+	 * Ghi sổ nhiều
+	 * @param {Array} body 
+	 * @returns {Promise}
+	 * CreatedBy: NTDUNG (28/09/2021)
+	 */
+	async mentionMany(body) {
+		let url = this.baseApiUrl + this.controller + '/mention';
+		return await axios.put(url, body);
+	}
+	/**
+	 * Bỏ ghi nhiều
+	 * @param {Array} body 
+	 * @returns {Promise}
+	 * CreatedBy: NTDUNG (28/09/2021)
+	 */
+	async unMentionMany(body) {	
+		let url = this.baseApiUrl + this.controller + '/unmention';
+		return await axios.put(url, body);
+	}
+	/**
+     * Lấy chi tiết chứng từ
+     * @param {String} voucherId 
+     * @returns {Promise}
+	 * CreatedBy: NTDUNG (28/09/2021)
+     */
+    getVoucherDetail(voucherId){
+        let url = this.baseApiUrl + this.controller + `/Detail/${voucherId}`;
+        return axios.get(url);
+    }
 }
 export default new VoucherAPI();

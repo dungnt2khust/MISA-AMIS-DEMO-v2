@@ -7,7 +7,7 @@
 </template>
 <script>
 	// COMPONENTS
-	import BaseTab from "../../Base/BaseTab.vue";
+	import BaseTab from "../../Base/Tab/BaseTab.vue";
 	import WarehouseDetail from "./tabs/WarehouseDetail.vue";
 
 	export default {

@@ -1,6 +1,19 @@
 export default {
 	methods: {
 		/**
+		 * Tính toán vị trí hợp lý cho popup
+		 * @param {DOMRect} button
+		 * CreatedBy: NTDUNG (27/09/2021)
+		 */
+		positionPopup(button) {
+			var position = {
+				top: button.top + button.height + 10,
+				left: button.left
+			};
+
+			return position;
+		},
+		/**
 		 * So sánh 2 object
 		 * @param {Object} object1
 		 * @param {Object} object2
@@ -27,8 +40,7 @@ export default {
 						}
 						// Khi một trong 2 bằng null
 					} else if (
-						(!object1[prop] &&
-						object2[prop]) ||
+						(!object1[prop] && object2[prop]) ||
 						(object1[prop] && !object2[prop])
 					) {
 						duplicate = false;
@@ -45,8 +57,7 @@ export default {
 						}
 						// Khi một trong 2 bằng null
 					} else if (
-						(!object1[prop] &&
-						object2[prop]) ||
+						(!object1[prop] && object2[prop]) ||
 						(object1[prop] && !object2[prop])
 					) {
 						duplicate = false;
@@ -75,7 +86,7 @@ export default {
 						break;
 					}
 				}
-			}	
+			}
 			// Trả về kết quả
 			return parentE;
 		},
@@ -88,9 +99,9 @@ export default {
 			if (value) {
 				var currDate = new Date(value);
 				var date = currDate.getDate();
-				date = date < 10 ? '0' + date : date;
+				date = date < 10 ? "0" + date : date;
 				var month = currDate.getMonth() + 1;
-				month = month < 10 ? '0' + month : month;
+				month = month < 10 ? "0" + month : month;
 				var year = currDate.getFullYear();
 
 				return `${date}/${month}/${year}`;
@@ -98,8 +109,21 @@ export default {
 			return null;
 		},
 		/**
+		 * Format tiền tệ
+		 * @param {Number} value
+		 * @returns {String}
+		 */
+		formatMoney(value) {
+			if (value)
+				return value.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+			else {
+				var zero = 0;
+				return zero.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+			}
+		},
+		/**
 		 * Format chuỗi hiển thị trên input thành date
-		 * @param {String} value 
+		 * @param {String} value
 		 * @return {String}
 		 */
 		formatInputDate(value) {
@@ -109,17 +133,17 @@ export default {
 				var year = value.substring(6, 10);
 				return `${year}-${month}-${date}`;
 			} else {
-				return '';
+				return "";
 			}
 		},
 		/**
 		 * Hiển thị lỗi trả về từ server
-		 * @param {Error} res 
+		 * @param {Error} res
 		 * CreatedBy: NTDUNG (04/09/2021)
 		 */
 		showError(res) {
 			if (!res.response) {
-				this.callDialog('error', 'Có lỗi xảy ra. Vui lòng liên hệ MISA');
+				this.callDialog("error", "Có lỗi xảy ra. Vui lòng liên hệ MISA");
 			} else {
 				if (res.response.data) {
 					// Show lỗi cho người dùng
@@ -133,23 +157,22 @@ export default {
 				} else {
 					this.callDialog("error", res.response.data.Msg);
 				}
-				
-			}		
+			}
 		},
 		/**
 		 * Chuyển chuỗi tiếng việt sang chuỗi bình thường
-		 * @param {String} str 
+		 * @param {String} str
 		 * @returns {String}
 		 * CreatedBy: NTDUNG (05/09/2021) - Referenced
 		 */
 		removeVietnameseTones(str) {
-			str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
-			str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
-			str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
-			str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
-			str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
-			str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
-			str = str.replace(/đ/g,"d");
+			str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+			str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+			str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+			str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+			str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+			str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+			str = str.replace(/đ/g, "d");
 			str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
 			str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
 			str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
@@ -163,13 +186,17 @@ export default {
 			str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
 			// Remove extra spaces
 			// Bỏ các khoảng trắng liền nhau
-			str = str.replace(/ + /g," ");
+			str = str.replace(/ + /g, " ");
 			str = str.trim();
 			// Remove punctuations
 			// Bỏ dấu câu, kí tự đặc biệt
-			//eslint-disable-next-line
-			str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
+			/* eslint-disable */
+			str = str.replace(
+				/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, // eslint-disable-line no-use-before-define
+				" "
+			);
+			/* eslint-enable */
 			return str;
-		}
-	}
+		},
+	},
 };

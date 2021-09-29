@@ -77,7 +77,8 @@
             background-color: #FFF;
             border: 1px solid var(--border-color);
             border-radius: 3px;
-            max-height: 150px;
+            min-width: 260px;
+            max-height: 250px;
             overflow: auto;
         }
         .combobox--show .combobox__list {

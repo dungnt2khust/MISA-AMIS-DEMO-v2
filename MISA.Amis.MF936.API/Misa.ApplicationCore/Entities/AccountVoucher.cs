@@ -14,7 +14,7 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Khóa chính
         /// </summary>
-        public Guid account_voucher_id { get; set; }
+        public Guid accountvoucher_id { get; set; }
 
         /// <summary>
         /// Mã khách hàng
@@ -54,7 +54,7 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Mã đối tượng
         /// </summary>
-        public Guid? account_object_id { get; set; }
+        public Guid? accountobject_id { get; set; }
 
         /// <summary>
         /// Loại chứng từ
@@ -75,6 +75,42 @@ namespace Misa.ApplicationCore.Entities
         /// Kèm theo
         /// </summary>
         public string voucher_attach { get; set; }
+
+        /// <summary>
+        /// Mã đối tượng
+        /// </summary>
+        [MisaNotMap]
+        public string account_object_code { get; set; }
+
+        /// <summary>
+        /// Tên đối tượng
+        /// </summary>
+        [MisaNotMap]
+        public string account_object_name { get; set; }
+
+        /// <summary>
+        /// Tên đối tượng
+        /// </summary>
+        [MisaNotMap]
+        public string contact_address { get; set; }
+
+        /// <summary>
+        /// Id nhân viên
+        /// </summary>
+        [MisaNotMap]
+        public Guid? employee_id { get; set; }
+
+        /// <summary>
+        /// Mã nhân viên
+        /// </summary>
+        [MisaNotMap]
+        public string employee_code { get; set; }
+
+        /// <summary>
+        /// Tên nhân viên
+        /// </summary>
+        [MisaNotMap]
+        public string employee_name { get; set; }
         #endregion
     }
 }

@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Misa.API.Properties;
 using Misa.ApplicationCore.Entities;
 using Misa.ApplicationCore.Interfaces.Base;
 using Misa.ApplicationCore.Interfaces.Services;
-using Misa.API.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,89 @@ namespace Misa.API.Controllers
             }
         }
 
+        [HttpPut("mention")]
+        public IActionResult MentionMany([FromBody] List<Guid> entityIds)
+        {
+            try
+            {
+                var serviceResult = _accountVoucherService.mentionMany(entityIds);
+                //4.Trả về kết quả cho client
+                if (serviceResult.Data != null)
+                {
+                    return StatusCode(200, serviceResult.Data);
+                }
+                else
+                {
+                    return StatusCode(204);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorObj = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Resources.Exception_ErrorMsg,
+                    errorCode = "misa-001",
+                    moreInfo = "https://openapi.misa.com.vn/errorcode/misa-001",
+                    traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
+                };
 
+                return StatusCode(500, errorObj);
+            }
+        }
+        
+        [HttpPut("unmention")]
+        public IActionResult UnMentionMany([FromBody] List<Guid> entityIds)
+        {
+            try
+            {
+                var serviceResult = _accountVoucherService.unMentionMany(entityIds);
+                //4.Trả về kết quả cho client
+                if (serviceResult.Data != null)
+                {
+                    return StatusCode(200, serviceResult.Data);
+                }
+                else
+                {
+                    return StatusCode(204);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorObj = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Resources.Exception_ErrorMsg,
+                    errorCode = "misa-001",
+                    moreInfo = "https://openapi.misa.com.vn/errorcode/misa-001",
+                    traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
+                };
 
+                return StatusCode(500, errorObj);
+            }
+        }
+
+        [HttpGet("Detail/{accountVoucherID}")]
+        public IActionResult getAccountVoucherDetail(Guid accountVoucherID)
+        {
+            try
+            {
+                var serviceResult = _accountVoucherService.getAccountVoucherDetail(accountVoucherID);
+                return Ok(serviceResult.Data);
+            }
+            catch (Exception ex)
+            {
+                var errorObj = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Resources.Exception_ErrorMsg,
+                    errorCode = "misa-001",
+                    moreInfo = "https://openapi.misa.com.vn/errorcode/misa-001",
+                    traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
+                };
+
+                return StatusCode(500, errorObj);
+            }
+        }
     }
 }

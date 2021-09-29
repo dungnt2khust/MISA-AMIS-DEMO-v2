@@ -8,6 +8,7 @@
 					<th
 						v-for="(item, index) in tableStyle"
 						:style="{ 'min-width': item['width'] }"
+						:class="positionOfRecord(item)"
 						:key="index"
 					>
 						{{ item["name"] }}
@@ -16,11 +17,25 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(itemData, indexData) in tableData" :key="indexData">
+				<tr v-for="(itemData, indexData) in tableData" v-show="itemData['state'] != 2" :key="indexData">
 					<td class="fx-center">{{ indexData }}</td>
-					<td v-for="(itemStyle, indexStyle) in tableStyle" :key="indexStyle">
-						<base-input v-if="indexStyle % 2 == 0"/>
-						<base-combobox-advance type="small" v-if="indexStyle % 2 != 0"/>
+					<td v-for="(itemStyle, indexStyle) in tableStyle" :class="positionOfRecord(itemStyle)" :key="indexStyle">
+						<base-combobox-advance
+							v-if="itemStyle.type == TableDataStyle.TYPE.Combobox"
+							:api="itemData[itemStyle['api']]"
+							type="small"
+						/>
+						<base-input
+							v-if="itemStyle.type == TableDataStyle.TYPE.Input"
+							:value="itemData[itemStyle['field']]"
+							v-model="itemData[itemStyle['field']]"
+							:pos="itemStyle.pos"
+						/>
+						<base-input-date
+							v-if="itemStyle.type == TableDataStyle.TYPE.InputDate"
+							:value="itemData[itemStyle['field']]"
+							v-model="itemData[itemStyle['field']]"
+						/>
 					</td>
 					<td>
 						<div class="tableinput__delete"></div>
@@ -28,124 +43,117 @@
 				</tr>
 			</tbody>
 		</table>
-        <div class="tableinput__function mt-20 mb-20">
-            <base-button :method="addRecord" label="Thêm dòng" type="small"/>
-            <base-button :method="openSelectCommodity" class="ml-10" label="Thêm ghi chú" type="small"/>
-            <base-button :method="deleteAllRecords" class="ml-10" label="Xoá hết dòng" type="small"/>
-        </div>
+		<div class="tableinput__function mt-20 mb-20">
+			<base-button :method="addRecord" label="Thêm dòng" type="small" />
+			<base-button
+				class="ml-10"
+				label="Thêm ghi chú"
+				type="small"
+			/>
+			<base-button
+				:method="deleteAllRecords"
+				class="ml-10"
+				label="Xoá hết dòng"
+				type="small"
+			/>
+		</div>
 	</div>
 </template>
 <script>
-    // LIBRARY
-    import TableDataStyle from '../../../js/enum/tableDataStyle'
-    // COMPONENTS 
-    import BaseInput from '../BaseInput.vue'
-    import BaseComboboxAdvance from '../Select/BaseComboboxAdvance.vue'
-    import BaseButton from "../Button/BaseButton.vue"
+	// LIBRARY
+	import TableDataStyle from "../../../js/enum/tableDataStyle";
+	import VoucherDetailState from "../../../js/enum/voucherDetailState";
+	// COMPONENTS
+	import BaseInput from "../BaseInput.vue";
+	import BaseInputDate from "../BaseInputDate.vue";
+	import BaseComboboxAdvance from "../Select/BaseComboboxAdvance.vue";
+	import BaseButton from "../Button/BaseButton.vue";
 
 	export default {
 		name: "BaseTableInput",
-        components: {
-            BaseInput,
-            BaseComboboxAdvance,
-            BaseButton
-        },
+		components: {
+			BaseInput,
+			BaseComboboxAdvance,
+			BaseButton,
+			BaseInputDate,
+		},
+		props: {
+			tableStyle: {
+				type: Array,
+				default: function() {
+					return [];
+				},
+			},
+			tableData: {
+				type: Array,
+				default: function() {
+					return [];
+				},
+			},
+		},
 		data() {
 			return {
-				tableStyle: [
-					{
-						name: "Mã hàng",
-						field: "commodity_code",
-						width: "150px",
-                        type: TableDataStyle.Combobox,
-						enable: true,
-					},
-					{
-						name: "Tên hàng",
-						field: "commodity_name",
-						width: "300px",
-						enable: true,
-					},
-					{
-						name: "Kho",
-						field: "warehouse_code",
-						width: "150px",
-						enable: true,
-					},
-					{
-						name: "TK nợ",
-						field: "account_number1",
-						width: "150px",
-						enable: true,
-					},
-					{
-						name: "TK có",
-						field: "account_number2",
-						width: "150px",
-						enable: true,
-					},
-					{ name: "ĐVT", field: "unit", width: "150px", enable: true },
-					{ name: "Số lượng", field: "amount", width: "150px", enable: true },
-					{ name: "Đơn giá", field: "price", width: "150px", enable: true },
-					{
-						name: "Thành tiền",
-						field: "summary",
-						width: "100px",
-						enable: true,
-					},
-				],
-				tableData: [
-					{
-						commodity_code: "MF936",
-						commodity_name: "Nguyễn Tiến Dũng",
-						warehouse_code: "MFFFF",
-						account_number1: "0372973290",
-						account_number2: "0372973290",
-						rules: "None",
-						unit: "Kg",
-						amount: 1,
-						price: 10000000,
-						summary: 10000000,
-					},
-					{
-						commodity_code: "MF936",
-						commodity_name: "Nguyễn Tiến Dũng",
-						warehouse_code: "MFFFF",
-						account_number1: "0372973290",
-						account_number2: "0372973290",
-						rules: "None",
-						unit: "Kg",
-						amount: 1,
-						price: 10000000,
-						summary: 10000000,
-					},
-				],
+				TableDataStyle: TableDataStyle,
 			};
 		},
 		methods: {
+			/**
+			 * Đặt vị trí cho bản ghi
+			 * @param {Object} itemStyle
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			positionOfRecord(itemStyle) {
+				var styleClass = {};
+				switch (itemStyle.pos) {
+					case TableDataStyle.POS.Left: 
+						styleClass["text-align-left"] = true;
+						break;
+					case TableDataStyle.POS.Center: 
+						styleClass["text-align-center"] = true;
+						break;
+					case TableDataStyle.POS.Right: 
+						styleClass["text-align-right"] = true;
+						break;
+				}
+				return styleClass;
+			},
+			/**
+			 * Thêm một bản ghi rỗng vào trong bảng
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
 			addRecord() {
-				this.tableData.push({
-						commodity_code: "MF936",
-						commodity_name: "Nguyễn Tiến Dũng",
-						warehouse_code: "MFFFF",
-						account_number1: "0372973290",
-						account_number2: "0372973290",
-						rules: "None",
-						unit: "Kg",
-						amount: 1,
-						price: 10000000,
-						summary: 10000000,
-					});
+				var rowEmpty = {};
+				this.tableStyle.forEach(item => {
+					rowEmpty[item['field']] = null;
+				});
+				rowEmpty['state'] = VoucherDetailState.ADD;
+				var tableData = this.tableData;
+				tableData.push(rowEmpty);
+				this.changeTableData(tableData);
 			},
+			/**
+			 * Xoá tất cả các bản ghi
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
 			deleteAllRecords() {
-				this.tableData = [];
+				var tableData = this.tableData;
+				tableData.forEach(item => {
+					item['state'] = VoucherDetailState.DELETE;
+				});
+				this.changeTableData(tableData);
 			},
-			openSelectCommodity() {
-				this.$emit('input', true);
+			/**
+			 * Thay đổi dữ liệu trong bảng
+			 * @param {Array} newValue
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			changeTableData(newValue) {
+				this.$emit('input', newValue)
 			}
-		}
+
+		},
 	};
 </script>
-<style>
+<style scoped>
 	@import url("../../../css/base/table/tableinput.css");
 </style>

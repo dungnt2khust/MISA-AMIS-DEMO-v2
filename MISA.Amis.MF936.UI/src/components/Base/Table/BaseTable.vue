@@ -3,7 +3,7 @@
 		<thead>
 			<tr>
 				<th>
-					<base-checkbox />
+					<base-checkbox :state="checkAll" v-model="checkAll" />
 				</th>
 				<th
 					v-for="(item, index) in tableStyle"
@@ -18,14 +18,18 @@
 		<tbody>
 			<tr
 				v-for="(itemData, indexData) in tableData"
-				:class="{ 'text--green': itemData['is_mention'] }"
+				:class="{ 'text--green': !itemData['is_mention'] }"
 				:key="indexData"
 			>
 				<td>
-					<base-checkbox />
+					<base-checkbox
+						:state="markRows[indexData]"
+						v-model="markRows[indexData]"
+					/>
 				</td>
 				<td
 					v-for="(itemStyle, indexStyle) in tableStyle"
+					@click="choose(indexStyle, itemData[tableId])"
 					:class="recordStyle(itemStyle)"
 					:key="indexStyle"
 				>
@@ -38,11 +42,18 @@
 						class="table__function"
 						:class="{ 'table--loading': tableLoading }"
 					>
-						<div class="table__update">
+						<div
+							@click="showFormDetail(itemData[tableId])"
+							class="table__update"
+						>
 							{{ $resourcesVN.TABLE.Watch }}
 						</div>
 						<div
-							v-on="contextMenuListeners(contextFunction)"
+							v-on="
+								contextMenuListeners(
+									contextFunction(itemData['is_mention'], itemData[tableId])
+								)
+							"
 							class="context-menu"
 							tabindex="0"
 						>
@@ -54,8 +65,8 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<th v-for="(item, index) in (tableStyle.length + 2)" :key="index">
-					{{ footerTable(index)}}
+				<th v-for="(item, index) in tableStyle.length + 2" :key="index">
+					{{ footerTable(index) }}
 				</th>
 			</tr>
 		</tfoot>
@@ -63,6 +74,7 @@
 </template>
 <script>
 	// LIBRARY
+	import voucherAPI from "../../../js/components/voucherAPI";
 	import methods from "../../../mixins/methods";
 	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
 	import TableDataStyle from "../../../js/enum/tableDataStyle.js";
@@ -95,26 +107,24 @@
 			},
 			totalPrices: {
 				type: Number,
-				default: 0
-			}
-		},
-		computed: {
-			contextFunction() {
-				return [
-					{
-						name: this.$resourcesVN.FUNCTION.UnCommit,
-						function: () => {
-							this.functionTest(this.$resourcesVN.FUNCTION.UnCommit);
-						},
-					},
-					{
-						name: this.$resourcesVN.FUNCTION.Replication,
-						function: () => {
-							this.functionTest(this.$resourcesVN.FUNCTION.Replication);
-						},
-					},
-				];
+				default: 0,
 			},
+			contextFunction: {
+				type: Function,
+				default: function() {
+					return [];
+				},
+			},
+			tableId: {
+				type: String,
+				default: "",
+			},
+		},
+		data() {
+			return {
+				checkAll: false,
+				markRows: [],
+			};
 		},
 		methods: {
 			/**
@@ -123,7 +133,7 @@
 			 * CreatedBy: NTDUNG (17/09/2021)
 			 */
 			recordStyle(itemStyle) {
-				var styleClass = {};
+				var styleClass = { "table--loading": this.tableLoading };
 				// Kiểu text đặc biệT
 				switch (itemStyle["color"]) {
 					case TableDataStyle.COLOR.Blue:
@@ -142,6 +152,7 @@
 						styleClass["text-align-right"] = true;
 						break;
 				}
+
 				return styleClass;
 			},
 			/**
@@ -155,21 +166,75 @@
 
 				if (field.includes("date")) {
 					formatedValue = this.formatDate(value);
+				} else if (field.includes("price")) {
+					formatedValue = this.formatMoney(value);
 				} else {
 					formatedValue = value;
 				}
 				return formatedValue;
 			},
-			footerTable(index) {
+			/**
+			 * Ấn vào hàng ở bảng
+			 * @param {Number} index
+			 * @param {String} tata
+			 * CreatedBy: NTDUNG (27/09/2021)
+			 */
+			choose(index, data) {
 				if (index == 1) {
-					return 'Tổng';
-				}
-				if (index == 4) {
-					return this.totalPrices;
+					this.showFormDetail(data);
 				}
 			},
-			functionTest(index) {
-				console.log("option" + index);
+			showFormDetail(id) {
+				voucherAPI
+					.getVoucherDetail(id)
+					.then((res) =>
+						this.$bus.$emit("showWarehouseDetail", {
+							mode: "UPDATE",
+							data: res.data.Data,
+						})
+					)
+					.catch((res) => console.log(res));
+			},
+			footerTable(index) {
+				if (index == 1) {
+					return "Tổng";
+				}
+				if (index == 4) {
+					return this.formatMoney(this.totalPrices);
+				}
+			},
+		},
+		watch: {
+			/**
+			 * Khi trạng thái checkbox thay đổi thì emit ra ngoài
+			 * CreatedBy: NTDUNG (03/09/2021)
+			 */
+			markRows: {
+				handler(newValue) {
+					this.$emit("input", newValue);
+				},
+				deep: true,
+			},
+			/**
+			 * Khi check và bỏ check tất cả
+			 * CreatedBy: NTDUNG (03/09/2021)
+			 */
+			checkAll: function(state) {
+				for (var i = 0; i < this.tableData.length; i++) {
+					this.$set(this.markRows, i, state);
+				}
+			},
+			/**
+			 * Khi table load lại thì bỏ hết check
+			 * @param {Boolean} state
+			 * CreatedBy: NTDUNG (03/09/2021)
+			 */
+			tableLoading: function(state) {
+				if (state) {
+					for (var i = 0; i < this.tableData.length; i++) {
+						this.$set(this.markRows, i, false);
+					}
+				}
 			},
 		},
 	};

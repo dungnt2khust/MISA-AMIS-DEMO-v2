@@ -8,6 +8,7 @@ Vue.config.productionTip = false;
 // ResoucesVN
 Vue.prototype.$resourcesVN = ResourcesVN;
 
+
 // EVENT BUS
 const EventBus = new Vue();
 Object.defineProperties(Vue.prototype, {

@@ -23,5 +23,29 @@ namespace Misa.ApplicationCore.Interfaces.Services
         /// <returns></returns>
         /// CreatedBy: NTDUNG(24/9/2021)
         ServiceResult getAccountVoucherPagingFilter(string searchData, int? mentionState, string voucherType, DateTime? startDate, DateTime? endDate, int pageIndex, int pageSize);
+
+        /// <summary>
+        /// Ghi sổ nhiều
+        /// </summary>
+        /// <param name="entityIds"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(28/09/2021)
+        ServiceResult mentionMany(List<Guid> entityIds);
+
+        /// <summary>
+        /// Bỏ ghi nhiều
+        /// </summary>
+        /// <param name="entityIds"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(28/09/2021)
+        ServiceResult unMentionMany(List<Guid> entityIds);
+
+        /// <summary>
+        /// Lấy chi tiết chứng từ theo Id
+        /// </summary>
+        /// <param name="accountVoucherID">ID chứng từ</param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(24/9/2021)
+        ServiceResult getAccountVoucherDetail(Guid accountVoucherID);
     }
 }

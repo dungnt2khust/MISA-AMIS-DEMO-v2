@@ -1,11 +1,11 @@
 <template lang="">
-	<div class="manycontrol non-select-text" :class="{'manycontrol--selected': manyControlState}">
+	<div class="manycontrol non-select-text" :class="{'manycontrol--selected': enable}">
 		<div @click="manyControlOnClick()" class="manycontrol__label">
 			Thực hiện hàng loạt
 		</div>
 		<ul v-show="manyControlState" class="manycontrol__list">
-			<li @click.stop="deleteMany()" class="manycontrol__item">
-				Xoá
+			<li v-for="(item, index) in listManyControl" @click="choose(index)" class="manycontrol__item" :key="index">
+				{{ item['name'] }}
 			</li>
 		</ul>
 	</div>
@@ -16,7 +16,13 @@
 		props: {
 			enable: {
 				type: Boolean,
-				defaule: false
+				default: false
+			},
+			listManyControl: {
+				type: Array,
+				default: function() {
+					return []
+				}
 			}
 		},
 		data() {
@@ -33,6 +39,15 @@
 				if (this.enable) {
 					this.manyControlState = true;
 				}
+			},
+			/**
+			 * Chọn một chức năng
+			 * @param {Number} index
+			 * CreatedBy: NTDUNG (27/09/2021)
+			 */
+			choose(index) {
+				this.listManyControl[index]['function']();
+				this.manyControlState = false;
 			}
 		}
 

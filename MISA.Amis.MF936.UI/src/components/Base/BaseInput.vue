@@ -8,7 +8,7 @@
                 v-on="inputListeners"
                 :title="isError ? errorMsg : ''"
                 :value="value"
-                :class="{'border-error': isError}"
+                :class="positionOfInput"
                 type="text"
                 class="input"
                 :tabindex="tabindex" 
@@ -22,6 +22,7 @@
 <script>
     // LIBRARY
     import globalComponents from '../../mixins/globalComponents/globalComponents.js'
+    import TableDataStyle from "../../js/enum/tableDataStyle.js"
 
 	export default {
 		name: "BaseInput",
@@ -36,7 +37,7 @@
 				default: false,
 			},
 			value: {
-				type: String,
+				type: [String, Number],
 				default: "",
 			},
             field: {
@@ -62,6 +63,10 @@
             width: {
                 type: String,
                 default: ''
+            },
+            pos: {
+                type: Number,
+                default: -1
             }
 		},
 		data() {
@@ -101,6 +106,25 @@
                         }
                     }
                 });
+            },
+            /**
+             * Vị trí của input
+             * CreatedBy: NTDUNG (28/09/2021)
+             */
+            positionOfInput() {
+                var styleClass = {"border-error": this.isError};
+                switch(this.pos) {
+                    case TableDataStyle.POS.Left: 
+                        styleClass["text-align-left"] = true;
+                        break;
+                    case TableDataStyle.POS.Center: 
+                        styleClass["text-align-center"] = true;
+                        break;
+                    case TableDataStyle.POS.Right: 
+                        styleClass["text-align-right"] = true;
+                        break;
+                }
+                return styleClass;
             }
         },
         methods: {
@@ -197,5 +221,5 @@
 	};
 </script>
 <style>
-    @import url('../../css/base/input.css');
+    @import url('../../css/base/input.css');    
 </style>

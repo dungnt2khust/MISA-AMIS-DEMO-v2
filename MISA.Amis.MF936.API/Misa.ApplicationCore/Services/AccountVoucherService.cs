@@ -36,6 +36,91 @@ namespace Misa.ApplicationCore.Services
                 throw;
             }
         }
+        
+        /// <summary>
+        /// Ghi sổ nhiều
+        /// </summary>
+        /// <param name="entityIds"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(28/09/2021)
+        public ServiceResult mentionMany(List<Guid> entityIds)
+        {
+            try
+            {
+                var serviceResult = new ServiceResult();
+                var rowEffects = _accounVoucherRepository.mentionMany(entityIds);
+                serviceResult.Data = new
+                {
+                    rowEffects = rowEffects,
+                    messages = Resources.ResourceVN.Success_Delete,
+                };
+                return serviceResult;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+    
+        /// <summary>
+        /// Bỏ ghi nhiều
+        /// </summary>
+        /// <param name="entityIds"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(28/09/2021)
+        public ServiceResult unMentionMany(List<Guid> entityIds)
+        {
+            try
+            {
+                var serviceResult = new ServiceResult();
+                var rowEffects = _accounVoucherRepository.unMentionMany(entityIds);
+                serviceResult.Data = new
+                {
+                    rowEffects = rowEffects,
+                    messages = Resources.ResourceVN.Success_Delete,
+                };
+                return serviceResult;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        /// <summary>
+        /// Ghi đề phương thức lấy thông tin phiếu nhập chi tiết
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(28/09/2021)
+        public override ServiceResult GetEntityById(Guid entityId)
+        {
+            var serviceResult = new ServiceResult();
+            serviceResult.Data = _accounVoucherRepository.getAccountVoucherDetail(entityId);
+            return serviceResult;
+        }
+
+        /// <summary>
+        /// Lấy chi tiết chứng từ theo Id
+        /// </summary>
+        /// <param name="accountVoucherID">ID chứng từ</param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(24/9/2021)
+        public ServiceResult getAccountVoucherDetail(Guid accountVoucherID)
+        {
+            try
+            {
+                var serviceResult = new ServiceResult();
+                serviceResult.Data = _accounVoucherRepository.getAccountVoucherDetail(accountVoucherID);
+                return serviceResult;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         #endregion
     }
 }

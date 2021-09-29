@@ -14,7 +14,7 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Khóa chính
         /// </summary>
-        public Guid account_object_id { get; set; }
+        public Guid accountobject_id { get; set; }
 
         /// <summary>
         /// Mã khách hàng
@@ -36,7 +36,7 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Id nhóm khách hàng
         /// </summary>
-        public Guid? account_object_group_id { get; set; }
+        public Guid? accountobjectgroup_id { get; set; }
 
         /// <summary>
         /// Id nhân viên bán hàng

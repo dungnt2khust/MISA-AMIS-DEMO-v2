@@ -39,7 +39,7 @@
         overflow: auto;
     }
         .listgrid__body tr:hover td {
-            background-color: #ebedf0 !important;
+            background-color: #EBEDF0 !important;
             color: #2ca01c !important;
         }
         .listgrid--selected td{

@@ -1,3 +1,4 @@
+/* eslint-disable*/
 module.exports = {
     //#region COMMON
     COMMON: {
@@ -112,7 +113,22 @@ module.exports = {
         Close: 'Đóng',
         Help: 'Trợ giúp',
         Setting: 'Cài đặt'
+    },
+    //#endregion
+
+    //#region NOTIFICATIONS
+    NOTIFY: {
+        FeatureNotAvaiable: 'Chức năng đang phát triển'
+    },
+    //#endregion
+    
+    //#region 
+    API: {
+        Warehouse: 'https://localhost:44350/api/v1/Warehouses',
+        Unit: '',
+        Commodity: ''
     }
     //#endregion
+
 };
 

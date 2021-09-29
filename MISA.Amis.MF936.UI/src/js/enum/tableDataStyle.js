@@ -6,7 +6,9 @@ const TableDataStyle = {
     TYPE: {
         Text: 0,
         Checkbox: 1, 
-        Combobox: 2
+        Combobox: 2,
+        Input: 3,
+        InputDate: 4
     },
     POS: {
         Left: 0, 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Misa.ApplicationCore.Interfaces.Base;
 using Misa.API.Properties;
+using Misa.ApplicationCore.Interfaces.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +24,6 @@ namespace Misa.API.Controllers
             _baseService = baseService;
         }
         #endregion
-
         #region Method
         /// <summary>
         /// Lấy danh sách
@@ -145,7 +144,7 @@ namespace Misa.API.Controllers
         /// <param name="entityId">Id</param>
         /// <param name="entity">Thông tin muốn thay đổi</param>
         /// <returns></returns>
-       /// CreatedBy: NTDUNG(17/8/2021)
+        /// CreatedBy: NTDUNG(17/8/2021)
         /// ModifiedBy: NTDUNG(17/8/2021)
         [HttpPut("{entityId}")]
         public IActionResult Update(Guid entityId, TEntity entity)
@@ -190,7 +189,7 @@ namespace Misa.API.Controllers
         /// ModifiedBy: NTDUNG(17/8/2021)
         [HttpDelete("{entityId}")]
         public IActionResult Delete(Guid entityId)
-        { 
+        {
             try
             {
                 var serviceResult = _baseService.Delete(entityId);
@@ -219,7 +218,7 @@ namespace Misa.API.Controllers
         /// CreatedBy: NTDUNG(17/8/2021)
         /// ModifiedBy: NTDUNG(17/8/2021)
         [HttpDelete]
-        public IActionResult DeleteMultiple([FromQuery]string entityIds)
+        public IActionResult DeleteMultiple([FromBody] List<Guid> entityIds)
         {
             try
             {

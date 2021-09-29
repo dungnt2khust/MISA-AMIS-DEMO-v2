@@ -3,7 +3,7 @@
         <div class="formlarge__header fx-space-between">
             <div class="fx-center">
                 <base-history class="mr-16"/>
-                <div class="formlarge__title">Phiếu nhập kho BK026</div> 
+                <div class="formlarge__title"> {{ title}}</div> 
                 <slot name="header"></slot>
             </div> 
             <div class="form__function fx-center-ver">
@@ -59,6 +59,10 @@ export default {
         formLargeState: {
             type: Boolean,
             default: false
+        },
+        title: {
+            type: String,
+            default: ''
         }
     },
     methods: {

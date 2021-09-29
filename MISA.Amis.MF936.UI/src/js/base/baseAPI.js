@@ -57,7 +57,7 @@ export default class BaseAPI {
 	 */
 	async deleteMany(body) {
 		let api = this.baseApiUrl + this.controller;
-		return await axios.delete(api, { data: body });
+		return await axios.delete(api, {data: body});
 	}
 	/**
 	 * Xóa theo id

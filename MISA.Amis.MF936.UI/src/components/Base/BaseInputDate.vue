@@ -1,6 +1,6 @@
 <template lang="">
 	<div class="input-wrapper">
-		<span class="label">
+		<span v-if="label != ''" class="label">
 			{{ label }} <span v-if="required" class="text-red">*</span></span
 		>
 		<div class="input__main">
@@ -112,16 +112,19 @@
 			 * Bắt sự kiện thay đổi value thì cập nhật ngày hiện tại
 			 * @param {String} newValue
 			 * CreatedBy: NTDUNG (02/09/2021)
-			 */
-			value: function(newValue) {
-				if (newValue) {
-					this.currDate = newValue.substring(0, 10);
-					this.resolvedValue();
-				}
-				else {
-					this.currDate = null;
-					this.resolvedValue();
-				}
+			 */	
+			value: {
+				handler(newValue) {
+					if (newValue) {
+						this.currDate = newValue.substring(0, 10);
+						this.resolvedValue();
+					}
+					else {
+						this.currDate = null;
+						this.resolvedValue();
+					}
+				},
+				immediate: true
 			}
 		},
 	};

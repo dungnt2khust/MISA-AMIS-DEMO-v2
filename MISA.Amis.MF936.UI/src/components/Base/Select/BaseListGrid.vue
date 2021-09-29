@@ -77,6 +77,6 @@
 		}	
 	};
 </script>
-<style>
+<style scoped>
 	@import url("../../../css/base/select/listgrid.css");
 </style>

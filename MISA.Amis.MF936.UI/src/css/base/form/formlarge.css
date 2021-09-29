@@ -26,6 +26,7 @@
         }
         .formlarge__type {
             display: flex;
+            width: 300px;
         }
     .formlarge__body {
         overflow-y: auto;

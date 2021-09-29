@@ -46,6 +46,8 @@ namespace Misa.ApplicationCore.Interfaces
         /// CreatedBy: NTDUNG(27/8/2021)
         /// ModifiedBy: NTDUNG(27/8/2021)
         ServiceResult CheckEmployeeCodeExist(string employeeCode);
+        
+        
        
     }
 }

@@ -57,11 +57,11 @@ namespace Misa.ApplicationCore.Interfaces.Base
         /// <summary>
         /// Xóa nhiều
         /// </summary>
-        /// <param name="entityIds">chuỗi chứa các Id</param>
+        /// <param name="entityIds"> mảng chứa các Id</param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(27/8/2021)
         /// ModifiedBy: NTDUNG(27/8/2021)
-        ServiceResult DeleteMultiple(string entityIds);
+        ServiceResult DeleteMultiple(List<Guid> entityIds);
 
     }
 }
