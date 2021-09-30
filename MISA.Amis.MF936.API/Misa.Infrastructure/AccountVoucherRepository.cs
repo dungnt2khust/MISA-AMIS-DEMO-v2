@@ -52,7 +52,7 @@ namespace Misa.Infrastructure
 
                 var sql = "select * from  public.func_get_voucher_paging_filter(@search_data, @mention_state,@type_voucher, @start_date, @end_date) limit @page_size offset @offset;";
                 sql += "select count(*) from (select * from  public.func_get_voucher_paging_filter(@search_data, @mention_state, @type_voucher,  @start_date, @end_date)) as filtertable;";
-                sql += "select coalesce(sum(filtertable.total_price),0) as total_prices from (select * from  public.func_get_voucher_paging_filter(@search_data, @mention_state, @type_voucher,  @start_date, @end_date)) as filtertable;";
+                sql += "select coalesce(sum(filtertable.total_price),0) as total_prices from (select * from  public.func_get_voucher_paging_filter(@search_data, @mention_state, @type_voucher,  @start_date, @end_date) limit @page_size offset @offset) as filtertable;";
                 var response = _dbConnection.QueryMultiple(sql, param: dynamicParameters, commandType: CommandType.Text);
 
                 //var vmodel = Activator.CreateInstance<Employee>();
@@ -204,6 +204,18 @@ namespace Misa.Infrastructure
             var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
             //var accountVoucherDetail = data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
             return 1;
+        }
+
+        public AccountVoucher getNewVoucherCode()
+        {
+            using (_dbConnection = new NpgsqlConnection(_connectionString))
+            {
+
+
+                var sqlCommand = "select * from public.accountvoucher av order by cast( public.func_extract_number(av.voucher_code) as int) DESC LIMIT 1";
+                var voucher = _dbConnection.Query<AccountVoucher>(sqlCommand).Single();
+                return voucher;
+            }
         }
     }
 }

@@ -46,5 +46,5 @@ module.exports = {
             {name: 'Số tài khoản', field: 'account_number'},
             {name: 'Tên tài khoản', field: 'account_name'},
         ]
-    },
+    }
 }

@@ -31,7 +31,7 @@
 				<li
 					v-for="(item, index) in comboboxData"
 					class="combobox__item"
-					:class="{ 'combobox__item--selected': index == currIdx }"
+					:class="{ 'combobox__item--selected': index == Number(currIdx) }"
                     @click="comboboxItemOnClick(index)"
 					:key="index"
 				>
@@ -56,7 +56,7 @@ export default {
             }
         },
         currIdx: {
-            type: Number,
+            type: [Number, String],
             default: -1
         },
         tabIdx: {

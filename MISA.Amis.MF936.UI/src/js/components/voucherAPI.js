@@ -65,7 +65,7 @@ class VoucherAPI extends BaseAPI {
 	 */
 	addVoucher(body) {
 		let url = this.baseApiUrl + this.controller + '/add';
-		return axios.put(url, body);
+		return axios.post(url, body);
 	}
 	/**
 	 * Cập nhật phiếu nhập
@@ -77,6 +77,14 @@ class VoucherAPI extends BaseAPI {
 	updateVoucher(voucherId, body) {
 		let url = this.baseApiUrl + this.controller + `/update/${voucherId}`;
 		return axios.put(url, body);
+	}
+	/**
+	 * Lấy mã mới
+	 * CreatedBy: NTDUNG (30/09/2021)
+	 */
+	getNewCode() {
+		let url = this.baseApiUrl + this.controller + '/NewVoucherCode';
+		return axios.get(url);
 	}
 }
 export default new VoucherAPI();

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Misa.ApplicationCore.Services
@@ -16,15 +17,17 @@ namespace Misa.ApplicationCore.Services
         #region Declare
         IAccountVoucherRepository _accounVoucherRepository;
         IAccountVoucherDetailRepository _accountVoucherDetailRepository;
+        IAccountObjectRepository _accountObjectRepository;
         //readonly IBaseRepository<AccountVoucher> _baseRepository;
         #endregion
 
         #region Constructor
-        public AccountVoucherService(IBaseRepository<AccountVoucher> baseRepository, IAccountVoucherRepository accounVoucherRepository, IAccountVoucherDetailRepository accountVoucherDetailRepository) : base(baseRepository)
+        public AccountVoucherService(IBaseRepository<AccountVoucher> baseRepository, IAccountVoucherRepository accounVoucherRepository, IAccountVoucherDetailRepository accountVoucherDetailRepository, IAccountObjectRepository accountObjectRepository) : base(baseRepository)
         {
             _accounVoucherRepository = accounVoucherRepository;
             _baseRepository = baseRepository;
             _accountVoucherDetailRepository = accountVoucherDetailRepository;
+            _accountObjectRepository = accountObjectRepository;
         }
 
         public ServiceResult getAccountVoucherPagingFilter(string searchData, int? mentionState, string voucherType, DateTime? startDate, DateTime? endDate, int pageIndex, int pageSize)
@@ -138,7 +141,39 @@ namespace Misa.ApplicationCore.Services
             try
             {
                 var serviceResult = new ServiceResult();
-                serviceResult.Data = _accounVoucherRepository.addAccountVoucher(data);
+                var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
+                var accountObject = new AccountObject();
+                accountObject.accountobject_id = (Guid)accountVoucher.accountobject_id;
+                accountObject.employee_id = accountVoucher.employee_id;
+                // Thêm vào bảng đối tượng
+                _accountObjectRepository.Update(accountObject, accountObject.accountobject_id);
+                // Thêm vào bảng chính
+                accountVoucher.accountvoucher_id = Guid.NewGuid();
+                _baseRepository.Insert(accountVoucher);
+                // Thêm vào hàng tiền
+                var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
+                for (int i = 0; i < accountVoucherDetails.Count(); i++)
+                {
+                    var accountVoucherDetail = accountVoucherDetails[i];
+                    accountVoucherDetail.accountvoucher_id = accountVoucher.accountvoucher_id;
+                    var state = (int)accountVoucherDetail.GetType().GetProperty("state").GetValue(accountVoucherDetail, null);
+
+                    switch (state)
+                    {
+                        case (int)AccountVoucherDetailState.Add:
+                            _accountVoucherDetailRepository.Insert(accountVoucherDetail);
+                            break;
+                        case (int)AccountVoucherDetailState.Update:
+                            _accountVoucherDetailRepository.Update(accountVoucherDetail, accountVoucherDetail.accountvoucherdetail_id);
+                            break;
+                        case (int)AccountVoucherDetailState.Delete:
+                            _accountVoucherDetailRepository.Delete(accountVoucherDetail.accountvoucherdetail_id);
+                            break;
+                    }
+                }
+                serviceResult.Data = accountVoucherDetails.Count();
+                //serviceResult.Data = _accounVoucherRepository.updateAccountVoucher(accountVoucherID,data);
+
                 return serviceResult;
             }
             catch (Exception)
@@ -161,6 +196,11 @@ namespace Misa.ApplicationCore.Services
             {
                 var serviceResult = new ServiceResult();
                 var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
+                var accountObject = new AccountObject();
+                accountObject.accountobject_id = (Guid)accountVoucher.accountobject_id;
+                accountObject.employee_id = accountVoucher.employee_id;
+                // Thêm vào bảng đối tượng
+                _accountObjectRepository.Update(accountObject, accountObject.accountobject_id);
                 // Thêm vào bảng chính
                 _baseRepository.Update(accountVoucher, accountVoucherID);
                 // Thêm vào hàng tiền
@@ -175,7 +215,7 @@ namespace Misa.ApplicationCore.Services
                             _accountVoucherDetailRepository.Insert(accountVoucherDetail);
                             break;
                         case (int)AccountVoucherDetailState.Update: 
-                            _accountVoucherDetailRepository.Update(accountVoucherDetail, accountVoucherID);
+                            _accountVoucherDetailRepository.Update(accountVoucherDetail, accountVoucherDetail.accountvoucherdetail_id);
                             break;
                         case (int)AccountVoucherDetailState.Delete:
                             _accountVoucherDetailRepository.Delete(accountVoucherDetail.accountvoucherdetail_id);
@@ -185,6 +225,42 @@ namespace Misa.ApplicationCore.Services
                 serviceResult.Data = accountVoucherDetails.Count();
                 //serviceResult.Data = _accounVoucherRepository.updateAccountVoucher(accountVoucherID,data);
 
+                return serviceResult;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lấy mã chứng từ mới
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(30/09/2021)
+        public ServiceResult getNewVoucherCode()
+        {
+            try
+            {
+                var serviceResult = new ServiceResult();
+                var voucher = _accounVoucherRepository.getNewVoucherCode();
+                var currentVoucherCode = voucher.voucher_code;
+                var numberString = Regex.Match(currentVoucherCode, @"\d+").Value;
+                int numberCode = Int32.Parse(numberString);
+                numberCode = numberCode + 1;
+                numberString = numberCode.ToString();
+                var numberStringLength = numberString.Length;
+                var newVoucherCode = "BK";
+                if (numberStringLength < 6)
+                {
+                    for (int i = 0; i < 6 - numberStringLength; ++i)
+                    {
+                        newVoucherCode = newVoucherCode + "0";
+                    }
+                }
+                newVoucherCode = newVoucherCode + numberString;
+                serviceResult.Data = newVoucherCode;
                 return serviceResult;
             }
             catch (Exception)

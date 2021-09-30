@@ -10,7 +10,7 @@
                 <base-tutorial class="mr-16"/>
                 <base-setting class="mr-10"/>
                 <base-help/>
-                <base-cancel/>
+                <base-cancel @click.native="hideForm()"/>
             </div>
         </div>
         <div class="formlarge__body">

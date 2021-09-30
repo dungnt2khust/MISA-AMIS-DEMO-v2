@@ -39,6 +39,7 @@
 			<base-list-grid
 				v-show="showList"
 				:showList="showList"
+				v-model="showList"
 				:listGridStyle="listGridStyle"
 				:listGridData="listGridData"
 				:valueBind="valueBind"
@@ -141,6 +142,10 @@
 				type: String,
 				default: "",
 			},
+			index: {
+				type: Number,
+				default: -1
+			}
 		},
 		data() {
 			return {
@@ -198,11 +203,16 @@
 			foundSelectedItem() {
 				if (this.valueBind) {
 					var foundIdx = this.listGridData.findIndex((item) => {
-						return item[this.vmodelField] == this.valueBind;
+						if (this.subfield)
+							return item[this.subfield] == this.valueBind;
+						else
+							return item[this.vmodelField] == this.valueBind;
 					});
 					if (foundIdx != -1) {
-						if (!this.data) return this.listGridData[foundIdx][this.field];
-						else return this.listGridData[foundIdx][this.display];	
+						if (this.display)
+							return this.listGridData[foundIdx][this.display];	
+						else 
+							return this.listGridData[foundIdx][this.field];
 					} else {
 						return this.default;
 					}
@@ -228,6 +238,15 @@
 			changeOption(value) {
 				if (value != this.valueBind) {
 					this.$emit("input", value);
+					this.$nextTick(() => {
+						switch(this.controller) {
+							case "Commoditys":
+								this.$bus.$emit('changeCommodity', this.index, this.valueBind, this.listGridData);
+								break;
+							// case "Units}"
+						}
+
+					})	
 				}
 			},
 			/**

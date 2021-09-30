@@ -93,6 +93,7 @@
 						{ name: "Chưa ghi sổ" },
 					],
 					type: [
+						{ name: "Tất cả"},
 						{ name: "Thành phần sản xuất" },
 						{ name: "Hàng bán bị trả lại" },
 						{ name: "Khác" },
@@ -172,6 +173,7 @@
 					mention: mention,
 					toDate: this.currToDate.substring(0, 10),
 					formDate: this.currFromDate.substring(0, 10),
+					type: this.currType - 1
 				});
 			},
 			/**

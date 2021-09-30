@@ -49,29 +49,33 @@
 							:data="itemData[itemStyle['data']]"
 							:subfield="itemStyle['subfield']"
 							:form="itemStyle['form']"
+							:index="indexData"
 							type="small"
+							:tabindex="indexData"
 						/>
 						<base-input
 							v-if="itemStyle.type == TableDataStyle.TYPE.Input"
 							:value="itemData[itemStyle['field']]"
 							v-model="itemData[itemStyle['field']]"
 							:pos="itemStyle.pos"
+							:tabindex="indexData"
 						/>
 						<base-input-date
 							v-if="itemStyle.type == TableDataStyle.TYPE.InputDate"
 							:value="itemData[itemStyle['field']]"
 							v-model="itemData[itemStyle['field']]"
+							:tabindex="indexData"
 						/>
 					</td>
 					<td>
-						<div class="tableinput__delete"></div>
+						<div @click="deleteOneRecord(indexData)" class="tableinput__delete"></div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 		<div class="tableinput__function mt-20 mb-20">
 			<base-button :method="addRecord" label="Thêm dòng" type="small" />
-			<base-button class="ml-10" label="Thêm ghi chú" type="small" />
+			<base-button :method="addNote" class="ml-10" label="Thêm ghi chú" type="small" />
 			<base-button
 				:method="deleteAllRecords"
 				class="ml-10"
@@ -85,6 +89,7 @@
 	// LIBRARY
 	import TableDataStyle from "../../../js/enum/tableDataStyle";
 	import VoucherDetailState from "../../../js/enum/voucherDetailState";
+	import globalComponents from "../../../mixins/globalComponents/globalComponents.js"
 	// COMPONENTS
 	import BaseInput from "../BaseInput.vue";
 	import BaseInputDate from "../BaseInputDate.vue";
@@ -93,6 +98,7 @@
 
 	export default {
 		name: "BaseTableInput",
+		mixins: [globalComponents],
 		components: {
 			BaseInput,
 			BaseComboboxAdvance,
@@ -112,6 +118,12 @@
 					return [];
 				},
 			},
+			defaultBind: {
+				type: Object,
+				default: function() {
+					return {}
+				}
+			}
 		},
 		data() {
 			return {
@@ -149,6 +161,7 @@
 					rowEmpty[item["field"]] = null;
 				});
 				rowEmpty["state"] = VoucherDetailState.ADD;
+				rowEmpty[this.defaultBind['name']] = this.defaultBind['value'];
 				var tableData = this.tableData;
 				tableData.push(rowEmpty);
 				this.changeTableData(tableData);
@@ -159,9 +172,23 @@
 			 */
 			deleteAllRecords() {
 				var tableData = this.tableData;
-				tableData.forEach((item) => {
+				tableData.forEach((item) => {	
 					item["state"] = VoucherDetailState.DELETE;
 				});
+
+				this.changeTableData(tableData);
+			},
+			/**
+			 * Xoá một bản ghi
+			 * @param {Number} indexData
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			deleteOneRecord(indexData) {
+				var tableData = this.tableData;
+				if (tableData[indexData]['state'] == VoucherDetailState.ADD)
+					tableData.splice(indexData, 1);
+				else
+					tableData[indexData]['state'] = VoucherDetailState.DELETE;
 				this.changeTableData(tableData);
 			},
 			/**
@@ -172,6 +199,13 @@
 			changeTableData(newValue) {
 				this.$emit("input", newValue);
 			},
+			/**
+			 * Thêm ghi chú
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			addNote() {
+				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+			}
 		},
 	};
 </script>

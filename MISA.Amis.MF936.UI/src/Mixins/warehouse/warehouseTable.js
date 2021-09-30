@@ -37,13 +37,7 @@ export default {
 						field: "contact_name",
 						type: TableDataStyle.TYPE.Text,
 						pos: TableDataStyle.POS.Left,
-					},
-					{
-						name: "Đã lập CT bán hàng",
-						field: "is_mention",
-						type: TableDataStyle.TYPE.Text,
-						pos: TableDataStyle.POS.Left,
-					},
+					},			
 					{
 						name: "Ngày chứng từ",
 						field: "voucher_date",
@@ -95,7 +89,6 @@ export default {
 							vmodel: "commodity_id",
 							controller: "Commoditys",
 							form: 'showWarehouseAddCommodity',
-							enable: true,
 						},
 						{
 							name: "Tên hàng",
@@ -103,7 +96,6 @@ export default {
 							width: "300px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Left,
-							enable: true,
 						},
 						{
 							name: "Kho",
@@ -116,7 +108,6 @@ export default {
 							vmodel: "warehouse_id",
 							controller: "Warehouses",
 							form: 'showWarehouseAdd',
-							enable: true,
 						},
 						{
 							name: "TK nợ",
@@ -125,11 +116,11 @@ export default {
 							type: TableDataStyle.TYPE.ComboboxNotAdd,
 							api: this.$api.DEBIT_ACCOUNT.Api,
 							style: this.$api.DEBIT_ACCOUNT.Style,
-							vmodel: "debit_account_id",
+							vmodel: "credit_account_id",
 							subfield: "account_id",
+							display: "account_number",
 							controller: "Accounts",
 							pos: TableDataStyle.POS.Left,
-							enable: true,
 						},
 						{
 							name: "TK có",
@@ -139,10 +130,10 @@ export default {
 							pos: TableDataStyle.POS.Left,
 							api: this.$api.CREDIT_ACCOUNT.Api,
 							style: this.$api.CREDIT_ACCOUNT.Style,
-							vmodel: "credit_account_id",
+							vmodel: "debit_account_id",
 							subfield: "account_id",
+							display: "account_number",
 							controller: "Accounts",
-							enable: true,
 						},
 						{
 							name: "ĐVT",
@@ -158,8 +149,7 @@ export default {
 							style: [
 								{ name: "Tên đơn vị", field: "unit_name" },
 								{ name: "Tỷ lệ chuyển đổi", field: "rate" },
-							],
-							enable: true,
+							]
 						},
 						{
 							name: "Số lượng",
@@ -167,7 +157,6 @@ export default {
 							width: "150px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
-							enable: true,
 						},
 						{
 							name: "Đơn giá",
@@ -175,7 +164,6 @@ export default {
 							width: "150px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
-							enable: true,
 						},
 						{
 							name: "Thành tiền",
@@ -183,7 +171,6 @@ export default {
 							width: "100px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
-							enable: true,
 						},
 						{
 							name: "Hạn sử dụng",
@@ -191,7 +178,6 @@ export default {
 							width: "150px",
 							type: TableDataStyle.TYPE.InputDate,
 							pos: TableDataStyle.POS.Left,
-							enable: true,
 						},
 					],
 					OBJECT: {
@@ -204,7 +190,6 @@ export default {
 						vmodel: "accountobject_id",
 						controller: "AccountObjects",
 						form: 'showEmployeeForm',
-						enable: true,
 					},
 					EMPLOYEE: {
 						name: "Nhân viên",
@@ -216,7 +201,6 @@ export default {
 						vmodel: "employee_id",
 						controller: "Employees",
 						form: 'showEmployeeForm',
-						enable: true,						
 					}
 				},
 			},

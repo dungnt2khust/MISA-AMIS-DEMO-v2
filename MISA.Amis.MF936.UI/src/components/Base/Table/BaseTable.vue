@@ -168,6 +168,18 @@
 					formatedValue = this.formatDate(value);
 				} else if (field.includes("price")) {
 					formatedValue = this.formatMoney(value);
+				} else if (field.includes("type")) {
+					switch (Number(value)) {
+						case this.$enum.VOUCHER_TYPE.One:
+							formatedValue = 'Thành phần sản xuất'
+							break;
+						case this.$enum.VOUCHER_TYPE.Two:
+							formatedValue =  'Hàng bán bị trả lại'
+							break;
+						case this.$enum.VOUCHER_TYPE.Three:
+							formatedValue = ' Khác (NVL thừa, HH thuê gia công, ...)';
+							break;
+					}
 				} else {
 					formatedValue = value;
 				}
@@ -189,7 +201,7 @@
 					.getVoucherDetail(id)
 					.then((res) =>
 						this.$bus.$emit("showWarehouseDetail", {
-							mode: "UPDATE",
+							mode: this.$enum.FORM_MODE.Update,
 							data: res.data.Data,
 						})
 					)

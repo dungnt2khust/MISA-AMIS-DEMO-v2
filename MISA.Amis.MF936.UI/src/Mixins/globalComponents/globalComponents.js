@@ -73,11 +73,12 @@ export default {
 						left: event.clientX,
 					};
 					// Hiện tooltip
-					this.$bus.$emit("showTooltip", tooltipStyle);
+					if (message)
+						this.$bus.$emit("showTooltip", tooltipStyle);
 				},
 				mouseleave: () => {
 					// Ẩn tooltip
-					this.$bus.$emit("hideTooltip");
+					if (message) this.$bus.$emit("hideTooltip");
 				},
 			});
 		},

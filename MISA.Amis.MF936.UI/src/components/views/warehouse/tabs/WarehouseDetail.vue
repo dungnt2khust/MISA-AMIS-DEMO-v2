@@ -9,8 +9,8 @@
 				<div class="formlarge__type ml-40">
 					<base-combobox
 						:comboboxData="voucherTypeData"
-						:currIdx="voucherIdx"
-						v-model="voucherIdx"
+						:currIdx="masterContent['voucher_type']"
+						v-model="masterContent['voucher_type']"
 						class="mr-16"
 					/>
 				</div>
@@ -149,6 +149,10 @@
 				<!-- Escap -->
 				<div class="formlarge__body-part2">
 					<base-table-input
+						:defaultBind="{
+							name: 'accountvoucher_id',
+							value: masterContent['accountvoucher_id'],
+						}"
 						:tableData="tableInputData"
 						:tableStyle="WAREHOUSE_TABLE.InWardDetail.TABLE_INPUT"
 						v-model="tableInputData"
@@ -159,16 +163,23 @@
 				<base-button
 					:label="$resourcesVN.FORM.Cancel"
 					:method="hideForm"
+					tooltip="Huỷ (Cancel)"
 					type="dark"
 				/>
 				<div class="formlarge__store fx">
 					<base-button
 						@click.native="store()"
 						:label="$resourcesVN.FORM.Store"
+						tooltip="Cất (Ctrl + S)"
 						type="dark"
 						class="mr-8"
 					/>
-					<base-button :label="$resourcesVN.FORM.StoreAndPrint" type="green" />
+					<base-button
+						@click.native="storeAndPrint()"
+						:label="$resourcesVN.FORM.StoreAndPrint"
+						tooltip="Cất và In (Ctrl + Shift + S)"
+						type="green"
+					/>
 				</div>
 			</template>
 		</base-form-large>
@@ -184,7 +195,7 @@
 	import globalComponents from "../../../../mixins/globalComponents/globalComponents.js";
 	import VoucherDetailState from "../../../../js/enum/voucherDetailState";
 	import methods from "../../../../mixins/methods.js";
-	// import voucherAPI from "../../../../js/components/voucherAPI"
+	import voucherAPI from "../../../../js/components/voucherAPI";
 	// COMPONENTS
 	import BaseFormLarge from "../../../Base/Form/BaseFormLarge.vue";
 	import BaseInput from "../../../Base/BaseInput.vue";
@@ -221,7 +232,6 @@
 				tableInputData: [],
 				units: [],
 				mode: null,
-				voucherIdx: 1,
 				voucherTypeData: [
 					{ name: "1. Thành phẩm sản xuất" },
 					{ name: "2. Hàng bán bị trả lại" },
@@ -232,8 +242,8 @@
 		created() {
 			this.$bus.$on("showWarehouseDetail", (data) => {
 				this.formLargeState = true;
-				if (data["mode"] == "UPDATE") {
-					// this.mode = ''
+				if (data["mode"] == this.$enum.FORM_MODE.Update) {
+					this.mode = this.$enum.FORM_MODE.Update;
 					this.masterContent = data["data"]["in_inward"][0];
 					var dataDetail = data["data"]["in_inward_detail"];
 					this.tableInputData = [];
@@ -270,17 +280,40 @@
 						);
 					});
 				}
-				if (data["mode"] == "ADD") {
+				if (data["mode"] == this.$enum.FORM_MODE.Add) {
+					this.mode = this.$enum.FORM_MODE.Add;
 					this.masterContent = {};
 					this.tableInputData = [];
-					this.masterContent["description"] =
-						"Nhập kho từ " +
-						this.voucherTypeData[this.voucherIdx]["name"].substring(3);
+					this.$bus.$emit("showLoading");
+					voucherAPI
+						.getNewCode()
+						.then((res) => {
+							console.log(res);
+							this.$set(this.masterContent, "voucher_code", res.data);
+							this.$bus.$emit("hideLoading");
+						})
+						.catch((res) => {
+							console.log(res);
+							this.$bus.$emit("hideLoading");
+						});
+					this.$set(this.masterContent, "voucher_type", 0);
+					this.$set(
+						this.masterContent,
+						"description",
+						"Nhập kho từ " + this.voucherTypeData[1]["name"].substring(3)
+					);
 				}
 			});
 			this.$bus.$on("hideWarehouseDetail", () => {
 				this.formLargeState = false;
 			});
+			this.$bus.$on("changeCommodity", (index, newId, data) => {
+				var foundIdx = data.findIndex(item => {
+					return item['commodity_id'] == newId;
+				})
+				if (foundIdx != -1)
+					this.tableInputData[index]['commodity_name'] = data[foundIdx]['commodity_name'];
+			});	
 		},
 		methods: {
 			/**
@@ -302,11 +335,47 @@
 			 * CreatedBy: NTDUNG (30/09/2021)
 			 */
 			store() {
-				console.log(JSON.stringify({
+				this.masterContent["voucher_type"] += "";
+				var data = {
 					in_inward: this.masterContent,
 					in_inward_detail: this.tableInputData,
-				}));
-				// voucherAPI.
+				};
+
+				this.$bus.$emit("showLoading");
+				switch (this.mode) {
+					case this.$enum.FORM_MODE.Add:
+						voucherAPI
+							.addVoucher(data)
+							.then((res) => {
+								console.log(res);
+								this.formLargeState = false;
+								this.$bus.$emit("reloadData");
+							})
+							.catch((res) => {
+								console.log(res);
+							});
+						break;
+					case this.$enum.FORM_MODE.Update:
+						console.log(data);
+						voucherAPI
+							.updateVoucher(data.in_inward.accountvoucher_id, data)
+							.then((res) => {
+								console.log(res);
+								this.formLargeState = false;
+								this.$bus.$emit("reloadData");
+							})
+							.catch((res) => {
+								console.log(res);
+							});
+						break;
+				}
+			},
+			/**
+			 * Cất và in
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			storeAndPrint() {
+				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
 			},
 		},
 		watch: {
@@ -315,9 +384,22 @@
 			 * @param {Number} value
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
-			voucherIdx: function(value) {
+			"masterContent.voucher_type": function(value) {
 				this.masterContent["description"] =
-					"Nhập kho từ " + this.voucherTypeData[value]["name"].substring(3);
+					"Nhập kho từ " +
+					this.voucherTypeData[Number(value)]["name"].substring(3);
+			},
+			tableInputData: {
+				handler() {
+					var totalPrice = 0;
+					this.tableInputData.forEach((item, index) => {
+						this.tableInputData[index]['total_price'] = Number(item["debit_amount"]) * Number(item["quantity"]);	
+						totalPrice += Number(item["total_price"]);
+					});
+					this.$set(this.masterContent, "total_price", totalPrice);
+				},
+				deep: true,
+				immediate: true,
 			},
 		},
 		destroyed() {

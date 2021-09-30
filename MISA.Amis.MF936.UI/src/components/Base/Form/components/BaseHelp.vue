@@ -1,5 +1,5 @@
 <template lang="">
-	<div v-on="tooltipListeners($resourcesVN.FORM.Help)" class="form__help fx-center"></div>
+	<div v-on="tooltipListeners($resourcesVN.FORM.Help)" @click="help()" class="form__help fx-center"></div>
 </template>
 <script>
 	// LIBRARY
@@ -8,6 +8,15 @@
 	export default {
 		name: "BaseHelp",
 		mixins: [globalComponents],
+		methods: {
+			/**
+			 * Trợ giúp
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			help() {
+				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+			}
+		}
 	};
 </script>
 <style>

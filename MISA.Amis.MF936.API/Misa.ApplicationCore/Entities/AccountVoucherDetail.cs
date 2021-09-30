@@ -36,22 +36,22 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// số lượng
         /// </summary>
-        public int quantity { get; set; }
+        public int? quantity { get; set; }
 
         /// <summary>
         /// Đơn giá
         /// </summary>
-        public decimal debit_amount { get; set; }
+        public decimal? debit_amount { get; set; }
 
         /// <summary>
         /// Tài khoản nợ
         /// </summary>
-        public Guid debit_account_id { get; set; }
+        public Guid? debit_account_id { get; set; }
 
         /// <summary>
         /// Tài khoản có
         /// </summary>
-        public Guid credit_account_id { get; set; }
+        public Guid? credit_account_id { get; set; }
 
         /// <summary>
         /// số lô
@@ -61,12 +61,12 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Hạn sử dụng
         /// </summary>
-        public DateTime expiry { get; set; }
+        public DateTime? expiry { get; set; }
 
         /// <summary>
         /// Thành tiền
         /// </summary>
-        public decimal total_price { get; set; }
+        public decimal? total_price { get; set; }
 
         /// <summary>
         /// Tên hàng hóa

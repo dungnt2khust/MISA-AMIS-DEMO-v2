@@ -260,7 +260,7 @@
             } 
         /* TABLE BODY */
         .table tbody {
-
+            flex: 1;
         }
         .table tbody::after {
             content: "";
@@ -306,6 +306,10 @@
            height: 34px;
            inset-block-end: 46px;
         }
+        .table tfoot th:nth-child(5) {
+            text-align: right;
+            padding-right: 10px;
+        }
 
 /* DÁN CÁC CỘT CỦA TABLE LẠI */
 
@@ -328,7 +332,7 @@
 }
 
 /* CỘT THỨ 3 */
-.table tr th:nth-child(3),
+.table th:nth-child(3),
 .table tr td:nth-child(3) {
     z-index: 20;
     position: sticky;
@@ -337,7 +341,7 @@
 }
 
 /* CỘT CUỐI */
-.table thead th:last-child,
+.table th:last-child,
 .table tbody td:last-child {
     border-right: none;
     position: sticky;

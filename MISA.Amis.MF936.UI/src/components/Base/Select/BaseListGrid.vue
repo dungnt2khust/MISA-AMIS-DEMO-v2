@@ -69,6 +69,10 @@
 			subfield: {
 				type: String,
 				default: ''
+			},
+			nonfooter: {
+				type: Number,
+				default: -1
 			}
 		},
 		data() {
@@ -105,6 +109,7 @@
 					this.$emit('changeOption', itemData[this.vmodelField]);
 				else 
 					this.$emit('changeOption', itemData[this.subfield]);
+				this.$emit('input', false);
 			}
 		}
 	};

@@ -152,6 +152,11 @@
 				];
 			},
 		},
+		created() {
+			this.$bus.$on('reloadData', () => {
+				this.getData();
+			});
+		},
 		methods: {
 			/**
 			 * Chức năng trên bảng dữ liệu
@@ -220,6 +225,7 @@
 						this.totalRecord = res.data["TotalRecord"];
 						this.totalPrices = res.data["TotalPrices"];
 						this.tableLoading = false;
+						this.$bus.$emit('hideLoading');
 					})
 					.catch((res) => {
 						console.log(res);
@@ -230,7 +236,7 @@
 			 * CreatedBy: NTDUNG (17/09/2021)
 			 */
 			addRecord() {
-				this.$bus.$emit("showWarehouseDetail", {mode: 'ADD'});
+				this.$bus.$emit("showWarehouseDetail", {mode: this.$enum.FORM_MODE.Add});
 			},
 			/**
 			 * Xử lý khi pagination thay đổi
@@ -380,6 +386,7 @@
 				this.mentionState = value["mention"];
 				this.startDate = value["formDate"];
 				this.endDate = value["toDate"];
+				this.voucherType = value["type"] != -1 ? value["type"] : '';
 				this.currPage = 1;
 				this.getData();
 			},
