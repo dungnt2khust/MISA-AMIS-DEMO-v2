@@ -17,12 +17,35 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(itemData, indexData) in tableData" v-show="itemData['state'] != 2" :key="indexData">
+				<tr
+					v-for="(itemData, indexData) in tableData"
+					v-show="itemData['state'] != 2"
+					:key="indexData"
+				>
 					<td class="fx-center">{{ indexData }}</td>
-					<td v-for="(itemStyle, indexStyle) in tableStyle" :class="positionOfRecord(itemStyle)" :key="indexStyle">
+					<td
+						v-for="(itemStyle, indexStyle) in tableStyle"
+						:class="positionOfRecord(itemStyle)"
+						:key="indexStyle"
+					>
 						<base-combobox-advance
 							v-if="itemStyle.type == TableDataStyle.TYPE.Combobox"
-							:api="itemData[itemStyle['api']]"
+							:api="itemStyle['api']"
+							:controller="itemStyle['controller']"
+							v-model="itemData[itemStyle['vmodel']]"
+							:valueBind="itemData[itemStyle['vmodel']]"
+							:vmodelField="itemStyle['vmodel']"
+							:field="itemStyle['field']"
+							:default="
+								itemStyle['default']
+									? itemData[itemStyle['default']]
+									: itemData[itemStyle['field']]
+							"
+							:display="itemStyle['display']"
+							:listGridStyle="itemStyle['style']"
+							:data="itemData[itemStyle['data']]"
+							:subfield="itemStyle['subfield']"
+							:form="itemStyle['form']"
 							type="small"
 						/>
 						<base-input
@@ -45,11 +68,7 @@
 		</table>
 		<div class="tableinput__function mt-20 mb-20">
 			<base-button :method="addRecord" label="Thêm dòng" type="small" />
-			<base-button
-				class="ml-10"
-				label="Thêm ghi chú"
-				type="small"
-			/>
+			<base-button class="ml-10" label="Thêm ghi chú" type="small" />
 			<base-button
 				:method="deleteAllRecords"
 				class="ml-10"
@@ -105,13 +124,13 @@
 			positionOfRecord(itemStyle) {
 				var styleClass = {};
 				switch (itemStyle.pos) {
-					case TableDataStyle.POS.Left: 
+					case TableDataStyle.POS.Left:
 						styleClass["text-align-left"] = true;
 						break;
-					case TableDataStyle.POS.Center: 
+					case TableDataStyle.POS.Center:
 						styleClass["text-align-center"] = true;
 						break;
-					case TableDataStyle.POS.Right: 
+					case TableDataStyle.POS.Right:
 						styleClass["text-align-right"] = true;
 						break;
 				}
@@ -123,10 +142,10 @@
 			 */
 			addRecord() {
 				var rowEmpty = {};
-				this.tableStyle.forEach(item => {
-					rowEmpty[item['field']] = null;
+				this.tableStyle.forEach((item) => {
+					rowEmpty[item["field"]] = null;
 				});
-				rowEmpty['state'] = VoucherDetailState.ADD;
+				rowEmpty["state"] = VoucherDetailState.ADD;
 				var tableData = this.tableData;
 				tableData.push(rowEmpty);
 				this.changeTableData(tableData);
@@ -137,8 +156,8 @@
 			 */
 			deleteAllRecords() {
 				var tableData = this.tableData;
-				tableData.forEach(item => {
-					item['state'] = VoucherDetailState.DELETE;
+				tableData.forEach((item) => {
+					item["state"] = VoucherDetailState.DELETE;
 				});
 				this.changeTableData(tableData);
 			},
@@ -148,9 +167,8 @@
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
 			changeTableData(newValue) {
-				this.$emit('input', newValue)
-			}
-
+				this.$emit("input", newValue);
+			},
 		},
 	};
 </script>

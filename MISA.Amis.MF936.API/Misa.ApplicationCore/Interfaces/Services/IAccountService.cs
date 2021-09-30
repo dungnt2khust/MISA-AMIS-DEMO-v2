@@ -6,18 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Misa.ApplicationCore.Interfaces.Repository
+namespace Misa.ApplicationCore.Interfaces.Services
 {
-    public interface IAccountObjectRepository : IBaseRepository<AccountObject>
+    public interface IAccountService : IBaseService<Account>
     {
         /// <summary>
-        /// lọc và phân trang đối tượng
+        /// lọc và phân trang đối tượng theo mã và tên đối tượng
         /// </summary>
         /// <param name="searchData">Từ khóa tìm kiếm</param>
         /// <param name="pageIndex">index trang</param>
         /// <param name="pageSize">số bản ghi trên trang</param>
+        /// <param name="type">Kiểu</param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(24/9/2021)
-        object getAccountObjectPagingFilter(string searchData, int pageIndex, int pageSize);
+        ServiceResult getAccountPagingFilter(string searchData, int pageIndex, int pageSize, int type);
     }
 }

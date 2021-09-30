@@ -21,7 +21,27 @@
 					<div class="formlarge__body-main-info w-3/4">
 						<div class="w-4/5 fx-wrap pr-10 border-right">
 							<div class="fx-3/7 mb-10">
-								<base-combobox-advance :tabindex="0" label="Khách hàng" />
+								<base-combobox-advance
+									:api="WAREHOUSE_TABLE.InWardDetail.OBJECT['api']"
+									:controller="
+										WAREHOUSE_TABLE.InWardDetail.OBJECT['controller']
+									"
+									v-model="
+										masterContent[WAREHOUSE_TABLE.InWardDetail.OBJECT['vmodel']]
+									"
+									:valueBind="
+										masterContent[WAREHOUSE_TABLE.InWardDetail.OBJECT['vmodel']]
+									"
+									:vmodelField="WAREHOUSE_TABLE.InWardDetail.OBJECT['vmodel']"
+									:field="WAREHOUSE_TABLE.InWardDetail.OBJECT['field']"
+									:default="
+										masterContent[WAREHOUSE_TABLE.InWardDetail.OBJECT['field']]
+									"
+									:listGridStyle="WAREHOUSE_TABLE.InWardDetail.OBJECT['style']"
+									:form="WAREHOUSE_TABLE.InWardDetail.OBJECT['form']"
+									:tabindex="0"
+									label="Đối tượng"
+								/>
 							</div>
 							<div class="fx-4/7 mb-10">
 								<base-input
@@ -47,7 +67,30 @@
 									label="Diễn giải"
 								/>
 							</div>
-							<div class="fx-item mb-10">
+							<div class="fx-3/7">
+								<base-combobox-advance
+									:api="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['api']"
+									:controller="
+										WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['controller']
+									"
+									v-model="
+										masterContent[WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']]
+									"
+									:valueBind="
+										masterContent[WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']]
+									"
+									:vmodelField="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']"
+									:field="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['field']"
+									:default="
+										masterContent[WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['field']]
+									"
+									:listGridStyle="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['style']"
+									:form="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['form']"
+									:tabindex="0"
+									label="Nhân viên"
+								/>
+							</div>
+							<div class="fx-4/7 mb-10">
 								<base-input
 									label="Kèm theo"
 									unit="chứng từ gốc"
@@ -99,25 +142,22 @@
 				<div class="formlarge__body-part2">
 					<base-table-input
 						:tableData="tableInputData"
-						:tableStyle="tableInputStyle"
+						:tableStyle="WAREHOUSE_TABLE.InWardDetail.TABLE_INPUT"
 						v-model="tableInputData"
 					/>
 				</div>
 			</template>
 		</base-form-large>
-		<warehouse-select-commodity
-			v-if="selectCommodityState"
-			v-model="selectCommodityState"
-		/>
-		<warehouse-add width="500px" v-if="false" />
-		<warehouse-add-commodity-group width="600px" v-if="false" />
-		<warehouse-add-unit width="500px" v-if="false" />
+		<warehouse-select-commodity/>
+		<warehouse-add width="500px"/>
+		<warehouse-add-commodity-group width="600px"/>
+		<warehouse-add-unit width="500px"/>
 	</div>
 </template>
 <script>
 	// LIBRARY
+	import warehouseTable from "../../../../mixins/warehouse/warehouseTable";
 	import globalComponents from "../../../../mixins/globalComponents/globalComponents.js";
-	import TableDataStyle from "../../../../js/enum/tableDataStyle";
 	import VoucherDetailState from "../../../../js/enum/voucherDetailState";
 	import methods from "../../../../mixins/methods.js";
 	// COMPONENTS
@@ -134,7 +174,7 @@
 
 	export default {
 		name: "WarehouseDetail",
-		mixins: [globalComponents, methods],
+		mixins: [globalComponents, methods, warehouseTable],
 		components: {
 			BaseFormLarge,
 			BaseInput,
@@ -150,93 +190,9 @@
 		data() {
 			return {
 				formLargeState: false,
-				selectCommodityState: false,
-				createCommodityState: false,
 				masterContent: {},
 				tableInputData: [],
-				tableInputStyle: [
-					{
-						name: "Mã hàng",
-						field: "commodity_code",
-						width: "150px",
-						type: TableDataStyle.TYPE.Combobox,
-						pos: TableDataStyle.POS.Left,
-						enable: true,
-					},
-					{
-						name: "Tên hàng",
-						field: "commodity_name",
-						width: "300px",
-						type: TableDataStyle.TYPE.Input,
-						pos: TableDataStyle.POS.Left,
-						enable: true,
-					},
-					{
-						name: "Kho",
-						field: "warehouse_code",
-						width: "150px",
-						type: TableDataStyle.TYPE.Combobox,
-						pos: TableDataStyle.POS.Left,
-						api: this.$resourcesVN.API.Warehouse,
-						enable: true,
-					},
-					{
-						name: "TK nợ",
-						field: "credit_account_number",
-						width: "150px",
-						type: TableDataStyle.TYPE.Combobox,
-						pos: TableDataStyle.POS.Left,
-						enable: true,
-					},
-					{
-						name: "TK có",
-						field: "debit_account_number",
-						width: "150px",
-						type: TableDataStyle.TYPE.Combobox,
-						pos: TableDataStyle.POS.Left,
-						enable: true,
-					},
-					{
-						name: "ĐVT",
-						field: "units",
-						width: "150px",
-						type: TableDataStyle.TYPE.Combobox,
-						pos: TableDataStyle.POS.Left,
-						enable: true,
-					},
-					{
-						name: "Số lượng",
-						field: "quantity",
-						width: "150px",
-						type: TableDataStyle.TYPE.Input,
-						pos: TableDataStyle.POS.Right,
-						enable: true,
-					},
-					{
-						name: "Đơn giá",
-						field: "debit_amount",
-						width: "150px",
-						type: TableDataStyle.TYPE.Input,
-						pos: TableDataStyle.POS.Right,
-						enable: true,
-					},
-					{
-						name: "Thành tiền",
-						field: "total_price",
-						width: "100px",
-						type: TableDataStyle.TYPE.Input,
-						pos: TableDataStyle.POS.Right,
-						enable: true,
-					},
-					{
-						name: "Hạn sử dụng",
-						field: "expiry",
-						width: "150px",
-						type: TableDataStyle.TYPE.InputDate,
-						pos: TableDataStyle.POS.Left,
-						enable: true,
-					},
-				],
+				units: [],
 				voucherIdx: 1,
 				voucherTypeData: [
 					{ name: "1. Thành phẩm sản xuất" },
@@ -255,6 +211,29 @@
 					dataDetail.forEach((item, index) => {
 						this.$set(this.tableInputData, index, item["voucher_detail"]);
 						this.$set(this.tableInputData[index], "units", item["units"]);
+						this.units[index] = item["units"];
+						var mainUnit = this.tableInputData[index]["units"].find((item) => {
+							return item["is_main_unit"] == 1;
+						});
+
+						this.$set(
+							this.tableInputData[index],
+							"mainUnitId",
+							mainUnit["unit_id"]
+						);
+
+						this.$set(
+							this.tableInputData[index],
+							"main_unit_name",
+							this.valUnitName(index)
+						);
+
+						this.$set(
+							this.tableInputData[index],
+							"main_unit_rate",
+							mainUnit["rate"]
+						);
+
 						this.$set(
 							this.tableInputData[index],
 							"state",
@@ -262,10 +241,12 @@
 						);
 					});
 				}
-				if (data['mode'] == "ADD") {
+				if (data["mode"] == "ADD") {
 					this.masterContent = {};
 					this.tableInputData = [];
-					this.masterContent['description'] = 'Nhập kho từ '+ this.voucherTypeData[this.voucherIdx]['name'].substring(3);
+					this.masterContent["description"] =
+						"Nhập kho từ " +
+						this.voucherTypeData[this.voucherIdx]["name"].substring(3);
 				}
 			});
 			this.$bus.$on("hideWarehouseDetail", () => {
@@ -280,6 +261,16 @@
 			reference() {
 				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
 			},
+			/**
+			 *
+			 */
+			valUnitName(index) {
+				var unitId = this.tableInputData[index]["mainUnitId"];
+				var foundIdx = this.units[index].findIndex((item) => {
+					return item["unit_id"] == unitId;
+				});
+				return this.units[index][foundIdx]["unit_name"];
+			},
 		},
 		watch: {
 			/**
@@ -288,8 +279,9 @@
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
 			voucherIdx: function(value) {
-				this.masterContent['description'] = 'Nhập kho từ '+ this.voucherTypeData[value]['name'].substring(3);
-			}
+				this.masterContent["description"] =
+					"Nhập kho từ " + this.voucherTypeData[value]["name"].substring(3);
+			},
 		},
 		destroyed() {
 			this.$bus.$off("showWarehouseDetail");

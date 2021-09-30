@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Misa.API.Properties;
 using Misa.ApplicationCore.Entities;
 using Misa.ApplicationCore.Interfaces.Base;
@@ -10,22 +11,22 @@ using System.Threading.Tasks;
 
 namespace Misa.API.Controllers
 {
-    public class AccountObjectsController : BaseEntityController<AccountObject>
+    public class AccountsController : BaseEntityController<Account>
     {
         #region Declare
-        IAccountObjectService _accountObjectService;
+        IAccountService _accountService;
         #endregion
-        public AccountObjectsController(IBaseService<AccountObject> baseService, IAccountObjectService accountObjectService) : base(baseService)
+        public AccountsController(IBaseService<Account> baseService, IAccountService accountService) : base(baseService)
         {
-            _accountObjectService = accountObjectService;
+            _accountService = accountService;
         }
 
         [HttpGet("Filter")]
-        public IActionResult GetAccountObjectPagingFilter([FromQuery] string searchData, [FromQuery] int pageIndex, [FromQuery] int pageSize)
+        public IActionResult GetAccountPagingFilter([FromQuery] string searchData, [FromQuery] int pageIndex, [FromQuery] int pageSize, [FromQuery] int type)
         {
             try
             {
-                var serviceResult = _accountObjectService.getAccountObjectPagingFilter(searchData, pageIndex, pageSize);
+                var serviceResult = _accountService.getAccountPagingFilter(searchData, pageIndex, pageSize, type);
                 return Ok(serviceResult.Data);
             }
             catch (Exception ex)

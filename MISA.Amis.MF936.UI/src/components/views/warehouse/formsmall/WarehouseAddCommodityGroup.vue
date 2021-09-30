@@ -3,6 +3,8 @@
 		<base-form-small
 			:width="width"
 			title="Thêm nhóm vật tư, hàng hoá, dịch vụ"
+			v-if="formState"
+			v-model="formState"
 		>
 			<template v-slot:body>
 				<div class="fx-wrap">
@@ -38,6 +40,16 @@
 				type: String,
 				default: ''
 			}
+		},
+		data() {
+			return {
+				formState: false
+			}
+		},
+		created() {
+			this.$bus.$on('showWarehouseAddCommodityGroup', () => {
+				this.formState = true;
+			});
 		}
 	};
 </script>

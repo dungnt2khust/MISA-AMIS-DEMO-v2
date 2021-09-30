@@ -8,13 +8,16 @@
     background-color: #fff;
     border: 1px solid #babec5;
     border-radius: 2px;
-    overflow: hidden;
     box-shadow: 0 -8px 34px 0 rgb(0 0 0 / 5%);
     white-space: nowrap;
     text-align: left;
     color: #111;
+    max-height: 256px;
+    overflow: auto;
 }
     .listgrid__header {
+        position: sticky;
+        top: 0;
         color: #212121;
         height: 32px;
         font-size: 13px;
@@ -35,9 +38,10 @@
         height: 10px !important;
     }
     .listgrid__body {
+        width: 100%;
         max-height: 256px;
         overflow: auto;
-    }
+    } 
         .listgrid__body tr:hover td {
             background-color: #EBEDF0 !important;
             color: #2ca01c !important;

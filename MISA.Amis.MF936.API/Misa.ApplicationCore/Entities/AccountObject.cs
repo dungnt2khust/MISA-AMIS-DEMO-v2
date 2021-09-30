@@ -49,6 +49,18 @@ namespace Misa.ApplicationCore.Entities
         /// </summary>
         public string contact_address { get; set; }
 
+        /// <summary>
+        /// Mã nhân viên bán hàng
+        /// </summary>
+        [MisaNotMap]
+        public string employee_code { get; set; }
+
+        /// <summary>
+        /// Tên nhân viên bán hàng
+        /// </summary>
+        [MisaNotMap]
+        public string employee_name { get; set; }
+
         #endregion
     }
 }

@@ -1,5 +1,5 @@
 <template lang="">
-	<base-form-extend @hideForm="hideForm()">
+	<base-form-extend v-if="formState" v-model="formState">
 		<template v-slot:header>
 			<div v-if="currIdx == -1" class="formextend__title">
 				Chọn tính chất hàng hoá dịch vụ
@@ -54,7 +54,7 @@
 		</template>
 		<template v-if="currIdx != -1" v-slot:footer>
 			<div class="fx-space-between">
-				<base-button label="Huỷ"/>
+				<base-button :method="hideForm" label="Huỷ"/>
 				<div class="fx">
 					<base-button label="Cất" class="mr-10"/>
 					<base-button label="Cất và Thêm" type="green"/>
@@ -80,6 +80,7 @@
 			return {
 				fullscreen: false,
 				currIdx: -1,
+				formState: false,
 				data: [
 					{
 						pos: "-32px -632px",
@@ -115,11 +116,21 @@
 				],
 			};
 		},
-		methods: {
-			hideForm() {
-				this.$emit("input", false);
-			},
+		created() {
+			this.$bus.$on('showWarehouseAddCommodity', () => {
+				this.formState = true;
+				this.currIdx = -1;
+			});
 		},
+		methods: {
+			/**
+			 * Ẩn form
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			hideForm() {
+				this.formState = false;
+			}
+		}
 	};
 </script>
 <style>

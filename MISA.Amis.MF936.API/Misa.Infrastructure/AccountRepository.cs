@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace Misa.Infrastructure
 {
-    public class AccountObjectRepository : BaseRepository<AccountObject>, IAccountObjectRepository
+    public class AccountRepository : BaseRepository<Account>, IAccountRepository
     {
         #region Constructor
-        public AccountObjectRepository(IConfiguration configuration) : base(configuration)
+        public AccountRepository(IConfiguration configuration) : base(configuration)
         {
 
         }
@@ -26,9 +26,10 @@ namespace Misa.Infrastructure
         /// <param name="searchData">Từ khóa tìm kiếm</param>
         /// <param name="pageIndex">index trang</param>
         /// <param name="pageSize">số bản ghi trên trang</param>
+        /// <param name="type">kiểu</param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(24/9/2021)
-        public object getAccountObjectPagingFilter(string searchData, int pageIndex, int pageSize)
+        public object getAccountPagingFilter(string searchData, int pageIndex, int pageSize, int type)
         {
             using (_dbConnection = new NpgsqlConnection(_connectionString))
             {
@@ -38,18 +39,19 @@ namespace Misa.Infrastructure
                 dynamicParameters.Add("@search_data", objectFilter);
                 dynamicParameters.Add("@offset", (pageIndex - 1) * pageSize);
                 dynamicParameters.Add("@page_size", pageSize);
+                dynamicParameters.Add("@type", type.ToString());
 
-                var sql = "select * from  public.func_get_accountobject_paging_filter(@search_data) limit @page_size offset @offset;";
-                sql += "select count(*) from (select * from  public.func_get_accountobject_paging_filter(@search_data)) as filtertable;";
+                var sql = "select * from  public.func_get_account_paging_filter(@search_data, @type) limit @page_size offset @offset;";
+                sql += "select count(*) from (select * from  public.func_get_account_paging_filter(@search_data, @type)) as filtertable;";
                 var response = _dbConnection.QueryMultiple(sql, param: dynamicParameters, commandType: CommandType.Text);
 
                 //var vmodel = Activator.CreateInstance<Employee>();
-                var accountObjects = response.Read<AccountObject>();
+                var accounts = response.Read<Account>();
                 var totalRecord = response.Read<int>().FirstOrDefault();
                 var totalPage = Math.Ceiling((double)totalRecord / pageSize);
                 var result = new
                 {
-                    AccountObjects = accountObjects,
+                    Accounts = accounts,
                     TotalRecord = totalRecord,
                     TotalPage = totalPage,
 

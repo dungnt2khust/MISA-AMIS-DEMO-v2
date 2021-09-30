@@ -19,10 +19,15 @@
 						type="text"
 						class="comboboxadvance__input"
 						:tabindex="tabindex"
+						:value="foundSelectedItem()"
 						:placeholder="placeholder"
 					/>
 				</div>
-				<div v-if="type != 'small'" class="comboboxadvance__icon"></div>
+				<div
+					v-if="type != 'small'"
+					@click="showForm()"
+					class="comboboxadvance__icon"
+				></div>
 			</div>
 			<base-dropdown-button
 				v-show="dropdownButtonState"
@@ -36,10 +41,14 @@
 				:showList="showList"
 				:listGridStyle="listGridStyle"
 				:listGridData="listGridData"
+				:valueBind="valueBind"
+				:vmodelField="vmodelField"
+				:subfield="subfield"
+				@changeOption="changeOption($event)"
 				:type="type"
 			>
 				<template v-slot:footer>
-					<div class="comboboxadvance__add">
+					<div @click="showForm()" class="comboboxadvance__add">
 						<div class="comboboxadvance__icon"></div>
 						Thêm mới (F9)
 					</div>
@@ -49,6 +58,8 @@
 	</div>
 </template>
 <script>
+	// LIBRARY
+	import axios from "axios";
 	// COMPONENTS
 	import BaseDropdownButton from "../Select/BaseDropdownButton.vue";
 	import BaseListGrid from "../Select/BaseListGrid.vue";
@@ -84,105 +95,60 @@
 				type: Number,
 				default: -1,
 			},
+			api: {
+				type: String,
+				default: "",
+			},
+			controller: {
+				type: String,
+				default: "",
+			},
+			listGridStyle: {
+				type: Array,
+				default: function() {
+					return [];
+				},
+			},
+			valueBind: {
+				type: String,
+				default: "",
+			},
+			vmodelField: {
+				type: String,
+				default: "",
+			},
+			field: {
+				type: String,
+				default: "",
+			},
+			default: {
+				type: String,
+				default: "",
+			},
+			display: {
+				type: String,
+				default: "",
+			},
+			data: {
+				type: Array,
+				default: null,
+			},
+			subfield: {
+				type: String,
+				default: "",
+			},
+			form: {
+				type: String,
+				default: "",
+			},
 		},
 		data() {
 			return {
 				showList: false,
 				focusState: false,
 				dropdownButtonState: this.type != "small",
-				listGridStyle: [
-					{ name: "Mã đối tượng", field: "object_code", width: "150px" },
-					{ name: "Tên đối tượng", field: "object_name", width: "200px" },
-					{ name: "Mã số thuế", field: "tax_code", width: "150px" },
-					{ name: "Địa chỉ", field: "address", width: "200px" },
-					{ name: "Số điện thoại", field: "phone_number", width: "100px" },
-				],
-				listGridData: [
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-					{
-						object_code: "KH001",
-						object_name: "Tên đối tượng",
-						tax_code: "Mã số thuế",
-						address: "Địa chỉ",
-						phone_number: "Số điện thoại",
-					},
-				],
+				listGridData: [],
+				inputTimeout: null,
 			};
 		},
 		computed: {
@@ -204,10 +170,44 @@
 							this.dropdownButtonState = false;
 						}
 					},
+					input: (event) => {
+						clearTimeout(this.inputTimeout);
+
+						this.inputTimeout = setTimeout(() => {
+							if (!this.data)
+								axios
+									.get(this.api + `&searchData=${event.target.value}`)
+									.then((res) => {
+										console.log(res);
+										this.listGridData = res.data[this.controller];
+									})
+									.catch((res) => {
+										console.log(res);
+									});
+						}, 500);
+					},
 				});
-			},
+			},	
 		},
 		methods: {
+			/**
+			 * Giá trị hiện tại
+			 * @param {String} value
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			foundSelectedItem() {
+				if (this.valueBind) {
+					var foundIdx = this.listGridData.findIndex((item) => {
+						return item[this.vmodelField] == this.valueBind;
+					});
+					if (foundIdx != -1) {
+						if (!this.data) return this.listGridData[foundIdx][this.field];
+						else return this.listGridData[foundIdx][this.display];	
+					} else {
+						return this.default;
+					}
+				} else return "";
+			},
 			/**
 			 * Focus input khi nút dropdown được nhấn
 			 * CreatedBy: NTDUNG (26/09/2021)
@@ -220,6 +220,52 @@
 					}
 				});
 			},
+			/**
+			 * Khi thay đổi giá trị thì cập nhật
+			 * @param {String} value
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			changeOption(value) {
+				if (value != this.valueBind) {
+					this.$emit("input", value);
+				}
+			},
+			/**
+			 * Mở form
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			showForm() {
+				this.$bus.$emit(this.form);
+			},
+		},
+		watch: {
+			/**
+			 * KHi mở dropdown thì gọi api
+			 * @param {Boolean} value
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			showList: function(value) {
+				if (value) {
+					if (!this.data)
+						axios
+							.get(this.api)
+							.then((res) => {
+								console.log(res);
+								this.listGridData = res.data[this.controller];
+							})
+							.catch((res) => {
+								console.log(res);
+							});
+					else this.listGridData = this.data;
+				}
+			},
+			/**
+			 * Giá trị bind thay đổi thì cập nhật lại dữ liệu
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			valueBind: function() {
+				this.foundSelectedItem();
+			}
 		},
 	};
 </script>

@@ -333,7 +333,7 @@
 			 * @param {object} data
 			 * CreatedBy: NTDUNG (29/08/2021)
 			 */
-			this.$bus.$on("showForm", (data) => {
+			this.$bus.$on("showEmployeeForm", (data) => {
 				// Reset lỗi
 				this.errMsg = "";
 				// Gán id và mode cho form

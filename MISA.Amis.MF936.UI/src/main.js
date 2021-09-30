@@ -2,12 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './routers/index'
 import ResourcesVN from './resources/resourcesVN'
+import Api from './mixins/apis/api'
 
 Vue.config.productionTip = false;
 
 // ResoucesVN
 Vue.prototype.$resourcesVN = ResourcesVN;
 
+// API
+Vue.prototype.$api = Api;
 
 // EVENT BUS
 const EventBus = new Vue();

@@ -3,6 +3,8 @@
 		<base-form-small
 			:width="width"
 			title="Thêm Kho"
+			v-if="formState"
+			v-model="formState"
 		>
 			<template v-slot:body>
 				<div class="fx-wrap">
@@ -43,6 +45,16 @@
 				type: String,
 				default: ''
 			}
+		},
+		data() {
+			return {
+				formState: false
+			}
+		},
+		created() {
+			this.$bus.$on('showWarehouseAdd', () => {
+				this.formState = true;
+			});
 		}
 	};
 </script>

@@ -43,7 +43,7 @@ export default {
     },
 	methods: {
 		hideForm() {
-			this.$emit('hideForm');
+			this.$emit('input', false);
 		}
 	}
 }

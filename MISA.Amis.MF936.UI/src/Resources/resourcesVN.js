@@ -124,9 +124,9 @@ module.exports = {
     
     //#region 
     API: {
-        Warehouse: 'https://localhost:44350/api/v1/Warehouses',
+        Warehouse: 'https://localhost:44350/api/v1/Warehouses/Filter?pageIndex=1&pageSize=20',
         Unit: '',
-        Commodity: ''
+        Commodity: 'https://localhost:44350/api/v1/Commoditys/Filter?pageIndex=1&pageSize=20'
     }
     //#endregion
 

@@ -10,23 +10,23 @@ using System.Threading.Tasks;
 
 namespace Misa.ApplicationCore.Services
 {
-    public class AccountObjectService:BaseService<AccountObject>, IAccountObjectService
+    public class AccountService : BaseService<Account>, IAccountService
     {
         #region Declare
-        IAccountObjectRepository _accounObjectRepository;
+        IAccountRepository _accountRepository;
         #endregion
         #region Constructor
-        public AccountObjectService(IBaseRepository<AccountObject> baseRepository, IAccountObjectRepository accountObjectVoucherRepository) : base(baseRepository)
+        public AccountService(IBaseRepository<Account> baseRepository, IAccountRepository accountRepository) : base(baseRepository)
         {
-            _accounObjectRepository = accountObjectVoucherRepository;
+            _accountRepository = accountRepository;
         }
         #endregion
-        public ServiceResult getAccountObjectPagingFilter(string searchData, int pageIndex, int pageSize)
+        public ServiceResult getAccountPagingFilter(string searchData, int pageIndex, int pageSize, int type)
         {
             try
             {
                 var serviceResult = new ServiceResult();
-                serviceResult.Data = _accounObjectRepository.getAccountObjectPagingFilter(searchData, pageIndex, pageSize);
+                serviceResult.Data = _accountRepository.getAccountPagingFilter(searchData, pageIndex, pageSize, type);
                 return serviceResult;
             }
             catch (Exception)
