@@ -57,5 +57,26 @@ class VoucherAPI extends BaseAPI {
         let url = this.baseApiUrl + this.controller + `/Detail/${voucherId}`;
         return axios.get(url);
     }
+	/**
+	 * Thêm mới phiếu nhập
+	 * @param {Object} body 
+	 * @returns {Promise}
+	 * CreatedBy: NTDUNG (30/09/2021)
+	 */
+	addVoucher(body) {
+		let url = this.baseApiUrl + this.controller + '/add';
+		return axios.put(url, body);
+	}
+	/**
+	 * Cập nhật phiếu nhập
+	 * @param {String} voucherId 
+	 * @param {Object} body 
+	 * @returns {Promise}
+	 * CreatedBy: NTDUNG (30/09/2021)
+	 */
+	updateVoucher(voucherId, body) {
+		let url = this.baseApiUrl + this.controller + `/update/${voucherId}`;
+		return axios.put(url, body);
+	}
 }
 export default new VoucherAPI();

@@ -17,27 +17,12 @@
             <slot name="body"></slot> 
         </div>  
         <div class="formlarge__footer fx-space-between">
-            <base-button 
-                :label="$resourcesVN.FORM.Cancel"
-                :method="hideForm"
-                type="dark"/>
-            <div class="formlarge__store fx">
-                <base-button 
-                    :label="$resourcesVN.FORM.Store"
-                    type="dark"
-                    class="mr-8"
-                    />
-                <base-button
-                    :label="$resourcesVN.FORM.StoreAndPrint"
-                    type="green"
-                    />
-            </div>
+            <slot name="footer"></slot>
         </div>
     </div>
 </template>
 <script>
 // COMPONENTS
-import BaseButton from '../Button/BaseButton.vue'
 import BaseTutorial from '../BaseTutorial.vue'
 import BaseHelp from './components/BaseHelp.vue'
 import BaseCancel from './components/BaseCancel.vue'
@@ -48,7 +33,6 @@ import BaseHistory from './components/BaseHistory.vue'
 export default {
     name: 'BaseFormLarge',
     components: {
-        BaseButton,
         BaseTutorial,
         BaseHelp,
         BaseCancel,

@@ -131,5 +131,67 @@ namespace Misa.API.Controllers
                 return StatusCode(500, errorObj);
             }
         }
+    
+        [HttpPost("add")]
+        public IActionResult AddAccountVoucher([FromBody] AccountVoucherData data)
+        {
+            try
+            {
+                //Trả về kết quả cho client
+                var serviceResult = _accountVoucherService.addAccountVoucher(data);
+                if (serviceResult.IsValid)
+                {
+                    return StatusCode(201, serviceResult.Data);
+                }
+                else
+                {
+                    return BadRequest(serviceResult.Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorObj = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Resources.Exception_ErrorMsg,
+                    errorCode = "misa-001",
+                    moreInfo = "https://openapi.misa.com.vn/errorcode/misa-001",
+                    traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
+                };
+
+                return StatusCode(500, errorObj);
+            }
+        }
+
+        [HttpPut("update/{accountVoucherID}")]
+        public IActionResult UpdateAccountVoucher(Guid accountVoucherID, [FromBody] AccountVoucherData data )
+        {
+            try
+            {
+                //Trả về kết quả cho client
+                var serviceResult = _accountVoucherService.updateAccountVoucher(accountVoucherID, data);
+                if (serviceResult.IsValid)
+                {
+                    return StatusCode(201, serviceResult.Data);
+                }
+                else
+                {
+                    return BadRequest(serviceResult.Data);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorObj = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Resources.Exception_ErrorMsg,
+                    errorCode = "misa-001",
+                    moreInfo = "https://openapi.misa.com.vn/errorcode/misa-001",
+                    traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
+                };
+
+                return StatusCode(500, errorObj);
+            }
+        }
     }
 }

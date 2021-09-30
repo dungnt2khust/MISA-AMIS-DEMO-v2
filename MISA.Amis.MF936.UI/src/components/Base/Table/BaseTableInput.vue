@@ -29,7 +29,10 @@
 						:key="indexStyle"
 					>
 						<base-combobox-advance
-							v-if="itemStyle.type == TableDataStyle.TYPE.Combobox"
+							v-if="
+								itemStyle.type == TableDataStyle.TYPE.Combobox ||
+									itemStyle.type == TableDataStyle.TYPE.ComboboxNotAdd
+							"
 							:api="itemStyle['api']"
 							:controller="itemStyle['controller']"
 							v-model="itemData[itemStyle['vmodel']]"

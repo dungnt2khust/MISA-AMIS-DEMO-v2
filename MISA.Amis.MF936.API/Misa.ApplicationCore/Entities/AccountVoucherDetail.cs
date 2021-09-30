@@ -26,7 +26,7 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Id chứng từ
         /// </summary>
-        public Guid? accountvoucher_id { get; set; }
+        public Guid accountvoucher_id { get; set; }
 
         /// <summary>
         /// Id kho
@@ -114,6 +114,18 @@ namespace Misa.ApplicationCore.Entities
         /// Tên TK có
         /// </summary>
         [MisaNotMap]
-        public string credit_account_name { get; set; } 
+        public string credit_account_name { get; set; }
+
+        /// <summary>
+        /// Đơn vị tính
+        /// </summary>
+        [MisaNotMap]
+        public List<Unit> units { get; set; }
+        
+        /// <summary>
+        /// Trạng thái 
+        /// </summary>
+        [MisaNotMap]
+        public int state { get; set; }
     }
 }

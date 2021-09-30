@@ -54,7 +54,7 @@ namespace Misa.Infrastructure
                     Accounts = accounts,
                     TotalRecord = totalRecord,
                     TotalPage = totalPage,
-
+    
                 };
                 return result;
             }

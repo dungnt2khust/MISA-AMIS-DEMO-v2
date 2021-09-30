@@ -47,5 +47,22 @@ namespace Misa.ApplicationCore.Interfaces.Repository
         /// <returns></returns>
         /// CreatedBy: NTDUNG(28/09/2021)
         int unMentionMany(List<Guid> entityIds);
+
+        /// <summary>
+        /// Thêm mới phiếu nhập
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(30/09/2021)
+        int addAccountVoucher(AccountVoucherData data);
+
+        /// <summary>
+        /// Chỉnh sửa phiếu nhập
+        /// </summary>
+        /// <param name="accountVoucherID"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(30/09/2021)
+        int updateAccountVoucher(Guid accountVoucherID, AccountVoucherData data);
     }
 }

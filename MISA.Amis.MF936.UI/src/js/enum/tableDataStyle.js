@@ -8,7 +8,8 @@ const TableDataStyle = {
         Checkbox: 1, 
         Combobox: 2,
         Input: 3,
-        InputDate: 4
+        InputDate: 4,
+        ComboboxNotAdd: 5
     },
     POS: {
         Left: 0, 

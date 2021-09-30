@@ -14,6 +14,7 @@ namespace Misa.Infrastructure
 {
     public class AccountVoucherRepository : BaseRepository<AccountVoucher>, IAccountVoucherRepository
     {
+
         #region Constructor
         public AccountVoucherRepository(IConfiguration configuration) : base(configuration)
         {
@@ -178,6 +179,31 @@ namespace Misa.Infrastructure
                 var rowEffects = _dbConnection.Execute(sqlCommand, param: parameters);
                 return rowEffects;
             }
+        }
+        
+        /// <summary>
+        /// Thêm mới phiếu nhập
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(30/09/2021)
+        public int addAccountVoucher(AccountVoucherData data)
+        {
+            return 100;
+        }
+
+        /// <summary>
+        /// Chỉnh sửa phiếu nhập
+        /// </summary>
+        /// <param name="accountVoucherID"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(30/09/2021)
+        public int updateAccountVoucher(Guid accountVoucherID, AccountVoucherData data)
+        {
+            var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
+            //var accountVoucherDetail = data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
+            return 1;
         }
     }
 }

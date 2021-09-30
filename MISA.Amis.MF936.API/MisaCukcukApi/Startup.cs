@@ -44,6 +44,7 @@ namespace MisaCukcukApi
             services.AddScoped<ICommodityRepository, CommodityRepository>();
             services.AddScoped<IAccountObjectRepository, AccountObjectRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAccountVoucherDetailRepository, AccountVoucherDetailRepository>();
             //Service DI
             services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddScoped<IEmployeeService, EmployeeService>();

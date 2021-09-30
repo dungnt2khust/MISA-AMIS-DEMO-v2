@@ -17,4 +17,11 @@ namespace Misa.ApplicationCore.Enum
         Female = 0,
         Other = 2
     }
+
+    public enum AccountVoucherDetailState
+    {
+        Add = 0,
+        Update = 1,
+        Delete = 2
+    }
 }

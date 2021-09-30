@@ -74,17 +74,25 @@
 										WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['controller']
 									"
 									v-model="
-										masterContent[WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']]
+										masterContent[
+											WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']
+										]
 									"
 									:valueBind="
-										masterContent[WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']]
+										masterContent[
+											WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']
+										]
 									"
 									:vmodelField="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']"
 									:field="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['field']"
 									:default="
-										masterContent[WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['field']]
+										masterContent[
+											WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['field']
+										]
 									"
-									:listGridStyle="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['style']"
+									:listGridStyle="
+										WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['style']
+									"
 									:form="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['form']"
 									:tabindex="0"
 									label="Nhân viên"
@@ -147,11 +155,27 @@
 					/>
 				</div>
 			</template>
+			<template v-slot:footer>
+				<base-button
+					:label="$resourcesVN.FORM.Cancel"
+					:method="hideForm"
+					type="dark"
+				/>
+				<div class="formlarge__store fx">
+					<base-button
+						@click.native="store()"
+						:label="$resourcesVN.FORM.Store"
+						type="dark"
+						class="mr-8"
+					/>
+					<base-button :label="$resourcesVN.FORM.StoreAndPrint" type="green" />
+				</div>
+			</template>
 		</base-form-large>
-		<warehouse-select-commodity/>
-		<warehouse-add width="500px"/>
-		<warehouse-add-commodity-group width="600px"/>
-		<warehouse-add-unit width="500px"/>
+		<warehouse-select-commodity />
+		<warehouse-add width="500px" />
+		<warehouse-add-commodity-group width="600px" />
+		<warehouse-add-unit width="500px" />
 	</div>
 </template>
 <script>
@@ -160,6 +184,7 @@
 	import globalComponents from "../../../../mixins/globalComponents/globalComponents.js";
 	import VoucherDetailState from "../../../../js/enum/voucherDetailState";
 	import methods from "../../../../mixins/methods.js";
+	// import voucherAPI from "../../../../js/components/voucherAPI"
 	// COMPONENTS
 	import BaseFormLarge from "../../../Base/Form/BaseFormLarge.vue";
 	import BaseInput from "../../../Base/BaseInput.vue";
@@ -171,6 +196,7 @@
 	import WarehouseAdd from "../formsmall/WarehouseAdd.vue";
 	import WarehouseAddCommodityGroup from "../formsmall/WarehouseAddCommodityGroup.vue";
 	import WarehouseAddUnit from "../formsmall/WarehouseAddUnit.vue";
+	import BaseButton from "../../../Base/Button/BaseButton.vue";
 
 	export default {
 		name: "WarehouseDetail",
@@ -186,6 +212,7 @@
 			WarehouseAdd,
 			WarehouseAddCommodityGroup,
 			WarehouseAddUnit,
+			BaseButton,
 		},
 		data() {
 			return {
@@ -193,6 +220,7 @@
 				masterContent: {},
 				tableInputData: [],
 				units: [],
+				mode: null,
 				voucherIdx: 1,
 				voucherTypeData: [
 					{ name: "1. Thành phẩm sản xuất" },
@@ -205,6 +233,7 @@
 			this.$bus.$on("showWarehouseDetail", (data) => {
 				this.formLargeState = true;
 				if (data["mode"] == "UPDATE") {
+					// this.mode = ''
 					this.masterContent = data["data"]["in_inward"][0];
 					var dataDetail = data["data"]["in_inward_detail"];
 					this.tableInputData = [];
@@ -225,7 +254,7 @@
 						this.$set(
 							this.tableInputData[index],
 							"main_unit_name",
-							this.valUnitName(index)
+							mainUnit["unit_name"]
 						);
 
 						this.$set(
@@ -262,14 +291,22 @@
 				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
 			},
 			/**
-			 *
+			 * Tắt form
+			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
-			valUnitName(index) {
-				var unitId = this.tableInputData[index]["mainUnitId"];
-				var foundIdx = this.units[index].findIndex((item) => {
-					return item["unit_id"] == unitId;
-				});
-				return this.units[index][foundIdx]["unit_name"];
+			hideForm() {
+				this.formLargeState = false;
+			},
+			/**
+			 * Cất dữ liệu
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			store() {
+				console.log(JSON.stringify({
+					in_inward: this.masterContent,
+					in_inward_detail: this.tableInputData,
+				}));
+				// voucherAPI.
 			},
 		},
 		watch: {
