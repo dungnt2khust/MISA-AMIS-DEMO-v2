@@ -19,3 +19,6 @@
         transition: all 0.2s ease;
         transform: rotate(0);
     }
+    .dropdownbutton--disable {
+        background-color: #EFF0F2;
+    }

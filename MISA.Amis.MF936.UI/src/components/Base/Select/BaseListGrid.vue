@@ -13,7 +13,7 @@
 				</th>
 			</tr>
 		</thead>
-		<tbody class="listgrid__body" :style="{'max-height': bodyHeight}">
+		<tbody class="listgrid__body" :style="{ 'max-height': bodyHeight }">
 			<tr
 				@click="choose(itemData)"
 				v-for="(itemData, indexData) in listGridData"
@@ -31,7 +31,12 @@
 				</td>
 			</tr>
 		</tbody>
-		<div v-if="type == 'small'" class="listgrid__footer">
+		<div
+			v-if="
+				type == 'small' && controller != 'Accounts' && controller != 'Units'
+			"
+			class="listgrid__footer"
+		>
 			<slot name="footer"></slot>
 		</div>
 	</div>
@@ -59,21 +64,21 @@
 				default: function() {},
 			},
 			valueBind: {
-				type: String, 
-				default: ''
+				type: String,
+				default: "",
 			},
 			vmodelField: {
 				type: String,
-				default: ''
+				default: "",
 			},
 			subfield: {
 				type: String,
-				default: ''
+				default: "",
 			},
-			nonfooter: {
-				type: Number,
-				default: -1
-			}
+			controller: {
+				type: String,
+				default: "",
+			},
 		},
 		data() {
 			return {};
@@ -94,10 +99,8 @@
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
 			foundSelectedItem(itemData) {
-				if (!this.subfield)
-					return itemData[this.vmodelField] == this.valueBind;
-				else 
-					return itemData[this.subfield] == this.valueBind;
+				if (!this.subfield) return itemData[this.vmodelField] == this.valueBind;
+				else return itemData[this.subfield] == this.valueBind;
 			},
 			/**
 			 * Khi chọn vào một lựa chọn thì emit ra ngoài để cập nhật
@@ -106,12 +109,11 @@
 			 */
 			choose(itemData) {
 				if (!this.subfield)
-					this.$emit('changeOption', itemData[this.vmodelField]);
-				else 
-					this.$emit('changeOption', itemData[this.subfield]);
-				this.$emit('input', false);
-			}
-		}
+					this.$emit("changeOption", itemData[this.vmodelField]);
+				else this.$emit("changeOption", itemData[this.subfield]);
+				this.$emit("input", false);
+			},
+		},
 	};
 </script>
 <style scoped>

@@ -137,15 +137,16 @@ export default {
 						},
 						{
 							name: "ĐVT",
-							field: "mainUnitId",
+							field: "selected_unit_id",
 							width: "150px",
 							type: TableDataStyle.TYPE.Combobox,
 							pos: TableDataStyle.POS.Left,
 							data: "units",
-							vmodel: "mainUnitId",
-							default: "main_unit_name",
+							vmodel: "selected_unit_id",
+							default: "selected_unit_name",
 							subfield: "unit_id",
 							display: "unit_name",
+							controller: "Units",
 							style: [
 								{ name: "Tên đơn vị", field: "unit_name" },
 								{ name: "Tỷ lệ chuyển đổi", field: "rate" },
@@ -157,6 +158,7 @@ export default {
 							width: "150px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
+							total: true
 						},
 						{
 							name: "Đơn giá",
@@ -171,13 +173,15 @@ export default {
 							width: "100px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
+							total: true
 						},
 						{
 							name: "Hạn sử dụng",
 							field: "expiry",
 							width: "150px",
 							type: TableDataStyle.TYPE.InputDate,
-							pos: TableDataStyle.POS.Left,
+							pos: TableDataStyle.POS.Center,
+							overtoday: true
 						},
 					],
 					OBJECT: {

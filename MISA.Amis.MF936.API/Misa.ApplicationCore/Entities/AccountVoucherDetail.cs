@@ -127,5 +127,10 @@ namespace Misa.ApplicationCore.Entities
         /// </summary>
         [MisaNotMap]
         public int state { get; set; }
+
+        /// <summary>
+        /// Đơn vị tính được dặt
+        /// </summary>
+        public Guid selected_unit_id { get; set; }
     }
 }

@@ -1,7 +1,12 @@
 <template lang="">
 	<div>
 		<base-form-large
-			:title="'Phiếu nhập kho ' + masterContent['voucher_code']"
+			:title="
+				formatString(
+					$resourcesVN.WAREHOUSE_DETAIL.Title,
+					masterContent['voucher_code']
+				)
+			"
 			v-model="formLargeState"
 			:formLargeState="formLargeState"
 		>
@@ -10,6 +15,7 @@
 					<base-combobox
 						:comboboxData="voucherTypeData"
 						:currIdx="masterContent['voucher_type']"
+						:enable="enable"
 						v-model="masterContent['voucher_type']"
 						class="mr-16"
 					/>
@@ -22,6 +28,7 @@
 						<div class="w-4/5 fx-wrap pr-10 border-right">
 							<div class="fx-3/7 mb-10">
 								<base-combobox-advance
+									:enable="enable"
 									:api="WAREHOUSE_TABLE.InWardDetail.OBJECT['api']"
 									:controller="
 										WAREHOUSE_TABLE.InWardDetail.OBJECT['controller']
@@ -40,7 +47,7 @@
 									:listGridStyle="WAREHOUSE_TABLE.InWardDetail.OBJECT['style']"
 									:form="WAREHOUSE_TABLE.InWardDetail.OBJECT['form']"
 									:tabindex="0"
-									label="Đối tượng"
+									:label="$resourcesVN.WAREHOUSE_DETAIL.Object"
 								/>
 							</div>
 							<div class="fx-4/7 mb-10">
@@ -48,7 +55,8 @@
 									:value="masterContent['contact_address']"
 									v-model="masterContent['contact_address']"
 									:tabindex="1"
-									label="Địa chỉ"
+									:enable="enable"
+									:label="$resourcesVN.WAREHOUSE_DETAIL.Address"
 								/>
 							</div>
 							<div class="fx-3/7 mb-10">
@@ -56,7 +64,8 @@
 									:value="masterContent['contact_name']"
 									v-model="masterContent['contact_name']"
 									:tabindex="2"
-									label="Người giao hàng"
+									:enable="enable"
+									:label="$resourcesVN.WAREHOUSE_DETAIL.Shipper"
 								/>
 							</div>
 							<div class="fx-4/7 mb-10">
@@ -64,11 +73,13 @@
 									:value="masterContent['description']"
 									v-model="masterContent['description']"
 									:tabindex="3"
-									label="Diễn giải"
+									:enable="enable"
+									:label="$resourcesVN.WAREHOUSE_DETAIL.Description"
 								/>
 							</div>
 							<div class="fx-3/7">
 								<base-combobox-advance
+									:enable="enable"
 									:api="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['api']"
 									:controller="
 										WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['controller']
@@ -100,11 +111,12 @@
 							</div>
 							<div class="fx-4/7 mb-10">
 								<base-input
-									label="Kèm theo"
-									unit="chứng từ gốc"
+									:label="$resourcesVN.WAREHOUSE_DETAIL.Attach"
+									:unit="$resourcesVN.WAREHOUSE_DETAIL.OriginalVoucher"
 									width="200px"
 									:value="masterContent['voucher_code']"
 									:tabindex="4"
+									:enable="enable"
 								/>
 							</div>
 						</div>
@@ -114,7 +126,8 @@
 									:value="masterContent['mathematics_date']"
 									v-model="masterContent['mathematics_date']"
 									:tabindex="5"
-									label="Ngày hạch toán"
+									:label="$resourcesVN.WAREHOUSE_DETAIL.MathematicsDate"
+									:enable="enable"
 								/>
 							</div>
 							<div class="fx-100 mb-10">
@@ -122,7 +135,8 @@
 									:value="masterContent['voucher_date']"
 									v-model="masterContent['voucher_date']"
 									:tabindex="6"
-									label="Ngày chứng từ"
+									:label="$resourcesVN.WAREHOUSE_DETAIL.VoucherDate"
+									:enable="enable"
 								/>
 							</div>
 							<div class="fx-100 mb-10">
@@ -130,19 +144,22 @@
 									:value="masterContent['voucher_code']"
 									v-model="masterContent['voucher_code']"
 									:tabindex="7"
-									label="Số chứng từ"
+									:label="$resourcesVN.WAREHOUSE_DETAIL.VoucherCode"
+									:enable="enable"
 								/>
 							</div>
 						</div>
 					</div>
 					<div class="formlarge__body-cash w-1/4">
-						<div class="formlarge__body-cash-title">Tổng tiền</div>
+						<div class="formlarge__body-cash-title">
+							{{ $resourcesVN.WAREHOUSE_DETAIL.TotalPrice }}
+						</div>
 						<h1 class="formlarge__body-cash-number">
 							{{ formatMoney(masterContent["total_price"]) }}
 						</h1>
 					</div>
 					<div class="formlarge__reference w-2/5 mb-20 mt-20">
-						Tham chiếu
+						{{ $resourcesVN.WAREHOUSE_DETAIL.Reference }}
 						<div @click="reference()" class="formlarge__reference-icon"></div>
 					</div>
 				</div>
@@ -156,6 +173,7 @@
 						:tableData="tableInputData"
 						:tableStyle="WAREHOUSE_TABLE.InWardDetail.TABLE_INPUT"
 						v-model="tableInputData"
+						:enable="enable"
 					/>
 				</div>
 			</template>
@@ -163,22 +181,40 @@
 				<base-button
 					:label="$resourcesVN.FORM.Cancel"
 					:method="hideForm"
-					tooltip="Huỷ (Cancel)"
 					type="dark"
 				/>
 				<div class="formlarge__store fx">
 					<base-button
 						@click.native="store()"
 						:label="$resourcesVN.FORM.Store"
-						tooltip="Cất (Ctrl + S)"
+						v-if="enable"
 						type="dark"
 						class="mr-8"
 					/>
 					<base-button
 						@click.native="storeAndPrint()"
 						:label="$resourcesVN.FORM.StoreAndPrint"
-						tooltip="Cất và In (Ctrl + Shift + S)"
+						v-if="enable"
 						type="green"
+					/>
+					<base-button
+						class="mr-8"
+						@click.native="edit()"
+						:label="$resourcesVN.FORM.Edit"
+						type="dark"
+						v-if="!masterContent['is_mention'] && !enable"
+					/>
+					<base-button
+						@click.native="unMention()"
+						:label="$resourcesVN.FORM.UnMention"
+						type="green"
+						v-if="masterContent['is_mention'] && !enable"
+					/>
+					<base-button
+						@click.native="mention()"
+						:label="$resourcesVN.FORM.Mention"
+						type="green"
+						v-if="!masterContent['is_mention'] && !enable"
 					/>
 				</div>
 			</template>
@@ -196,6 +232,7 @@
 	import VoucherDetailState from "../../../../js/enum/voucherDetailState";
 	import methods from "../../../../mixins/methods.js";
 	import voucherAPI from "../../../../js/components/voucherAPI";
+	import commodityunitAPI from "../../../../js/components/commodityunitAPI";
 	// COMPONENTS
 	import BaseFormLarge from "../../../Base/Form/BaseFormLarge.vue";
 	import BaseInput from "../../../Base/BaseInput.vue";
@@ -230,8 +267,11 @@
 				formLargeState: false,
 				masterContent: {},
 				tableInputData: [],
+				dataClone: [],
 				units: [],
 				mode: null,
+				enable: null,
+				needReload: false,
 				voucherTypeData: [
 					{ name: "1. Thành phẩm sản xuất" },
 					{ name: "2. Hàng bán bị trả lại" },
@@ -240,11 +280,18 @@
 			};
 		},
 		created() {
+			/**
+			 * Sự kiện bật form
+			 * @param {Object} data
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
 			this.$bus.$on("showWarehouseDetail", (data) => {
 				this.formLargeState = true;
 				if (data["mode"] == this.$enum.FORM_MODE.Update) {
+					this.enable = false;
 					this.mode = this.$enum.FORM_MODE.Update;
 					this.masterContent = data["data"]["in_inward"][0];
+
 					var dataDetail = data["data"]["in_inward_detail"];
 					this.tableInputData = [];
 					dataDetail.forEach((item, index) => {
@@ -254,23 +301,37 @@
 						var mainUnit = this.tableInputData[index]["units"].find((item) => {
 							return item["is_main_unit"] == 1;
 						});
-
+						var selectedUnitId = item["voucher_detail"]["selected_unit_id"];
+						var selectedUnit = item["units"].find((item) => {
+							return item["unit_id"] == selectedUnitId;
+						});
 						this.$set(
 							this.tableInputData[index],
-							"mainUnitId",
+							"main_unit_rate",
+							mainUnit["rate"]
+						);
+						this.$set(
+							this.tableInputData[index],
+							"main_unit_id",
 							mainUnit["unit_id"]
 						);
 
 						this.$set(
 							this.tableInputData[index],
-							"main_unit_name",
-							mainUnit["unit_name"]
+							"selected_unit_id",
+							selectedUnit["unit_id"]
 						);
 
 						this.$set(
 							this.tableInputData[index],
-							"main_unit_rate",
-							mainUnit["rate"]
+							"selected_unit_name",
+							selectedUnit["unit_name"]
+						);
+
+						this.$set(
+							this.tableInputData[index],
+							"selected_unit_rate",
+							selectedUnit["rate"]
 						);
 
 						this.$set(
@@ -278,9 +339,14 @@
 							"state",
 							VoucherDetailState.UPDATE
 						);
+						this.dataClone = {
+							in_inward: { ...this.masterContent },
+							in_inward_detail: { ...this.tableInputData },
+						};
 					});
 				}
 				if (data["mode"] == this.$enum.FORM_MODE.Add) {
+					this.enable = true;
 					this.mode = this.$enum.FORM_MODE.Add;
 					this.masterContent = {};
 					this.tableInputData = [];
@@ -290,6 +356,10 @@
 						.then((res) => {
 							console.log(res);
 							this.$set(this.masterContent, "voucher_code", res.data);
+							this.dataClone = {
+								in_inward: { ...this.masterContent },
+								in_inward_detail: [...this.tableInputData],
+							};
 							this.$bus.$emit("hideLoading");
 						})
 						.catch((res) => {
@@ -304,16 +374,92 @@
 					);
 				}
 			});
+
+			/**
+			 * Sự kiện ẩn form
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
 			this.$bus.$on("hideWarehouseDetail", () => {
 				this.formLargeState = false;
 			});
+			/**
+			 * Sự kiện thay đổi hàng hoá ở hàng tiền
+			 * @param {Number} index
+			 * @param {String} newId
+			 * @param {Array} data
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
 			this.$bus.$on("changeCommodity", (index, newId, data) => {
-				var foundIdx = data.findIndex(item => {
-					return item['commodity_id'] == newId;
-				})
-				if (foundIdx != -1)
-					this.tableInputData[index]['commodity_name'] = data[foundIdx]['commodity_name'];
-			});	
+				var foundIdx = data.findIndex((item) => {
+					return item["commodity_id"] == newId;
+				});
+				if (foundIdx != -1) {
+					this.tableInputData[index]["commodity_name"] =
+						data[foundIdx]["commodity_name"];
+					commodityunitAPI
+						.GetUnits(newId)
+						.then((res) => {
+							console.log(res);
+							this.$set(this.tableInputData[index], "units", res.data);
+							var selectedDefault = res.data.find((item) => {
+								return (item["is_main_unit"] = 1);
+							});
+							this.$set(
+								this.tableInputData[index],
+								"selected_unit_id",
+								selectedDefault["unit_id"]
+							);
+							this.$set(
+								this.tableInputData[index],
+								"selected_unit_name",
+								selectedDefault["unit_name"]
+							);
+						})
+						.catch((res) => {
+							console.log(res);
+						});
+				}
+			});
+			/**
+			 * Sự kiện thay đổi đơn vị tính ở hàng tiền
+			 * @param {Number} index
+			 * @param {String} newId
+			 * @param {Array} data
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+
+			this.$bus.$on("changeUnit", (index, newId, data) => {
+				console.log(index, newId, data);
+				var foundIdx = data.findIndex((item) => {
+					return item["unit_id"] == newId;
+				});
+				if (foundIdx != -1) {
+					this.tableInputData[index]["selected_unit_name"] =
+						data[foundIdx]["unit_name"];
+					var oldRate = this.tableInputData[index]["selected_unit_rate"];
+
+					this.tableInputData[index]["selected_unit_rate"] =
+						data[foundIdx]["rate"];
+					this.tableInputData[index]["selected_unit_id"] = newId;
+
+					if (newId == this.tableInputData[index]["main_unit_id"]) {
+						this.tableInputData[index]["quantity"] =
+							(this.tableInputData[index]["quantity"] * oldRate) /
+							this.tableInputData[index]["main_unit_rate"];
+					} else {
+						this.tableInputData[index]["quantity"] =
+							(this.tableInputData[index]["quantity"] /
+								this.tableInputData[index]["selected_unit_rate"]) *
+							oldRate;
+					}
+					this.tableInputData[index]["quantity"] = Math.round(
+						this.tableInputData[index]["quantity"]
+							? this.tableInputData[index]["quantity"]
+							: 0
+					);
+					this.$set(this.tableInputData[index], "debit_amount", 0);
+				}
+			});
 		},
 		methods: {
 			/**
@@ -321,14 +467,44 @@
 			 * CreatedBy: NTDUNG (28/09/2021)
 			 */
 			reference() {
-				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+				this.callDialog(
+					this.$enum.Warn,
+					this.$resourcesVN.NOTIFY.FeatureNotAvaiable
+				);
 			},
 			/**
 			 * Tắt form
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
 			hideForm() {
-				this.formLargeState = false;
+				var data = {
+					in_inward: this.masterContent,
+					in_inward_detail: this.tableInputData,
+				};
+				// Kiểm tra đã thay đổi thì cảnh báo cất
+				if (this.deepEqualObject(data, this.dataClone, ['is_mention'])) {
+					this.formLargeState = false;
+				} else {
+					this.callDialog(
+						this.$enum.DIALOG_TYPE.ConfirmCancel,
+						this.$resourcesVN.NOTIFY.DataHasChanged
+					).then((answer) => {
+						switch (answer) {
+							case this.$enum.DIALOG_RESULT.Yes:
+								this.store();
+								break;
+							case this.$enum.DIALOG_RESULT.No:
+								this.formLargeState = false;
+								if (this.needReload)
+									this.$bus.$emit('reloadData');
+								break;
+							case this.$enum.DIALOG_RESULT.Cancel:
+								if (this.needReload)
+									this.$bus.$emit('reloadData');
+								break;
+						}
+					});
+				}
 			},
 			/**
 			 * Cất dữ liệu
@@ -340,35 +516,50 @@
 					in_inward: this.masterContent,
 					in_inward_detail: this.tableInputData,
 				};
-
-				this.$bus.$emit("showLoading");
-				switch (this.mode) {
-					case this.$enum.FORM_MODE.Add:
-						voucherAPI
-							.addVoucher(data)
-							.then((res) => {
-								console.log(res);
-								this.formLargeState = false;
-								this.$bus.$emit("reloadData");
-							})
-							.catch((res) => {
-								console.log(res);
-							});
-						break;
-					case this.$enum.FORM_MODE.Update:
-						console.log(data);
-						voucherAPI
-							.updateVoucher(data.in_inward.accountvoucher_id, data)
-							.then((res) => {
-								console.log(res);
-								this.formLargeState = false;
-								this.$bus.$emit("reloadData");
-							})
-							.catch((res) => {
-								console.log(res);
-							});
-						break;
-				}
+				// if (!this.deepEqualObject(data, this.dataClone, ['is_mention'])) {
+					this.$bus.$emit("showLoading");
+					switch (this.mode) {
+						case this.$enum.FORM_MODE.Add:
+							data["in_inward"]["created_by"] = this.$resourcesVN.ACCOUNT_NAME;
+							voucherAPI
+								.addVoucher(data)
+								.then((res) => {
+									this.$bus.$emit('showToastMessage', this.$resourcesVN.NOTIFY.AddSuccess);
+									// Bind id master
+									this.$set(this.masterContent, 'accountvoucher_id', res.data['newMasterId']);
+									// Bind id detail
+									res.data['newDetailIds'].forEach((item, index) => {
+										this.$set(this.tableInputData[index], 'accountvoucherdetail_id', item);
+										this.$set(this.tableInputData[index], 'state', VoucherDetailState.UPDATE);
+									});
+									this.needReload = true;
+									this.enable = false;
+									this.mode = this.$enum.FORM_MODE.Update;
+									this.$bus.$emit("hideLoading");
+								})
+								.catch((res) => {
+									console.log(res);
+									this.$bus.$emit("hideLoading");
+								});
+							break;
+						case this.$enum.FORM_MODE.Update:
+							data["in_inward"]["modified_by"] = this.$resourcesVN.ACCOUNT_NAME;
+							voucherAPI
+								.updateVoucher(data.in_inward.accountvoucher_id, data)
+								.then((res) => {
+									console.log(res);
+									this.$bus.$emit('showToastMessage', this.$resourcesVN.NOTIFY.UpdateSuccess);
+									this.$bus.$emit("hideLoading");
+									this.needReload = true;
+									this.enable = false;
+								})
+								.catch((res) => {
+									console.log(res);
+									this.$bus.$emit("hideLoading");
+								});
+							break;
+					}
+				// }	
 			},
 			/**
 			 * Cất và in
@@ -376,6 +567,51 @@
 			 */
 			storeAndPrint() {
 				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+			},
+			/**
+			 * Bỏ ghi
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			unMention() {
+				var id = [this.masterContent["accountvoucher_id"]];
+				this.$bus.$emit("showLoading");
+				voucherAPI
+					.unMentionMany(id)
+					.then((res) => {
+						console.log(res);
+						this.$set(this.masterContent, "is_mention", 0);
+						this.$bus.$emit("reloadData");
+					})
+					.catch((res) => {
+						console.log(res);
+						this.$bus.$emit("hideLoading");
+					});
+			},
+			/**
+			 * Ghi sổ
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			mention() {
+				var id = [this.masterContent["accountvoucher_id"]];
+				this.$bus.$emit("showLoading");
+				voucherAPI
+					.mentionMany(id)
+					.then((res) => {
+						console.log(res);
+						this.$set(this.masterContent, "is_mention", 1);
+						this.$bus.$emit("reloadData");
+					})
+					.catch((res) => {
+						console.log(res);
+						this.$bus.$emit("hideLoading");
+					});
+			},
+			/**
+			 * Bật cho phép chỉnh sửa
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			edit() {
+				this.enable = true;
 			},
 		},
 		watch: {
@@ -389,12 +625,19 @@
 					"Nhập kho từ " +
 					this.voucherTypeData[Number(value)]["name"].substring(3);
 			},
+			/**
+			 * Khi dữ liệu thay đổi
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
 			tableInputData: {
-				handler() {
+				handler(newVal) {
 					var totalPrice = 0;
-					this.tableInputData.forEach((item, index) => {
-						this.tableInputData[index]['total_price'] = Number(item["debit_amount"]) * Number(item["quantity"]);	
-						totalPrice += Number(item["total_price"]);
+					newVal.forEach((item, index) => {
+						this.tableInputData[index]["total_price"] =
+							Number(item["debit_amount"] ? item["debit_amount"] : 0) *
+							Number(item["quantity"] ? item["quantity"] : 0);
+						if (item["state"] != VoucherDetailState.DELETE)
+							totalPrice += Number(item["total_price"]);
 					});
 					this.$set(this.masterContent, "total_price", totalPrice);
 				},

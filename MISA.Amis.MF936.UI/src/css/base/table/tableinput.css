@@ -42,6 +42,9 @@
         border-spacing: 0;
         position: relative;
     }
+    .tableinput.tableinput--disable > tbody > tr > td {
+        background-color: #F4F5F8 !important;
+    }
         .tableinput > thead {
             font-family: MISANotoSan-Semibold;
             font-size: 12px;
@@ -55,6 +58,16 @@
                 background-color: var(--table-header-color) !important;
                 border-right: 1px solid var(--border-color);
                 border-bottom: 1px solid var(--border-color); 
+            }
+            .tableinput > tfoot > tr > th {
+                text-align: right;
+                padding: 4px 12px;
+                font-size: 13px;
+                font-family: MISANotoSan-Bold;
+                background-color: #F8F9FE;
+            }
+            .tableinput > tfoot {
+                
             }
         .tableinput > tbody {
             display: contents;
@@ -77,34 +90,38 @@
 
 /* STICKY COLUMN */
 /* COLUMN 1 */
-.tableinput th:nth-child(1) {
+.tableinput > tfoot > tr > th:first-child,
+.tableinput > thead > tr > th:first-child {
     position: sticky;
     left: 0;
     min-width: 40px;
 }
-.tableinput tr td:nth-child(1) {
+.tableinput > tbody >  tr > td:nth-child(1) {
     z-index: 10;
     position: sticky;
     left: 0;
 }
 /* COLUMN 2 */
-.tableinput th:nth-child(2) {
+
+.tableinput > tfoot > tr > th:nth-child(2),
+.tableinput > thead > tr > th:nth-child(2){
     position: sticky;
     left: 40px;
 }
-.tableinput tr td:nth-child(2) {
+.tableinput > tbody > tr > td:nth-child(2) {
     z-index: 10;
     position: sticky;
     left: 40px;
 }
 /* LAST COLUMN */
-.tableinput th:last-child {
+.tableinput > tfoot > tr > th:last-child,
+.tableinput > thead > tr > th:last-child {
     min-width: 40px;
     position: sticky;
     right: 0;
     border-left: 1px dotted var(--border-color);
 }
-.tableinput tr td:last-child {
+.tableinput > tbody >tr > td:last-child {
     min-width: 40px;
     z-index: 10;
     position: sticky;

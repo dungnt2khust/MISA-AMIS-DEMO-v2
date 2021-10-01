@@ -1,6 +1,6 @@
 <template lang="">
 	<div class="input-wrapper">
-		<span v-if="label != ''" class="label">
+		<span v-if="label != ''" class="label label--date">
 			{{ label }} <span v-if="required" class="text-red">*</span></span
 		>
 		<div class="input__main">
@@ -10,16 +10,23 @@
 				placeholder="DD/MM/YYYY"
 				v-model="inputValue"
 				class="input input--date"
+				:class="{'input--disable': !enable}"
 				:tabindex="tabindex"
+				:readonly="!enable"
+				v-if="!disable"
 			/>
+			<div v-if="disable" class="input__span--date">{{inputValue}}</div>
 			<span
-				@click="datePickerState = !datePickerState"
-				class="input__icon"
+				@click="toggleDatePicker()"
+				class="input__icon"	
+				:class="{'input--disable': !enable}"
+				v-if="!disable"
 			></span>
 			<base-date-picker
 				:value="currDate"
 				v-model="currDate"
 				:datePickerState="datePickerState"
+				:overtoday="overtoday"
 				@hideDatepicker="datePickerState = false"
 			/>
 		</div>
@@ -53,6 +60,18 @@
 			tabindex: {
 				type: Number,
 				default: -1
+			},
+			overtoday: {
+				type: Boolean,
+				default: false
+			},
+			enable: {
+				type: Boolean,
+				default: true
+			},
+			disable: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -96,6 +115,14 @@
 					this.inputValue = '';
 				}
 			},
+			/**
+			 * Bật tắt datepicker
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			toggleDatePicker() {
+				if (this.enable)
+					this.datePickerState = !this.datePickerState;
+			}
 		},
 		watch: {
 			/**

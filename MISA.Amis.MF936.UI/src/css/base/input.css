@@ -35,8 +35,17 @@ input {
         width: 100%;
     }   
     .input:focus {
-        border: var(--input-focus);
+        border: var(--input-focus) !important;
     } 
+    .input:focus .input_icon {
+        border: none;
+    }
+    .input--disable {
+        background-color: #EFF0F2;
+    } 
+    .input__span {
+        width: 100%;
+    }
 
 input::-webkit-input-placeholder {
     /* max-width:  95% !important; */

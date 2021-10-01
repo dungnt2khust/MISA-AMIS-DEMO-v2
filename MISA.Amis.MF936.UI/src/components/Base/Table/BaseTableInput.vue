@@ -1,7 +1,7 @@
 <template lang="">
 	<div class="tableinput-wrapper">
 		<div class="tableinput__title">Hàng tiền</div>
-		<table class="tableinput">
+		<table class="tableinput" :class="{'tableinput--disable': !enable}">
 			<thead>
 				<tr>
 					<th class="fx-center">#</th>
@@ -19,10 +19,10 @@
 			<tbody>
 				<tr
 					v-for="(itemData, indexData) in tableData"
-					v-show="itemData['state'] != 2"
+					v-show="itemData['state'] != 2"	
 					:key="indexData"
 				>
-					<td class="fx-center">{{ indexData }}</td>
+					<td class="fx-center" >{{ indexData + 1 }}</td>
 					<td
 						v-for="(itemStyle, indexStyle) in tableStyle"
 						:class="positionOfRecord(itemStyle)"
@@ -30,8 +30,8 @@
 					>
 						<base-combobox-advance
 							v-if="
-								itemStyle.type == TableDataStyle.TYPE.Combobox ||
-									itemStyle.type == TableDataStyle.TYPE.ComboboxNotAdd
+								(itemStyle.type == TableDataStyle.TYPE.Combobox ||
+									itemStyle.type == TableDataStyle.TYPE.ComboboxNotAdd)
 							"
 							:api="itemStyle['api']"
 							:controller="itemStyle['controller']"
@@ -52,19 +52,23 @@
 							:index="indexData"
 							type="small"
 							:tabindex="indexData"
+							:disable="!enable"
 						/>
 						<base-input
-							v-if="itemStyle.type == TableDataStyle.TYPE.Input"
+							v-if="(itemStyle.type == TableDataStyle.TYPE.Input)"
 							:value="itemData[itemStyle['field']]"
 							v-model="itemData[itemStyle['field']]"
 							:pos="itemStyle.pos"
 							:tabindex="indexData"
+							:disable="!enable"
 						/>
 						<base-input-date
-							v-if="itemStyle.type == TableDataStyle.TYPE.InputDate"
+							v-if="(itemStyle.type == TableDataStyle.TYPE.InputDate)"
 							:value="itemData[itemStyle['field']]"
 							v-model="itemData[itemStyle['field']]"
 							:tabindex="indexData"
+							:overtoday="itemStyle['overtoday']"
+							:disable="!enable"
 						/>
 					</td>
 					<td>
@@ -72,17 +76,28 @@
 					</td>
 				</tr>
 			</tbody>
+			<tfoot>
+				<tr>
+					<th :key="100"></th>
+					<th v-for="(item, index) in tableStyle" :key="index">
+						{{ footerValue(item) }}
+					</th>
+					<th :key="101"></th>
+				</tr>	
+			</tfoot>
 		</table>
 		<div class="tableinput__function mt-20 mb-20">
-			<base-button :method="addRecord" label="Thêm dòng" type="small" />
-			<base-button :method="addNote" class="ml-10" label="Thêm ghi chú" type="small" />
+			<base-button :method="addRecord" :enable="enable" label="Thêm dòng" type="small" />
+			<base-button :method="addNote" :enable="enable" class="ml-10" label="Thêm ghi chú" type="small" />
 			<base-button
 				:method="deleteAllRecords"
 				class="ml-10"
 				label="Xoá hết dòng"
+				:enable="enable"
 				type="small"
 			/>
 		</div>
+		<base-attach/>
 	</div>
 </template>
 <script>
@@ -90,20 +105,23 @@
 	import TableDataStyle from "../../../js/enum/tableDataStyle";
 	import VoucherDetailState from "../../../js/enum/voucherDetailState";
 	import globalComponents from "../../../mixins/globalComponents/globalComponents.js"
+	import methods from "../../../mixins/methods"
 	// COMPONENTS
 	import BaseInput from "../BaseInput.vue";
 	import BaseInputDate from "../BaseInputDate.vue";
 	import BaseComboboxAdvance from "../Select/BaseComboboxAdvance.vue";
 	import BaseButton from "../Button/BaseButton.vue";
+	import BaseAttach from "../Form/components/BaseAttach.vue"
 
 	export default {
 		name: "BaseTableInput",
-		mixins: [globalComponents],
+		mixins: [globalComponents, methods],
 		components: {
 			BaseInput,
 			BaseComboboxAdvance,
 			BaseButton,
 			BaseInputDate,
+			BaseAttach
 		},
 		props: {
 			tableStyle: {
@@ -123,6 +141,10 @@
 				default: function() {
 					return {}
 				}
+			},
+			enable: {
+				type: Boolean,
+				default: true
 			}
 		},
 		data() {
@@ -164,7 +186,7 @@
 				rowEmpty[this.defaultBind['name']] = this.defaultBind['value'];
 				var tableData = this.tableData;
 				tableData.push(rowEmpty);
-				this.changeTableData(tableData);
+				this.changeTableData(tableData);	
 			},
 			/**
 			 * Xoá tất cả các bản ghi
@@ -184,12 +206,14 @@
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
 			deleteOneRecord(indexData) {
-				var tableData = this.tableData;
-				if (tableData[indexData]['state'] == VoucherDetailState.ADD)
-					tableData.splice(indexData, 1);
-				else
-					tableData[indexData]['state'] = VoucherDetailState.DELETE;
-				this.changeTableData(tableData);
+				if (this.enable) {
+					var tableData = this.tableData;
+					if (tableData[indexData]['state'] == VoucherDetailState.ADD)
+						tableData.splice(indexData, 1);
+					else
+						tableData[indexData]['state'] = VoucherDetailState.DELETE;
+					this.changeTableData(tableData);
+				}	
 			},
 			/**
 			 * Thay đổi dữ liệu trong bảng
@@ -205,6 +229,21 @@
 			 */
 			addNote() {
 				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+			},
+			/**
+			 * Giá trị bind vào footer
+			 * @param {Object} item
+			 * CreatedBy: NTDUNG (01/10/2021) 
+			 */
+			footerValue(item) {
+				if (item["total"]) {
+					var total = 0;
+					this.tableData.forEach(data=> {
+						if (data['state'] != VoucherDetailState.DELETE)
+							total += Number(data[item['field']] ? data[item['field']] : 0);
+					});
+					return this.formatMoney(total);
+				}
 			}
 		},
 	};

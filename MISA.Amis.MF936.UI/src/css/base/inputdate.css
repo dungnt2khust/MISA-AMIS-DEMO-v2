@@ -11,9 +11,9 @@
     /* INPUT ICON */
     .input__icon {
         position: absolute;
-        top: 0;
+        top: 1px;
         bottom: 0;
-        right: 0;
+        right: 1px;
         width: 32px;
         border-top-right-radius: 2px;
         border-bottom-right-radius: 2px;
@@ -21,6 +21,7 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        height: 30px;
     }
         .input__icon:hover {
             background-color: #e0e0e0;
@@ -32,3 +33,7 @@
             width: 16px;
             height: 16px;
         }
+        .input__span--date {
+            width: 100%;
+            text-align: center;
+        } 

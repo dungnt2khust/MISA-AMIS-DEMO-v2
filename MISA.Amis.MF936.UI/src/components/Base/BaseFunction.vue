@@ -6,7 +6,7 @@
 					ref="inputSearch"
 					type="text"
 					class="function__search-input"
-					:placeholder="$resourcesVN.FUNCTION.SearchByCodeNamePhone"
+					:placeholder="$resourcesVN.FUNCTION.SearchByCodeNameDescription"
 					v-on="inputListeners"
 				/>
 			</div>

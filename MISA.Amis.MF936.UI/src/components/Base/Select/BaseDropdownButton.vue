@@ -2,7 +2,7 @@
 	<div
 		@click="dropdownButtonOnClick()"
 		class="dropdownbutton"
-		:class="{ 'dropdownbutton--selected': showList }"
+		:class="{ 'dropdownbutton--selected': showList, 'dropdownbutton--disable': !enable }"
 	>
 		<div class="dropdownbutton__icon"></div>
 	</div>
@@ -22,14 +22,19 @@
 			method: {
 				type: Function,
 				default: () => {}
+			},
+			enable: {
+				type: Boolean,
+				default: true
 			}
 		},
 		methods: {
 			dropdownButtonOnClick() {
-				this.method();
-            
-				this.$emit('input', !this.showList);
+				if (this.enable) {
+					this.method();
 				
+					this.$emit('input', !this.showList);
+				}	
 			},
 		},
 	};

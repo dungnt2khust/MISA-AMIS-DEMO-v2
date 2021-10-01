@@ -12,7 +12,10 @@
                 type="text"
                 class="input"
                 :tabindex="tabindex" 
+                :readonly="!enable"
+                v-if="!disable"
             />
+            <div v-if="disable" :class="positionOfInput" class="input__span"> {{value}}</div>
             <span v-if="unit != ''" class="input-unit ml-10">
                 {{ unit }}
             </span>
@@ -67,6 +70,14 @@
             pos: {
                 type: Number,
                 default: -1
+            },
+            enable: {
+                type: Boolean,
+                default: true
+            },
+            disable: {
+                type: Boolean, 
+                default: false
             }
 		},
 		data() {
@@ -112,7 +123,7 @@
              * CreatedBy: NTDUNG (28/09/2021)
              */
             positionOfInput() {
-                var styleClass = {"border-error": this.isError};
+                var styleClass = {"border-error": this.isError, "input--disable": !this.enable};
                 switch(this.pos) {
                     case TableDataStyle.POS.Left: 
                         styleClass["text-align-left"] = true;

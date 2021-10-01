@@ -88,6 +88,7 @@ module.exports = {
     //#region FUNCTION 
     FUNCTION: {
         SearchByCodeNamePhone: 'Tìm theo mã, họ tên, số điện thoại',
+        SearchByCodeNameDescription: 'Tìm theo mã, họ tên, mô tả',
         ReloadData: 'Tải lại dữ liệu',
         ExportExcel: 'Xuất file Excel',
         TableFunction: 'Chức năng',
@@ -112,22 +113,40 @@ module.exports = {
         StoreAndPrint: 'Cất và In',
         Close: 'Đóng',
         Help: 'Trợ giúp',
-        Setting: 'Cài đặt'
+        Setting: 'Cài đặt',
+        Edit: 'Sửa',
+        Mention: 'Ghi sổ',
+        UnMention: 'Bỏ ghi'
     },
     //#endregion
 
     //#region NOTIFICATIONS
     NOTIFY: {
-        FeatureNotAvaiable: 'Chức năng đang phát triển'
+        FeatureNotAvaiable: 'Chức năng đang phát triển',
+        DataHasChanged: 'Dữ liệu đã thay đổi, bạn có muốn cất luôn không ?',
+        DeleteSuccess: 'Xoá thành công',
+        AddSuccess: 'Thêm mới thành công',
+        UpdateSuccess: 'Chỉnh sửa thành công',
     },
     //#endregion
     
-    //#region 
-    API: {
-        Warehouse: 'https://localhost:44350/api/v1/Warehouses/Filter?pageIndex=1&pageSize=20',
-        Unit: '',
-        Commodity: 'https://localhost:44350/api/v1/Commoditys/Filter?pageIndex=1&pageSize=20'
-    }
+    //#region WAREHOUSE DETAIL FORM
+    WAREHOUSE_DETAIL: {
+        Title: 'Phiếu nhập kho {0}',
+        Object: 'Đối tượng',
+        Address: 'Địa chỉ', 
+        Shipper: 'Người giao hàng',
+        Description: 'Diễn giải',
+        Employee: 'Nhân viên',
+        Attach: 'Kèm theo',
+        OriginalVoucher: 'Chứng từ gốc',
+        MathematicsDate: 'Ngày hạch toán',
+        VoucherDate: 'Ngày chứng từ',
+        VoucherCode: 'Số chứng từ',
+        TotalPrice: 'Tổng tiền',
+        Reference: 'Tham chiếu',
+        AttachFile: 'Đính kèm'
+    } 
     //#endregion
 
 };

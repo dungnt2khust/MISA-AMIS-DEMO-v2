@@ -18,16 +18,18 @@ namespace Misa.ApplicationCore.Services
         IAccountVoucherRepository _accounVoucherRepository;
         IAccountVoucherDetailRepository _accountVoucherDetailRepository;
         IAccountObjectRepository _accountObjectRepository;
+        ICommodityUnitRepository _commodityUnitRepository;
         //readonly IBaseRepository<AccountVoucher> _baseRepository;
         #endregion
 
         #region Constructor
-        public AccountVoucherService(IBaseRepository<AccountVoucher> baseRepository, IAccountVoucherRepository accounVoucherRepository, IAccountVoucherDetailRepository accountVoucherDetailRepository, IAccountObjectRepository accountObjectRepository) : base(baseRepository)
+        public AccountVoucherService(IBaseRepository<AccountVoucher> baseRepository, IAccountVoucherRepository accounVoucherRepository, IAccountVoucherDetailRepository accountVoucherDetailRepository, IAccountObjectRepository accountObjectRepository, ICommodityUnitRepository commodityUnitRepository) : base(baseRepository)
         {
             _accounVoucherRepository = accounVoucherRepository;
             _baseRepository = baseRepository;
             _accountVoucherDetailRepository = accountVoucherDetailRepository;
             _accountObjectRepository = accountObjectRepository;
+            _commodityUnitRepository = commodityUnitRepository;
         }
 
         public ServiceResult getAccountVoucherPagingFilter(string searchData, int? mentionState, string voucherType, DateTime? startDate, DateTime? endDate, int pageIndex, int pageSize)
@@ -152,26 +154,25 @@ namespace Misa.ApplicationCore.Services
                 _baseRepository.Insert(accountVoucher);
                 // Thêm vào hàng tiền
                 var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
+                var accountVoucherDetailIds = new List<Guid>();
                 for (int i = 0; i < accountVoucherDetails.Count(); i++)
                 {
                     var accountVoucherDetail = accountVoucherDetails[i];
+                    // Bind id của master
                     accountVoucherDetail.accountvoucher_id = accountVoucher.accountvoucher_id;
-                    var state = (int)accountVoucherDetail.GetType().GetProperty("state").GetValue(accountVoucherDetail, null);
-
-                    switch (state)
-                    {
-                        case (int)AccountVoucherDetailState.Add:
-                            _accountVoucherDetailRepository.Insert(accountVoucherDetail);
-                            break;
-                        case (int)AccountVoucherDetailState.Update:
-                            _accountVoucherDetailRepository.Update(accountVoucherDetail, accountVoucherDetail.accountvoucherdetail_id);
-                            break;
-                        case (int)AccountVoucherDetailState.Delete:
-                            _accountVoucherDetailRepository.Delete(accountVoucherDetail.accountvoucherdetail_id);
-                            break;
-                    }
+                    // Tạo id mới cho detail
+                    var newDetailId = Guid.NewGuid();
+                    accountVoucherDetail.accountvoucherdetail_id = newDetailId;
+                    accountVoucherDetailIds.Add(newDetailId);
+                    // Tạo mới detail
+                    _accountVoucherDetailRepository.Insert(accountVoucherDetail);
+                        
                 }
-                serviceResult.Data = accountVoucherDetails.Count();
+                serviceResult.Data = new
+                {
+                    newMasterId = accountVoucher.accountobject_id,
+                    newDetailIds = accountVoucherDetailIds
+                };
                 //serviceResult.Data = _accounVoucherRepository.updateAccountVoucher(accountVoucherID,data);
 
                 return serviceResult;
@@ -208,6 +209,7 @@ namespace Misa.ApplicationCore.Services
                 for (int i = 0; i < accountVoucherDetails.Count(); i++)
                 {
                     var accountVoucherDetail = accountVoucherDetails[i];
+                    // Sửa đơn vị tính dược chọn
                     var state = (int)accountVoucherDetail.GetType().GetProperty("state").GetValue(accountVoucherDetail, null);
 
                     switch (state) {

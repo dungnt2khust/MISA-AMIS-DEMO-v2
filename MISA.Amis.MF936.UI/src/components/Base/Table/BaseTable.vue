@@ -122,10 +122,11 @@
 		},
 		data() {
 			return {
+				currId: null,
 				checkAll: false,
 				markRows: [],
 			};
-		},
+		},	
 		methods: {
 			/**
 			 * Đặt kiểu cho ô dữ liệu
@@ -171,13 +172,13 @@
 				} else if (field.includes("type")) {
 					switch (Number(value)) {
 						case this.$enum.VOUCHER_TYPE.One:
-							formatedValue = 'Thành phần sản xuất'
+							formatedValue = "Thành phần sản xuất";
 							break;
 						case this.$enum.VOUCHER_TYPE.Two:
-							formatedValue =  'Hàng bán bị trả lại'
+							formatedValue = "Hàng bán bị trả lại";
 							break;
 						case this.$enum.VOUCHER_TYPE.Three:
-							formatedValue = ' Khác (NVL thừa, HH thuê gia công, ...)';
+							formatedValue = " Khác (NVL thừa, HH thuê gia công, ...)";
 							break;
 					}
 				} else {
@@ -197,15 +198,21 @@
 				}
 			},
 			showFormDetail(id) {
+				this.currId = id;
+				this.$bus.$emit("showLoading");
 				voucherAPI
 					.getVoucherDetail(id)
-					.then((res) =>
+					.then((res) => {
 						this.$bus.$emit("showWarehouseDetail", {
 							mode: this.$enum.FORM_MODE.Update,
 							data: res.data.Data,
-						})
-					)
-					.catch((res) => console.log(res));
+						});
+						this.$bus.$emit("hideLoading");
+					})
+					.catch((res) => {
+						this.$bus.$emit("hideLoading");
+						console.log(res);
+					});
 			},
 			footerTable(index) {
 				if (index == 1) {

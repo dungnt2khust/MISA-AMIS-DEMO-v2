@@ -10,7 +10,7 @@
 			<div class="dialog__separate"></div>
 			<div class="dialog__control">
 				<div
-					@click="confirm('CANCEL')"
+					@click="confirm($enum.DIALOG_RESULT.Cancel)"
 					class="dialog__cancel button"
 					:class="{'button--green': cancelGreen}"
 				>
@@ -18,13 +18,13 @@
 				</div>
 				<div class="dialog__answer">
 					<div
-						@click="confirm('NO')"
+						@click="confirm($enum.DIALOG_RESULT.No)"
 						class="dialog__no button"
 					>
 						Không
 					</div>
 					<div
-						@click="confirm('YES')"
+						@click="confirm($enum.DIALOG_RESULT.Yes)"
 						class="dialog__yes button button--green"
 					>
 						Có
@@ -39,7 +39,7 @@
 		name: "BaseDialog",
 		data() {
 			return {
-				dialogType: "error",
+				dialogType: null,
 				dialogState: false,
                 dialogMessage: ''
 			};
@@ -51,8 +51,8 @@
 			 */
 			cancelGreen() {
 				switch(this.dialogType) {
-					case 'error':
-					case 'warn':
+					case this.$enum.DIALOG_TYPE.Error:
+					case this.$enum.DIALOG_TYPE.Warn:
 						return true;
 					default: 
 						return false;
@@ -64,8 +64,8 @@
 			 */
 			cancelLabel() {
 				switch(this.dialogType) {
-					case 'error': 
-					case 'warn':
+					case this.$enum.DIALOG_TYPE.Error: 
+					case this.$enum.DIALOG_TYPE.Warn:
 						return 'Đồng ý';
 					default: 
 						return 'Huỷ';

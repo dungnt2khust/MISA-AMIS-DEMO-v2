@@ -7,11 +7,13 @@
 		<span v-if="label != ''" class="label">
 			{{ label }} <span v-if="required" class="text-red">*</span>
 		</span>
+		<div v-if="disable" class="input__span">{{foundSelectedItem()}}</div>
 		<div
+			v-if="!disable"
 			class="comboboxadvance"
 			:class="{ 'comboboxadvance--focus': focusState }"
 		>
-			<div class="comboboxadvance__main">
+			<div class="comboboxadvance__main" :class="{'comboboxadvance--disable': !enable}">
 				<div class="comboboxadvance__input-wrapper">
 					<input
 						ref="comboboxInput"
@@ -21,20 +23,22 @@
 						:tabindex="tabindex"
 						:value="foundSelectedItem()"
 						:placeholder="placeholder"
+						:readonly="!enable"	
 					/>
-				</div>
+				</div>	
 				<div
 					v-if="type != 'small'"
 					@click="showForm()"
 					class="comboboxadvance__icon"
 				></div>
-			</div>
+			</div>	
 			<base-dropdown-button
 				v-show="dropdownButtonState"
 				v-model="showList"
 				:method="focusInput"
 				:showList="showList"
 				:focusState="focusState"
+				:enable="enable"
 			/>
 			<base-list-grid
 				v-show="showList"
@@ -44,6 +48,7 @@
 				:listGridData="listGridData"
 				:valueBind="valueBind"
 				:vmodelField="vmodelField"
+				:controller="controller"
 				:subfield="subfield"
 				@changeOption="changeOption($event)"
 				:type="type"
@@ -145,6 +150,14 @@
 			index: {
 				type: Number,
 				default: -1
+			},
+			enable: {
+				type: Boolean,
+				default: true
+			},
+			disable: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -243,7 +256,9 @@
 							case "Commoditys":
 								this.$bus.$emit('changeCommodity', this.index, this.valueBind, this.listGridData);
 								break;
-							// case "Units}"
+							case "Units":
+								this.$bus.$emit('changeUnit', this.index, this.valueBind, this.listGridData);
+								break;
 						}
 
 					})	
@@ -254,7 +269,8 @@
 			 * CreatedBy: NTDUNG (30/09/2021)
 			 */
 			showForm() {
-				this.$bus.$emit(this.form);
+				if (this.enable)
+					this.$bus.$emit(this.form);
 			},
 		},
 		watch: {

@@ -6,6 +6,7 @@
 			'combobox--show': comboboxState,
 			'combobox--focus': focusState,
 			'combobox--error': comboboxError,
+            'combobox--disable': !enable 
 		}"
 	>
 		<span v-if="label != ''" class="label">
@@ -18,11 +19,12 @@
 					class="combobox__input"
                     :value="inputValue"
 					:tabindex="tabIdx"
+                    :readonly="!enable"
+                    v-on="inputListeners"
 				/>
 			</div>
 			<div
-				tabindex="0"
-				@click="comboboxState = !comboboxState"
+				@click="toggleCombobox()"
 				class="combobox__button"
 			>
 				<div class="combobox__button-icon"></div>
@@ -70,6 +72,10 @@ export default {
         comboboxType: {
             type: String,
             default: ''
+        },
+        enable: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -80,18 +86,51 @@ export default {
         }
     },
     computed: {
+        /**
+         * Bind giá trị của input
+         * @return {String}
+         * CreatedBy: NTDUNG (29/09/2021)
+         */
         inputValue() {
             if (this.comboboxData[this.currIdx]) {
                 return this.comboboxData[this.currIdx]['name'];
             } else {
                 return '';
             }
+        },
+        /**
+         * Bắt sự kiện của input
+         * CreatedBy: NTDUNG (29/09/2021)
+         */
+        inputListeners() {
+            return Object.assign({}, this.$listener, {
+                focus: (event) => {
+                    event.target.select();
+                    this.focusState = true;
+                },
+                blur: () => {
+                    this.focusState = false;
+                }
+            })
         }
     },
     methods: {
+        /**
+         * Sự kiện click vào combobox
+         * @param {Number} index
+         * CreatedBy: NTDUNG (29/09/2021)
+         */
         comboboxItemOnClick(index) {
             this.$emit('input', index);
             this.comboboxState = false;
+        },
+        /**
+         * Bật tắt combobox
+         * CreatedBy: NTDUNG (29/09/2021)
+         */
+        toggleCombobox() {
+            if (this.enable)
+                this.comboboxState = !this.comboboxState;
         }
     }
 }

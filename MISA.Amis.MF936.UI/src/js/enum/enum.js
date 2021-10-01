@@ -8,5 +8,16 @@ module.exports = {
         One: 0, 
         Two: 1, 
         Three: 2
+    },
+    DIALOG_TYPE: {
+        Warn: 'warn',
+        Error: 'error',
+        Confirm: 'confirm',
+        ConfirmCancel: 'confirmCancel'
+    },
+    DIALOG_RESULT: {
+        No: 'NO',
+        Yes: 'YES',
+        Cancel: 'CANCEL'
     }
 }

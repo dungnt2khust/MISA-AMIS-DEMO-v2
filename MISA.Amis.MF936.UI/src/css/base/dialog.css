@@ -90,7 +90,7 @@
             /* Khi confirm thì ẩn cancel đi, chỉ có yes no */
             .dialog--confirm .dialog__cancel {
                 display: none;
-            }
+            } 
             /* Dialog answer */
             .dialog__answer {
                 display: flex;

@@ -1,0 +1,61 @@
+.attach {
+    margin-top: 44px;
+    width: 340px;
+    position: sticky;
+    left: 0;
+}
+    .attach__header {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 6px;
+    }
+        .attach__icon {
+            background: url('../../../../assets/img/Sprites.6114dba8.svg') no-repeat -539px -202px;
+            width: 18px;
+            height: 19px;
+            margin-right: 8px;
+        }
+        .attach__title {
+            font-size: 12px;
+            font-family: MISANotoSan-Bold;
+            color: #111;
+        }
+        .attach__desc {
+            margin-left: 15px;
+            color: #757575;
+            white-space: nowrap; 
+            font-size: 12px;
+        }
+    .attach__input-wrapper {
+        height: 50px;
+        background: #fff;
+        padding: 16px 20px;
+        box-sizing: border-box;
+        border-radius: 2px;
+        position: relative;
+        border: 1px solid #babec5;
+        margin-bottom: 100px;
+        width: 100%;
+        cursor: pointer;
+    }
+        .attach__input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            width: 100%;
+            cursor: pointer !important;
+        }
+        .attach__input-placeholder {
+            min-width: 264px;
+            display: block;
+            text-align: center;
+            margin: 0!important;
+            padding: 0!important;
+            width: 100%;
+            color: #9e9e9e;
+            font-style: italic;
+            font-size: 12px;
+        }

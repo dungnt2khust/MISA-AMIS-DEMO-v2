@@ -45,5 +45,10 @@ namespace Misa.ApplicationCore.Entities
         /// </summary>
         [MisaNotMap]
         public string unit_name { get; set; }
+
+        /// <summary>
+        /// Được chọn
+        /// </summary>
+        public int selected { get; set; }
     }
 }

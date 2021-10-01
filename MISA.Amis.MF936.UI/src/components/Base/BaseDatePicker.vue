@@ -10,20 +10,29 @@
 				<div class="datepicker__year-list">
 					<div
 						v-for="index in 9"
-						@click="pickYear((Math.floor(currYear/3) - 1) * 3 + index)"
+						@click="pickYear((Math.floor(currYear / 3) - 1) * 3 + index)"
 						class="datepicker__year-item"
-						:class="{ 'year--selected': (Math.floor(currYear/3) - 1) * 3 + index == selected.year }"
+						:class="{
+							'year--selected':
+								(Math.floor(currYear / 3) - 1) * 3 + index == selected.year,	
+						}"
 						:key="index"
 					>
-						{{ (Math.floor(currYear/3) - 1) * 3 + index}}
+						{{ (Math.floor(currYear / 3) - 1) * 3 + index }}
 					</div>
 				</div>
 				<div class="datepicker__year-control">
-					<div @click="currYear = currYear - 6" class="datepicker__year-prev"></div>
+					<div
+						@click="currYear = currYear - 6"
+						class="datepicker__year-prev"
+					></div>
 					<div @click="yearPicker = false" class="datepicker__year-cancel">
 						Huỷ
 					</div>
-					<div @click="currYear = currYear + 6" class="datepicker__year-next"></div>
+					<div
+						@click="currYear = currYear + 6"
+						class="datepicker__year-next"
+					></div>
 				</div>
 			</div>
 		</div>
@@ -49,7 +58,13 @@
 							'datepicker--selected':
 								getDates[(idxRow - 1) * 7 + idxData - 1] == selected.date &&
 								curr.month == selected.month &&
-								curr.year == selected.year
+								curr.year == selected.year,
+							'datepicker--overtoday':
+								overToday(
+									getDates[(idxRow - 1) * 7 + idxData - 1],
+									curr.month,
+									curr.year
+								) && !overtoday,
 						}"
 						:style="{
 							visibility: getDates[(idxRow - 1) * 7 + idxData - 1]
@@ -70,7 +85,7 @@
 </template>
 <script>
 	// LIBRARY
-	import globalComponents from '../../mixins/globalComponents/globalComponents.js'
+	import globalComponents from "../../mixins/globalComponents/globalComponents.js";
 
 	export default {
 		name: "BaseDatePicker",
@@ -83,6 +98,10 @@
 			value: {
 				type: String,
 				default: null,
+			},
+			overtoday: {
+				type: Boolean,
+				default: false,
 			},
 		},
 		data() {
@@ -200,18 +219,13 @@
 				var newDate = `${year}-${month}-${date}`;
 
 				var datePicked = new Date(newDate);
-				var currDate = new Date();
-				currDate.setHours(0);
-				currDate.setMilliseconds(0);
-				currDate.setMinutes(0);
-				datePicked.setHours(0);
-				datePicked.setMilliseconds(0);
-				datePicked.setMinutes(0);
 
-				if (datePicked &&  datePicked <= currDate) {
-					this.$emit("input", newDate);	
+				if (datePicked && !this.overToday(date, month, year)) {
+					this.$emit("input", newDate);
 				} else {
-					this.callDialog('warn', this.$resourcesVN.OverCurrentDate);
+					if (this.overtoday) this.$emit("input", newDate);
+					// else
+					// 	this.callDialog('warn', this.$resourcesVN.OverCurrentDate);
 				}
 				this.$emit("hideDatepicker");
 			},
@@ -221,12 +235,31 @@
 			 * CreatedBy: NTDUNG (03/09/2021)
 			 */
 			pickYear(year) {
-				this.currYear = year,
-				this.$set(this.selected, "year", year);
+				(this.currYear = year), this.$set(this.selected, "year", year);
 				this.$set(this.curr, "year", year);
 				this.yearPicker = false;
 				this.dateOnClick(this.selected.date);
-			}
+			},
+			/**
+			 * Kiểm tra có vượt quá ngày hiện tại
+			 * @param {Number} date
+			 * @param {Number} date
+			 * @param {Number} date
+			 * @return {Boolean}
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			overToday(date, month, year) {
+				var currDate = new Date();
+				var dateChecked = new Date(`${year}-${month}-${date}`);
+				currDate.setHours(0);
+				currDate.setMilliseconds(0);
+				currDate.setMinutes(0);
+				dateChecked.setHours(0);
+				dateChecked.setMilliseconds(0);
+				dateChecked.setMinutes(0);
+
+				return dateChecked > currDate;
+			},
 		},
 		watch: {
 			/**
@@ -258,5 +291,5 @@
 	};
 </script>
 <style>
-	@import url('../../css/base/datepicker.css');
+	@import url("../../css/base/datepicker.css");
 </style>

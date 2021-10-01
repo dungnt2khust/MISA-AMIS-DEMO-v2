@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Misa.ApplicationCore.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,18 @@ namespace Misa.ApplicationCore.Entities
         /// Mô tả
         /// </summary>
         public string description { get; set; }
+
+        /// <summary>
+        /// Tỷ lệ chuyển đổi
+        /// </summary>
+        [MisaNotMap]
+        public decimal rate  { get; set; }
+
+        /// <summary>
+        /// Là đơn vị chính
+        /// </summary>
+        [MisaNotMap]
+        public int is_main_unit { get; set; }
 
         #endregion
     }

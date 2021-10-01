@@ -17,6 +17,12 @@
         flex: 1;
         display: flex;
     }
+    .comboboxadvance__main.comboboxadvance--disable,
+    .comboboxadvance__main.comboboxadvance__disable .comboboxadvance__input-wrapper,
+    .comboboxadvance__main.comboboxadvance--disable input {
+        background-color: #EFF0F2;
+    }
+
         .comboboxadvance__input-wrapper {
             flex: 1;
             box-sizing: border-box;

@@ -153,6 +153,7 @@
 			},
 		},
 		created() {
+			this.$bus.$emit('showLoading');
 			this.$bus.$on('reloadData', () => {
 				this.getData();
 			});
@@ -229,6 +230,7 @@
 					})
 					.catch((res) => {
 						console.log(res);
+						this.$bus.$emit('hideLoading');
 					});
 			},
 			/**

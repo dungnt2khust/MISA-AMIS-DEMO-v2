@@ -1,11 +1,17 @@
 <template lang="">
-	<div tabindex="20" v-on="tooltipListeners(tooltip)" @click="method()" class="button" :class="'button--' + type">
+	<div
+		tabindex="20"
+		v-on="tooltipListeners(tooltip)"
+		@click="buttonOnClick()"
+		class="button"
+		:class="[{'button--disable': !enable}, 'button--' + type]"
+	>
 		{{ label }}
 	</div>
 </template>
-<script>	
+<script>
 	// LIBRARY
-	import globalComponents from '../../../mixins/globalComponents/globalComponents.js'
+	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
 	export default {
 		name: "BaseButton",
 		mixins: [globalComponents],
@@ -24,9 +30,23 @@
 			},
 			tooltip: {
 				type: String,
-				default: ""
-			}
+				default: "",
+			},
+			enable: {
+				type: Boolean,
+				default: true,
+			},
 		},
+		methods: {
+			/**
+			 * Nhấn nút
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			buttonOnClick() {
+				if (this.enable) 
+					this.method();
+			}
+		}
 	};
 </script>
 <style>
