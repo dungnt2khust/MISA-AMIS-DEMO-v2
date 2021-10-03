@@ -6,7 +6,6 @@
 
 /* RADIO */
 .radio {
-    margin-left: 10px;
 }
     /* RADIO LIST */
     .radio__list {
@@ -19,6 +18,8 @@
     .radio__item {
         margin-right: 20px !important;
         outline: none;
+        display: flex;
+        align-items: center;
     }
         /* RADIO BORDER */
         .radio__border {

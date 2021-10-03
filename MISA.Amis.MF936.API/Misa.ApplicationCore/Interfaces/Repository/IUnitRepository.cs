@@ -10,5 +10,15 @@ namespace Misa.ApplicationCore.Interfaces.Repository
 {
     public interface IUnitRepository : IBaseRepository<Unit>
     {
+        /// <summary>
+        /// Lọc và phân trang dữ liệu kho
+        /// </summary>
+        /// <param name="warehouseFilter">giá trị tìm kiếm</param>
+        /// <param name="pageIndex">index trang</param>
+        /// <param name="pageSize">số bản ghi trên trang</param>
+        /// <returns></returns>
+        /// author: NTDUNG(27/8/2021)
+        /// modifiedBy: NTDUNG(27/8/2021)
+        object GetUnitFilterPaging(string warehouseFilter, int pageIndex, int pageSize);
     }
 }

@@ -9,10 +9,12 @@
                 :title="isError ? errorMsg : ''"
                 :value="value"
                 :class="positionOfInput"
-                type="text"
                 class="input"
                 :tabindex="tabindex" 
+                :placeholder="placeholder"
                 :readonly="!enable"
+                :type="type"
+                ref="input"
                 v-if="!disable"
             />
             <div v-if="disable" :class="positionOfInput" class="input__span"> {{value}}</div>
@@ -78,16 +80,45 @@
             disable: {
                 type: Boolean, 
                 default: false
+            },
+            intableinput: {
+                type: Boolean,
+                default: false
+            },
+            placeholder: {
+                type: String,
+                default: ''
+            },
+            type: {
+                type: String,
+                default: 'text'
+            },
+            syncfield: {
+                type: String,
+                default: ''
+            },
+            index: {
+                type: Number,
+                default: -1
+            },
+            formName: {
+                type: String,
+                default: ''
             }
 		},
 		data() {
 			return {
 				isError: false,
 				errorMsg: '',
-                type: 0,
                 firstFocus: false
 			};
 		},
+        created() {
+            this.$bus.$on('validate' + this.formName, () => {
+                this.validateInput(this.value);
+                this.$bus.$emit('catchError' + this.formName, this.errorMsg)
+            })
+        },
         computed: {
             /**
              * Lắng nghe các sự kiện của input
@@ -103,6 +134,9 @@
                     blur: (event) => {
                         // Đưa dữ liệu ra phía cha
                         this.$emit('input', event.target.value);
+                        // Emit dữ liệu để đồng bộ
+                        if (this.syncfield)
+                            this.$bus.$emit('change' + this.syncfield, this.index, 'INPUT', event.target.value);
                         // Validate dữ liệu
                         this.validateInput(event.target.value, 0);
                         // Tắt mode focus
@@ -142,14 +176,10 @@
             /**
              * validate các ô input
              * @param {String} value
-             * @param {Number} type kiểu show lỗi 0: chỉ blur, 1: blur và show dialog
              * CreatedBy: NTDUNG (05/08/2021)
              * ModifiedBy: NTDUNG (06/08/2021)
              */
-            validateInput(value, type) {
-                // Đặt kiểu show
-                this.type = type;
-
+            validateInput(value) {
                 if (value === null || value === '') {
                     if (this.required) {
                         this.errorMsg = this.$resourcesVN.RequireField.replace('@', this.label);
@@ -228,7 +258,7 @@
                 if (state)
                     this.isError = false;
             }
-        }
+        },
 	};
 </script>
 <style>

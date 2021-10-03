@@ -2,7 +2,8 @@
 module.exports = {
     FORM_MODE: {
         Add: 0,
-        Update: 1
+        Update: 1, 
+        Replication: 2
     },
     VOUCHER_TYPE: {
         One: 0, 
@@ -19,5 +20,10 @@ module.exports = {
         No: 'NO',
         Yes: 'YES',
         Cancel: 'CANCEL'
+    },
+    POS: {
+        Left: 0,
+        Center: 1,
+        Right: 2
     }
 }

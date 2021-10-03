@@ -22,13 +22,12 @@
         height: 32px;
         font-size: 13px;
         font-family: MISANotoSan-Bold;
-        background-color: #F4F5F8;
         margin: 0;
         background-color: #ECEEF1;
     }
     .listgrid thead {
         height: 32px;
-    }
+    } 
         .listgrid th {
             padding: 0 10px;
             border: none !important;

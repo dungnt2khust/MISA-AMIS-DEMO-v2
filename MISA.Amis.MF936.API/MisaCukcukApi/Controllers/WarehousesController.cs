@@ -33,7 +33,7 @@ namespace Misa.API.Controllers
         /// CreatedBy: NTDUNG(20/8/2021)
         /// ModifiedBy: NTDUNG(20/8/2021)
         [HttpGet("Filter")]
-        public IActionResult GetEmployeeFilterPaging([FromQuery] string searchData, [FromQuery] int pageIndex, [FromQuery] int pageSize)
+        public IActionResult GetWarehouseFilterPaging([FromQuery] string searchData, [FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
             try
             {

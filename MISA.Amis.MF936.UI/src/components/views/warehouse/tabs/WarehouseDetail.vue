@@ -1,5 +1,5 @@
 <template lang="">
-	<div>
+	<div v-if="formLargeState" class="warehousedetail">
 		<base-form-large
 			:title="
 				formatString(
@@ -7,8 +7,7 @@
 					masterContent['voucher_code']
 				)
 			"
-			v-model="formLargeState"
-			:formLargeState="formLargeState"
+			@hideForm="hideForm()"
 		>
 			<template v-slot:header>
 				<div class="formlarge__type ml-40">
@@ -121,7 +120,7 @@
 							</div>
 						</div>
 						<div class="w-1/5 ml-16">
-							<div class="fx-100 mb-10">
+							<div class="fx-1 mb-10">
 								<base-input-date
 									:value="masterContent['mathematics_date']"
 									v-model="masterContent['mathematics_date']"
@@ -130,7 +129,7 @@
 									:enable="enable"
 								/>
 							</div>
-							<div class="fx-100 mb-10">
+							<div class="fx-1 mb-10">
 								<base-input-date
 									:value="masterContent['voucher_date']"
 									v-model="masterContent['voucher_date']"
@@ -139,7 +138,7 @@
 									:enable="enable"
 								/>
 							</div>
-							<div class="fx-100 mb-10">
+							<div class="fx-1 mb-10">
 								<base-input
 									:value="masterContent['voucher_code']"
 									v-model="masterContent['voucher_code']"
@@ -179,40 +178,41 @@
 			</template>
 			<template v-slot:footer>
 				<base-button
-					:label="$resourcesVN.FORM.Cancel"
+					:label="$resourcesVN.FORM.Close.Label"
+					:tooltip="$resourcesVN.FORM.Close.Tooltip"
 					:method="hideForm"
 					type="dark"
 				/>
 				<div class="formlarge__store fx">
 					<base-button
 						@click.native="store()"
-						:label="$resourcesVN.FORM.Store"
+						:label="$resourcesVN.FORM.Store.Label"
 						v-if="enable"
 						type="dark"
 						class="mr-8"
 					/>
 					<base-button
 						@click.native="storeAndPrint()"
-						:label="$resourcesVN.FORM.StoreAndPrint"
+						:label="$resourcesVN.FORM.StoreAndPrint.Label"
 						v-if="enable"
 						type="green"
 					/>
 					<base-button
 						class="mr-8"
 						@click.native="edit()"
-						:label="$resourcesVN.FORM.Edit"
+						:label="$resourcesVN.FORM.Edit.Label"
 						type="dark"
 						v-if="!masterContent['is_mention'] && !enable"
 					/>
 					<base-button
 						@click.native="unMention()"
-						:label="$resourcesVN.FORM.UnMention"
+						:label="$resourcesVN.FORM.UnMention.Label"
 						type="green"
 						v-if="masterContent['is_mention'] && !enable"
 					/>
 					<base-button
 						@click.native="mention()"
-						:label="$resourcesVN.FORM.Mention"
+						:label="$resourcesVN.FORM.Mention.Label"
 						type="green"
 						v-if="!masterContent['is_mention'] && !enable"
 					/>
@@ -287,91 +287,166 @@
 			 */
 			this.$bus.$on("showWarehouseDetail", (data) => {
 				this.formLargeState = true;
-				if (data["mode"] == this.$enum.FORM_MODE.Update) {
-					this.enable = false;
-					this.mode = this.$enum.FORM_MODE.Update;
-					this.masterContent = data["data"]["in_inward"][0];
 
-					var dataDetail = data["data"]["in_inward_detail"];
-					this.tableInputData = [];
-					dataDetail.forEach((item, index) => {
-						this.$set(this.tableInputData, index, item["voucher_detail"]);
-						this.$set(this.tableInputData[index], "units", item["units"]);
-						this.units[index] = item["units"];
-						var mainUnit = this.tableInputData[index]["units"].find((item) => {
-							return item["is_main_unit"] == 1;
+				switch (data["mode"]) {
+					case this.$enum.FORM_MODE.Update:
+						this.enable = false;
+						this.mode = this.$enum.FORM_MODE.Update;
+						this.masterContent = data["data"]["in_inward"][0];
+
+						var dataDetail = data["data"]["in_inward_detail"];
+						this.tableInputData = [];
+						dataDetail.forEach((item, index) => {
+							this.$set(this.tableInputData, index, item["voucher_detail"]);
+							this.$set(this.tableInputData[index], "units", item["units"]);
+							this.units[index] = item["units"];
+							var mainUnit = this.tableInputData[index]["units"].find(
+								(item) => {
+									return item["is_main_unit"] == 1;
+								}
+							);
+							var selectedUnitId = item["voucher_detail"]["selected_unit_id"];
+							var selectedUnit = item["units"].find((item) => {
+								return item["unit_id"] == selectedUnitId;
+							});
+							this.$set(
+								this.tableInputData[index],
+								"main_unit_rate",
+								mainUnit["rate"]
+							);
+							this.$set(
+								this.tableInputData[index],
+								"main_unit_id",
+								mainUnit["unit_id"]
+							);
+
+							this.$set(
+								this.tableInputData[index],
+								"selected_unit_id",
+								selectedUnit["unit_id"]
+							);
+
+							this.$set(
+								this.tableInputData[index],
+								"selected_unit_name",
+								selectedUnit["unit_name"]
+							);
+
+							this.$set(
+								this.tableInputData[index],
+								"selected_unit_rate",
+								selectedUnit["rate"]
+							);
+
+							this.$set(
+								this.tableInputData[index],
+								"state",
+								VoucherDetailState.UPDATE
+							);
+
+							this.cloneData();
 						});
-						var selectedUnitId = item["voucher_detail"]["selected_unit_id"];
-						var selectedUnit = item["units"].find((item) => {
-							return item["unit_id"] == selectedUnitId;
+						break;
+					case this.$enum.FORM_MODE.Add:
+						this.enable = true;
+						this.mode = this.$enum.FORM_MODE.Add;
+						this.masterContent = {};
+						this.tableInputData = [];
+						this.$bus.$emit("showLoading");
+						voucherAPI
+							.getNewCode()
+							.then((res) => {
+								console.log(res);
+								this.$set(this.masterContent, "voucher_code", res.data);
+								this.cloneData();
+								this.$bus.$emit("hideLoading");
+							})
+							.catch((res) => {
+								console.log(res);
+								this.$bus.$emit("hideLoading");
+							});
+						this.$set(this.masterContent, "voucher_type", 0);
+						this.$set(
+							this.masterContent,
+							"description",
+							"Nhập kho từ " + this.voucherTypeData[1]["name"].substring(3)
+						);
+						this.cloneData();
+						break;
+					case this.$enum.FORM_MODE.Replication:
+						this.mode = this.$enum.FORM_MODE.Replication;
+						this.masterContent = data["data"]["in_inward"][0];
+
+						var dataDetail1 = data["data"]["in_inward_detail"];
+						this.tableInputData = [];
+						dataDetail1.forEach((item, index) => {
+							this.$set(this.tableInputData, index, item["voucher_detail"]);
+							this.$set(this.tableInputData[index], "units", item["units"]);
+							this.units[index] = item["units"];
+							var mainUnit = this.tableInputData[index]["units"].find(
+								(item) => {
+									return item["is_main_unit"] == 1;
+								}
+							);
+							var selectedUnitId = item["voucher_detail"]["selected_unit_id"];
+							var selectedUnit = item["units"].find((item) => {
+								return item["unit_id"] == selectedUnitId;
+							});
+							this.$set(
+								this.tableInputData[index],
+								"main_unit_rate",
+								mainUnit["rate"]
+							);
+							this.$set(
+								this.tableInputData[index],
+								"main_unit_id",
+								mainUnit["unit_id"]
+							);
+
+							this.$set(
+								this.tableInputData[index],
+								"selected_unit_id",
+								selectedUnit["unit_id"]
+							);
+
+							this.$set(
+								this.tableInputData[index],
+								"selected_unit_name",
+								selectedUnit["unit_name"]
+							);
+
+							this.$set(
+								this.tableInputData[index],
+								"selected_unit_rate",
+								selectedUnit["rate"]
+							);
+
+							this.$set(
+								this.tableInputData[index],
+								"state",
+								VoucherDetailState.ADD
+							);
+							this.masterContent['is_mention'] = 0;
+							this.enable = true;
+							
+
+							this.$bus.$emit("showLoading");
+							voucherAPI
+								.getNewCode()
+								.then((res) => {
+									console.log(res);
+									this.$set(this.masterContent, "voucher_code", res.data);
+									this.cloneData();
+									this.$bus.$emit("hideLoading");
+								})
+								.catch((res) => {
+									console.log(res);
+									this.$bus.$emit("hideLoading");
+								});
+
+							this.cloneData();
 						});
-						this.$set(
-							this.tableInputData[index],
-							"main_unit_rate",
-							mainUnit["rate"]
-						);
-						this.$set(
-							this.tableInputData[index],
-							"main_unit_id",
-							mainUnit["unit_id"]
-						);
-
-						this.$set(
-							this.tableInputData[index],
-							"selected_unit_id",
-							selectedUnit["unit_id"]
-						);
-
-						this.$set(
-							this.tableInputData[index],
-							"selected_unit_name",
-							selectedUnit["unit_name"]
-						);
-
-						this.$set(
-							this.tableInputData[index],
-							"selected_unit_rate",
-							selectedUnit["rate"]
-						);
-
-						this.$set(
-							this.tableInputData[index],
-							"state",
-							VoucherDetailState.UPDATE
-						);
-						this.dataClone = {
-							in_inward: { ...this.masterContent },
-							in_inward_detail: { ...this.tableInputData },
-						};
-					});
-				}
-				if (data["mode"] == this.$enum.FORM_MODE.Add) {
-					this.enable = true;
-					this.mode = this.$enum.FORM_MODE.Add;
-					this.masterContent = {};
-					this.tableInputData = [];
-					this.$bus.$emit("showLoading");
-					voucherAPI
-						.getNewCode()
-						.then((res) => {
-							console.log(res);
-							this.$set(this.masterContent, "voucher_code", res.data);
-							this.dataClone = {
-								in_inward: { ...this.masterContent },
-								in_inward_detail: [...this.tableInputData],
-							};
-							this.$bus.$emit("hideLoading");
-						})
-						.catch((res) => {
-							console.log(res);
-							this.$bus.$emit("hideLoading");
-						});
-					this.$set(this.masterContent, "voucher_type", 0);
-					this.$set(
-						this.masterContent,
-						"description",
-						"Nhập kho từ " + this.voucherTypeData[1]["name"].substring(3)
-					);
+						break;
 				}
 			});
 
@@ -482,7 +557,7 @@
 					in_inward_detail: this.tableInputData,
 				};
 				// Kiểm tra đã thay đổi thì cảnh báo cất
-				if (this.deepEqualObject(data, this.dataClone, ['is_mention'])) {
+				if (this.deepEqualObject(data, this.dataClone, ["is_mention"])) {
 					this.formLargeState = false;
 				} else {
 					this.callDialog(
@@ -495,12 +570,10 @@
 								break;
 							case this.$enum.DIALOG_RESULT.No:
 								this.formLargeState = false;
-								if (this.needReload)
-									this.$bus.$emit('reloadData');
+								if (this.needReload) this.$bus.$emit("reloadData");
 								break;
 							case this.$enum.DIALOG_RESULT.Cancel:
-								if (this.needReload)
-									this.$bus.$emit('reloadData');
+								if (this.needReload) this.$bus.$emit("reloadData");
 								break;
 						}
 					});
@@ -516,50 +589,107 @@
 					in_inward: this.masterContent,
 					in_inward_detail: this.tableInputData,
 				};
-				// if (!this.deepEqualObject(data, this.dataClone, ['is_mention'])) {
-					this.$bus.$emit("showLoading");
+				if (this.validateData()) {
 					switch (this.mode) {
 						case this.$enum.FORM_MODE.Add:
-							data["in_inward"]["created_by"] = this.$resourcesVN.ACCOUNT_NAME;
-							voucherAPI
-								.addVoucher(data)
-								.then((res) => {
-									this.$bus.$emit('showToastMessage', this.$resourcesVN.NOTIFY.AddSuccess);
-									// Bind id master
-									this.$set(this.masterContent, 'accountvoucher_id', res.data['newMasterId']);
-									// Bind id detail
-									res.data['newDetailIds'].forEach((item, index) => {
-										this.$set(this.tableInputData[index], 'accountvoucherdetail_id', item);
-										this.$set(this.tableInputData[index], 'state', VoucherDetailState.UPDATE);
-									});
-									this.needReload = true;
-									this.enable = false;
-									this.mode = this.$enum.FORM_MODE.Update;
-									this.$bus.$emit("hideLoading");
-								})
-								.catch((res) => {
-									console.log(res);
-									this.$bus.$emit("hideLoading");
-								});
+							if (!this.deepEqualObject(data, this.dataClone, ["is_mention"]))
+								this.addVoucher(data);
+							else 
+								this.enable = false;
 							break;
 						case this.$enum.FORM_MODE.Update:
-							data["in_inward"]["modified_by"] = this.$resourcesVN.ACCOUNT_NAME;
-							voucherAPI
-								.updateVoucher(data.in_inward.accountvoucher_id, data)
-								.then((res) => {
-									console.log(res);
-									this.$bus.$emit('showToastMessage', this.$resourcesVN.NOTIFY.UpdateSuccess);
-									this.$bus.$emit("hideLoading");
-									this.needReload = true;
-									this.enable = false;
-								})
-								.catch((res) => {
-									console.log(res);
-									this.$bus.$emit("hideLoading");
-								});
+							if (!this.deepEqualObject(data, this.dataClone, ["is_mention"]))
+								this.updateVoucher(data);
+							else 
+								this.enable = false;
+							break;
+						case this.$enum.FORM_MODE.Replication:
+							this.addVoucher(data);
 							break;
 					}
-				// }	
+				}
+			},
+			/**
+			 * Thêm mới phiếu nhập kho
+			 * @param {Object} data
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			addVoucher(data) {
+				data["in_inward"]["created_by"] = this.$resourcesVN.ACCOUNT_NAME;
+				this.$bus.$emit("showLoading");
+				voucherAPI
+					.addVoucher(data)
+					.then((res) => {
+						// Thong báo thành công
+						this.$bus.$emit(
+							"showToastMessage",
+							this.$resourcesVN.NOTIFY.AddSuccess
+						);
+						// Bind id master
+						this.$set(
+							this.masterContent,
+							"accountvoucher_id",
+							res.data["newMasterId"]
+						);
+						// Bind id detail
+						res.data["newDetailIds"].forEach((item, index) => {
+							this.$set(
+								this.tableInputData[index],
+								"accountvoucherdetail_id",
+								item
+							);
+							this.$set(
+								this.tableInputData[index],
+								"state",
+								VoucherDetailState.UPDATE
+							);
+						});
+						// Bật mode cần tải lại dữ liệu
+						this.needReload = true;
+						// Tắt chỉnh sửa
+						this.enable = false;
+						// Đổi mode thành update
+						this.mode = this.$enum.FORM_MODE.Update;
+						// Clone lại data
+						this.cloneData();
+						// Tắt loading
+						this.$bus.$emit("hideLoading");
+					})
+					.catch((res) => {
+						console.log(res);
+						this.$bus.$emit("hideLoading");
+					});
+			},
+			/**
+			 * Thêm mới phiếu nhập kho
+			 * @param {Object} data
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			updateVoucher(data) {
+				data["in_inward"]["modified_by"] = this.$resourcesVN.ACCOUNT_NAME;
+				this.$bus.$emit("showLoading");
+				voucherAPI
+					.updateVoucher(data.in_inward.accountvoucher_id, data)
+					.then((res) => {
+						console.log(res);
+						// Thông báo thành công
+						this.$bus.$emit(
+							"showToastMessage",
+							this.$resourcesVN.NOTIFY.UpdateSuccess
+						);
+						// Tắt loading
+						this.$bus.$emit("hideLoading");
+						// Bật mode cần tải lại dữ liệu
+						this.needReload = true;
+						// Tắt chỉnh sửa
+						this.enable = false;
+						// Clone lại data
+						this.cloneData();
+					})
+					.catch((res) => {
+						console.log(res);
+						this.$bus.$emit("hideLoading");
+					});
 			},
 			/**
 			 * Cất và in
@@ -613,6 +743,26 @@
 			edit() {
 				this.enable = true;
 			},
+			/**
+			 * Clone dữ liệu hiện tại
+			 * CreatedBy: NTDUNG (02/10/2021)
+			 */
+			cloneData() {
+				this.dataClone = {
+					in_inward: { ...this.masterContent },
+					in_inward_detail: [],
+				};
+				this.tableInputData.forEach((item, index) => {
+					this.dataClone.in_inward_detail[index] = { ...item };
+				});
+			},
+			/**
+			 * Validate data
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			validateData() {
+				return true;
+			}
 		},
 		watch: {
 			/**

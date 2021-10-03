@@ -41,12 +41,12 @@
         border-collapse: separate;
         border-spacing: 0;
         position: relative;
-    }
+    } 
     .tableinput.tableinput--disable > tbody > tr > td {
         background-color: #F4F5F8 !important;
     }
         .tableinput > thead {
-            font-family: MISANotoSan-Semibold;
+            font-family: MISANotoSan-Bold;
             font-size: 12px;
             text-transform: uppercase;
             text-align: left;
@@ -78,7 +78,7 @@
                 font-family: MISANotoSan-Regular;
                 font-size: 13px;
                 font-weight: 400;
-                background-color: #FFF;
+                background-color: #F4F5F8;
                 white-space: nowrap;
                 border-right: 1px dotted var(--border-color);
                 border-bottom: 1px dotted var(--border-color);

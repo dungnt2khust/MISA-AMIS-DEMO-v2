@@ -52,6 +52,8 @@
 							:index="indexData"
 							type="small"
 							:tabindex="indexData"
+							:syncfield="itemStyle['syncfield']"
+							:hasFooter="itemStyle['hasFooter']"
 							:disable="!enable"
 						/>
 						<base-input
@@ -60,7 +62,9 @@
 							v-model="itemData[itemStyle['field']]"
 							:pos="itemStyle.pos"
 							:tabindex="indexData"
-							:disable="!enable"
+							:disable="!enable || !itemStyle['enable']"
+							:syncfield="itemStyle['syncfield']"
+							:index="indexData"
 						/>
 						<base-input-date
 							v-if="(itemStyle.type == TableDataStyle.TYPE.InputDate)"
@@ -97,7 +101,7 @@
 				type="small"
 			/>
 		</div>
-		<base-attach/>
+		<base-attach :enable="enable"/>
 	</div>
 </template>
 <script>

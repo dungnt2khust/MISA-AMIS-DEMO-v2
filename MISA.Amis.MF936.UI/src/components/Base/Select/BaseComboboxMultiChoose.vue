@@ -23,13 +23,14 @@
 							</div>
 						</div>
 					</div>
-					<div v-if="type != 'small'" class="comboboxadvance__icon"></div>
+					<div v-if="type != 'small'" @click="showForm()" class="comboboxadvance__icon"></div>
 				</div>
 				<base-dropdown-button v-model="showList" :showList="showList" />
 				<base-list-grid-multichoose
 					v-show="showList"
 					:showList="showList"
 					v-model="listSelected"
+					@hideGrid="showList = false"
 					:listSelected="listSelected"
 					:listGridStyle="listGridStyle"
 					:listGridData="listGridData"
@@ -39,6 +40,8 @@
 	</div>
 </template>
 <script>
+	// LIBRARY
+	import axios from "axios";
 	// COMPONENTS
 	import BaseDropdownButton from "./BaseDropdownButton.vue";
 	import BaseListGridMultichoose from "./BaseListGridMultichoose.vue";
@@ -74,43 +77,126 @@
 				type: Number,
 				default: -1,
 			},
+			api: {
+				type: String,
+				default: "",
+			},
+			controller: {
+				type: String,
+				default: "",
+			},
+			listGridStyle: {
+				type: Array,
+				default: function() {
+					return [];
+				},
+			},
+			valueBind: {
+				type: Array,
+				default: function() {
+					return [];
+				}
+			},
+			vmodelField: {
+				type: String,
+				default: "",
+			},
+			field: {
+				type: String,
+				default: "",
+			},
+			default: {
+				type: Array,
+				default: function() {
+					return [];
+				},
+			},
+			display: {
+				type: String,
+				default: "",
+			},
+			data: {
+				type: Array,
+				default: null,
+			},
+			subfield: {
+				type: String,
+				default: "",
+			},
+			form: {
+				type: String,
+				default: "",
+			},
+			index: {
+				type: Number,
+				default: -1,
+			},
+			enable: {
+				type: Boolean,
+				default: true,
+			},
+			disable: {
+				type: Boolean,
+				default: false,
+			},
+			hasFooter: {
+				type: Boolean,
+				default: false,
+			},
+			syncdata: {
+				type: Boolean,
+				default: false,
+			},
 		},
 		data() {
 			return {
 				showList: false,
 				listSelected: [],
-				listGridStyle: [
-					{
-						name: "Mã nhóm vật tư, hàng hoá, dịch vụ",
-						field: "commodity_group_code",
-						width: "220px",
-					},
-					{
-						name: "Tên nhóm vật tư, hàng hoá, dịch vụ",
-						field: "commodity_group_name",
-						width: "200px",
-					},
-				],
-				listGridData: [
-					{
-						commodity_group_code: "HH",
-						commodity_group_name: "Hàng hoá",
-					},
-					{
-						commodity_group_code: "DV",
-						commodity_group_name: "Dịch vụ",
-					},
-					{
-						commodity_group_code: "NVL",
-						commodity_group_name: "Nguyên vật liệu",
-					},
-				],
+				listGridData: []
 			};
 		},
+		methods: {
+			/**
+			 * Mở form
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			showForm() {
+				if (!this.form) {
+					this.callDialog(
+						this.$enum.DIALOG_TYPE.Warn,
+						this.$resourcesVN.NOTIFY.FeatureNotAvaiable
+					);
+				} else if (this.enable) this.$bus.$emit(this.form);
+			},
+		},
 		watch: {
+			/**
+			 * KHi mở dropdown thì gọi api
+			 * @param {Boolean} value
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			showList: function(value) {
+				if (value) {
+					if (!this.data)
+						axios
+							.get(this.api)
+							.then((res) => {
+								console.log(res);
+								this.listGridData = res.data[this.controller];
+							})
+							.catch((res) => {
+								console.log(res);
+							});
+					else this.listGridData = this.data;
+				}
+			},
 			listSelected: {
 				handler(value) {
-					console.log(value);
+					var newData = [];
+					value.forEach(item => {
+						newData.push(this.listGridData[item][this.vmodelField]);
+					});
+					this.$emit('input', newData);
 				},
 				deep: true,
 			},

@@ -15,6 +15,7 @@ namespace Misa.ApplicationCore.Entities
         /// </summary>
         public Guid unit_id { get; set; }
 
+        public string unit_code { get; set; }
         /// <summary>
         /// Mã đơn vị tính
         /// </summary>

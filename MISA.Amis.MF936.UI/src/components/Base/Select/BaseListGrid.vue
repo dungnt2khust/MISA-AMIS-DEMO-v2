@@ -31,12 +31,7 @@
 				</td>
 			</tr>
 		</tbody>
-		<div
-			v-if="
-				type == 'small' && controller != 'Accounts' && controller != 'Units'
-			"
-			class="listgrid__footer"
-		>
+		<div v-if="hasFooter" class="listgrid__footer">
 			<slot name="footer"></slot>
 		</div>
 	</div>
@@ -79,6 +74,10 @@
 				type: String,
 				default: "",
 			},
+			hasFooter: {
+				type: Boolean,
+				default: false
+			}
 		},
 		data() {
 			return {};

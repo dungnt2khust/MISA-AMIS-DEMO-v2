@@ -65,7 +65,8 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Id nhóm hàng hóa
         /// </summary>
-        public Guid commoditygroup_id { get; set; }
+        [MisaNotMap]
+        public List<Guid> commoditygroup_id { get; set; }
 
         /// <summary>
         /// Tên nhóm hàng hóa

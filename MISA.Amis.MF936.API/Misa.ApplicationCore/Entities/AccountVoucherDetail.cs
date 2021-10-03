@@ -71,7 +71,6 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Tên hàng hóa
         /// </summary>
-        [MisaNotMap]
         public string commodity_name { get; set; }
 
         /// <summary>

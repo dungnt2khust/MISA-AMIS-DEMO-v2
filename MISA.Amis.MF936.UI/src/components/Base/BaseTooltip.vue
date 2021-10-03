@@ -1,6 +1,6 @@
 <template lang="">
 	<div
-		v-show="tooltipState"
+		v-show="tooltipState && tooltipContent"
 		class="tooltip tooltip--arrow"
 		:style="positionOfTooltip"
 	>
@@ -14,7 +14,7 @@
 		name: "BaseTooltip",
 		data() {
 			return {
-				tooltipContent: "Nguyễn Tiến Dũng",
+				tooltipContent: null,
 				tooltipState: false,
 				tooltipTop: -100,
 				tooltipLeft: -100,

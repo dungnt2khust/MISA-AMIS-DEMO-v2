@@ -7,13 +7,16 @@
 		<span v-if="label != ''" class="label">
 			{{ label }} <span v-if="required" class="text-red">*</span>
 		</span>
-		<div v-if="disable" class="input__span">{{foundSelectedItem()}}</div>
+		<div v-if="disable" class="input__span">{{ foundSelectedItem() }}</div>
 		<div
 			v-if="!disable"
 			class="comboboxadvance"
 			:class="{ 'comboboxadvance--focus': focusState }"
 		>
-			<div class="comboboxadvance__main" :class="{'comboboxadvance--disable': !enable}">
+			<div
+				class="comboboxadvance__main"
+				:class="{ 'comboboxadvance--disable': !enable }"
+			>
 				<div class="comboboxadvance__input-wrapper">
 					<input
 						ref="comboboxInput"
@@ -23,15 +26,15 @@
 						:tabindex="tabindex"
 						:value="foundSelectedItem()"
 						:placeholder="placeholder"
-						:readonly="!enable"	
+						:readonly="!enable"
 					/>
-				</div>	
+				</div>
 				<div
 					v-if="type != 'small'"
 					@click="showForm()"
 					class="comboboxadvance__icon"
 				></div>
-			</div>	
+			</div>
 			<base-dropdown-button
 				v-show="dropdownButtonState"
 				v-model="showList"
@@ -50,6 +53,7 @@
 				:vmodelField="vmodelField"
 				:controller="controller"
 				:subfield="subfield"
+				:hasFooter="hasFooter"
 				@changeOption="changeOption($event)"
 				:type="type"
 			>
@@ -66,12 +70,14 @@
 <script>
 	// LIBRARY
 	import axios from "axios";
+	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
 	// COMPONENTS
 	import BaseDropdownButton from "../Select/BaseDropdownButton.vue";
 	import BaseListGrid from "../Select/BaseListGrid.vue";
 
 	export default {
 		name: "BaseComboboxAdvance",
+		mixins: [globalComponents],
 		components: {
 			BaseDropdownButton,
 			BaseListGrid,
@@ -149,16 +155,24 @@
 			},
 			index: {
 				type: Number,
-				default: -1
+				default: -1,
 			},
 			enable: {
 				type: Boolean,
-				default: true
+				default: true,
 			},
 			disable: {
 				type: Boolean,
-				default: false
-			}
+				default: false,
+			},
+			hasFooter: {
+				type: Boolean,
+				default: false,
+			},
+			syncfield: {
+				type: String,
+				default: '',
+			},
 		},
 		data() {
 			return {
@@ -205,7 +219,7 @@
 						}, 500);
 					},
 				});
-			},	
+			},
 		},
 		methods: {
 			/**
@@ -216,16 +230,12 @@
 			foundSelectedItem() {
 				if (this.valueBind) {
 					var foundIdx = this.listGridData.findIndex((item) => {
-						if (this.subfield)
-							return item[this.subfield] == this.valueBind;
-						else
-							return item[this.vmodelField] == this.valueBind;
+						if (this.subfield) return item[this.subfield] == this.valueBind;
+						else return item[this.vmodelField] == this.valueBind;
 					});
 					if (foundIdx != -1) {
-						if (this.display)
-							return this.listGridData[foundIdx][this.display];	
-						else 
-							return this.listGridData[foundIdx][this.field];
+						if (this.display) return this.listGridData[foundIdx][this.display];
+						else return this.listGridData[foundIdx][this.field];
 					} else {
 						return this.default;
 					}
@@ -252,16 +262,15 @@
 				if (value != this.valueBind) {
 					this.$emit("input", value);
 					this.$nextTick(() => {
-						switch(this.controller) {
-							case "Commoditys":
-								this.$bus.$emit('changeCommodity', this.index, this.valueBind, this.listGridData);
-								break;
-							case "Units":
-								this.$bus.$emit('changeUnit', this.index, this.valueBind, this.listGridData);
-								break;
+						if (this.syncfield) {
+							this.$bus.$emit(
+								"change" + this.syncfield,
+								this.index,
+								this.valueBind,
+								this.listGridData
+							);
 						}
-
-					})	
+					});
 				}
 			},
 			/**
@@ -269,8 +278,13 @@
 			 * CreatedBy: NTDUNG (30/09/2021)
 			 */
 			showForm() {
-				if (this.enable)
-					this.$bus.$emit(this.form);
+				this.showList = false;
+				if (!this.form) {
+					this.callDialog(
+						this.$enum.DIALOG_TYPE.Warn,
+						this.$resourcesVN.NOTIFY.FeatureNotAvaiable
+					);
+				} else if (this.enable) this.$bus.$emit(this.form);
 			},
 		},
 		watch: {
@@ -300,7 +314,7 @@
 			 */
 			valueBind: function() {
 				this.foundSelectedItem();
-			}
+			},
 		},
 	};
 </script>

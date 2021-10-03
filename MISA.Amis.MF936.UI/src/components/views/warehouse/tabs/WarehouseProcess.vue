@@ -2,7 +2,9 @@
 	<div id="warehouse">
 		<div class="warehouse__process">
 			<div class="warehouse__tutorial">
-				<div class="warehouse__tutorial-title"> {{ $resourcesVN.WAREHOUSE_TUTORIAL_TITLE }}</div>
+				<div class="warehouse__tutorial-title">
+					{{ $resourcesVN.WAREHOUSE_TUTORIAL_TITLE }}
+				</div>
 				<div class="warehouse__tutorial-map">
 					<div class="warehouse__node">
 						{{ $resourcesVN.WAREHOUSE_MAP_LABELS.ProductionOrder }}
@@ -13,7 +15,7 @@
 					<div class="warehouse__node">
 						{{ $resourcesVN.WAREHOUSE_MAP_LABELS.ExportInventory }}
 					</div>
-					<div class="warehouse__node">
+					<div @click="importInventory()" class="warehouse__node">
 						{{ $resourcesVN.WAREHOUSE_MAP_LABELS.ImportInventory }}
 					</div>
 					<div class="warehouse__node">
@@ -29,6 +31,7 @@
 				<div class="warehouse__tutorial-function">
 					<div
 						v-for="(item, index) in WarehouseProcessFunction"
+						@click="processFunction(index)"
 						class="warehouse__tutorial-function-item"
 						:key="index"
 					>
@@ -47,15 +50,25 @@
 				</div>
 			</div>
 			<div class="warehouse__report">
-				<div class="warehouse__report-title"> {{ $resourcesVN.WAREHOUSE_REPORT.Title }}</div>
+				<div class="warehouse__report-title">
+					{{ $resourcesVN.WAREHOUSE_REPORT.Title }}
+				</div>
 				<ul class="warehouse__report-list">
-					<li class="warehouse__report-item"> Sổ chi tiết vật tư hàng hoá</li>
-					<li class="warehouse__report-item"> Tổng hợp tồn kho</li>
-					<li class="warehouse__report-item"> Tổng hợp tồn kho theo nhiều đơn vị tính</li>
-					<li class="warehouse__report-item"> Tổng hợp tồn trên nhiều kho (Dạng bảng chéo)</li>
-					<li class="warehouse__report-item"> Tổng hợp nhập xuất tồn trên nhiều kho</li>
+					<li class="warehouse__report-item">Sổ chi tiết vật tư hàng hoá</li>
+					<li class="warehouse__report-item">Tổng hợp tồn kho</li>
+					<li class="warehouse__report-item">
+						Tổng hợp tồn kho theo nhiều đơn vị tính
+					</li>
+					<li class="warehouse__report-item">
+						Tổng hợp tồn trên nhiều kho (Dạng bảng chéo)
+					</li>
+					<li class="warehouse__report-item">
+						Tổng hợp nhập xuất tồn trên nhiều kho
+					</li>
 				</ul>
-				<div class="warehouse__report-all"> {{ $resourcesVN.WAREHOUSE_REPORT.All }}</div>
+				<div class="warehouse__report-all">
+					{{ $resourcesVN.WAREHOUSE_REPORT.All }}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -66,7 +79,30 @@
 
 	export default {
 		name: "WarehouseProcess",
-		mixins: [WarehouseProcessFunction]	
+		mixins: [WarehouseProcessFunction],
+		methods: {
+			/**
+			 * Dẫn đến nhập kho
+			 * CreatedBy: NTDUNG (02/10/2021)
+			 */
+			importInventory() {
+				this.$router.push({
+					path: "InwardOutwardList/Add"
+				});
+			},
+			/**
+			 * Đường dẫn chức năng
+			 * @param {Number} index
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			processFunction(index) {
+				if (index == 0) {
+					this.$router.push({
+						path: "InwardOutwardList/Normal"
+					});
+				}
+			}
+		},
 	};
 </script>
 <style>

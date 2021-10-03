@@ -26,7 +26,7 @@
 					},
 					{
 						name: this.$resourcesVN.WAREHOUSE_TABS.InwardOutwardList,
-						path: "/warehouse/InwardOutwardList",
+						path: "/warehouse/InwardOutwardList/Normal",
 					},
 					{
 						name: this.$resourcesVN.WAREHOUSE_TABS.Report,
@@ -34,17 +34,7 @@
 					},
 				],
 			};
-		},
-		watch: {
-			/**
-			 * Khi chuyển tab thì redirect trang
-			 * @param {Number} value
-			 * CreatedBy: NTDUNG (14/09/2021)
-			 */
-			currTab: function(value) {
-				this.$router.push(this.listTab[value].path);
-			},
-		},
+		}	
 	};
 </script>
 <style>

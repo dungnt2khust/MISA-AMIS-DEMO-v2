@@ -48,36 +48,49 @@
 					</li>
 				</ul>
 				<div class="selectcommodity__main" v-if="currIdx != -1">
-					<warehouse-commodity/>
-				</div>	
+					<warehouse-commodity
+						:data="dataConversionUnit"
+						v-model="dataConversionUnit"
+					/>
+				</div>
 			</div>
 		</template>
 		<template v-if="currIdx != -1" v-slot:footer>
 			<div class="fx-space-between">
-				<base-button :method="hideForm" label="Huỷ"/>
+				<base-button :method="hideForm" label="Huỷ" />
 				<div class="fx">
-					<base-button label="Cất" class="mr-10"/>
-					<base-button label="Cất và Thêm" type="green"/>
+					<base-button :method="store" label="Cất" class="mr-10" />
+					<base-button :method="storeAndAdd" label="Cất và Thêm" type="green" />
 				</div>
 			</div>
 		</template>
 	</base-form-extend>
 </template>
 <script>
+	// LIBRARY
+	import commodityAPI from "../../../../js/components/commodityAPI"
+	import globalComponents from "../../../../mixins/globalComponents/globalComponents.js"
+	import methods from "../../../../mixins/methods"
 	// COMPONENTS
 	import BaseFormExtend from "../../../Base/Form/BaseFormExtend.vue";
-	import WarehouseCommodity from "./WarehouseCommodity.vue"
-	import BaseButton from "../../../Base/Button/BaseButton.vue"
+	import WarehouseCommodity from "./WarehouseCommodity.vue";
+	import BaseButton from "../../../Base/Button/BaseButton.vue";
 
 	export default {
 		name: "WarehouseSelectCommodity",
+		mixins: [methods, globalComponents],
 		components: {
 			BaseFormExtend,
 			WarehouseCommodity,
-			BaseButton
+			BaseButton,
 		},
 		data() {
 			return {
+				dataConversionUnit: {
+					dataMaster: {}, 
+					dataDetail: []
+				},
+				dataClone: {},
 				fullscreen: false,
 				currIdx: -1,
 				formState: false,
@@ -117,18 +130,79 @@
 			};
 		},
 		created() {
-			this.$bus.$on('showWarehouseAddCommodity', () => {
+			this.$bus.$on("showWarehouseAddCommodity", () => {
 				this.formState = true;
 				this.currIdx = -1;
 			});
 		},
 		methods: {
 			/**
-			 * Ẩn form
-			 * CreatedBy: NTDUNG (30/09/2021)
+			 * Tắt form
+			 * CreatedBy: NTDUNG (01/10/2021)
 			 */
 			hideForm() {
-				this.formState = false;
+				if (this.deepEqualObject(this.dataConversionUnit, this.dataClone))
+					this.formState = false;
+				else
+					this.callDialog(
+						this.$enum.DIALOG_TYPE.ConfirmCancel,
+						this.$resourcesVN.NOTIFY.DataHasChanged
+					).then((answer) => {
+						switch (answer) {
+							case this.$enum.DIALOG_RESULT.Yes:
+								this.store();
+								break;
+							case this.$enum.DIALOG_RESULT.No:
+								this.formState = false;
+								break;
+							case this.$enum.DIALOG_RESULT.Cancel:
+								break;
+						}
+					});
+			},
+			/**
+			 * Cất
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			store() {
+				if (!this.deepEqualObject(this.dataConversionUnit, this.dataClone)) {
+					commodityAPI
+						.AddCommodity(this.dataConversionUnit)
+						.then((res) => {
+							console.log(res);
+						})
+						.catch((res) => {
+							console.log(res);
+						});
+					this.formState = false;
+				} else this.formState = false;
+			},
+			/**
+			 * Cất và thêm
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			storeAndAdd() {
+				console.log(this.data);
+			},
+			/**
+			 * Clone data
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			cloneData() {
+				this.dataClone = { 
+					dataMaster: {...this.dataConversionUnit },
+					dataDetail: []
+				},
+				this.dataConversionUnit['dataDetail'].forEach((item) => {
+					this.dataClone['dataDetail'].push(item);
+				});
+			},
+		},
+		watch: {
+			currIdx: function(value) {
+				if (value != -1) {
+					this.cloneData();
+				}
 			}
 		}
 	};

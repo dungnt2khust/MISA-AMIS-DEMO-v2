@@ -25,16 +25,20 @@
 	export default {
 		name: "attach",
         mixins: [globalComponents],
-		data() {
-			return {};
-		},
+        props: {
+            enable: {
+                type: Boolean,
+                default: true
+            }
+        },
         methods: {
             /**
              * Thêm file 
              * CreatedBy: NTDUNG (01/10/2021)
              */
             addFile() {
-                this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+                if (this.enable)
+                    this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
             }
         }
 	};

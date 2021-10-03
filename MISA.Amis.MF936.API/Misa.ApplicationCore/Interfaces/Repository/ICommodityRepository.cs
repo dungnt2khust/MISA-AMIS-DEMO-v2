@@ -20,5 +20,7 @@ namespace Misa.ApplicationCore.Interfaces.Repository
         /// author: NTDUNG(27/8/2021)
         /// modifiedBy: NTDUNG(27/8/2021)
         object GetCommodityFilterPaging(string searchData, int pageIndex, int pageSize);
+
+        //int InsertCommodity(Com)
     }
 }

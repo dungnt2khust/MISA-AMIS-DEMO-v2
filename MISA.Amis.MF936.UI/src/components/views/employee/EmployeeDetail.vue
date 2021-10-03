@@ -133,7 +133,7 @@
 						:tabindex="9"
 					/>
 				</div>
-				<div class="form__body-item fx-100">
+				<div class="form__body-item fx-1">
 					<base-input
 						label=" Địa chỉ"
 						:value="data['Address']"
@@ -144,7 +144,7 @@
 						:tabindex="10"
 					/>
 				</div>
-				<div class="form__body-item fx fx-100">
+				<div class="form__body-item fx fx-1">
 					<base-input
 						label="ĐT di động"
 						:value="data['PhoneNumber']"
@@ -179,7 +179,7 @@
 						:tabindex="13"
 					/>
 				</div>
-				<div class="form__body-item fx fx-100">
+				<div class="form__body-item fx fx-1">
 					<base-input
 						label="Tài khoản ngân hàng"
 						:value="data['BankAccount']"

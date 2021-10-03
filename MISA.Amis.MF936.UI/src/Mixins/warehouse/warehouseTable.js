@@ -37,7 +37,7 @@ export default {
 						field: "contact_name",
 						type: TableDataStyle.TYPE.Text,
 						pos: TableDataStyle.POS.Left,
-					},			
+					},
 					{
 						name: "Ngày chứng từ",
 						field: "voucher_date",
@@ -88,7 +88,9 @@ export default {
 							style: this.$api.COMMODITY.Style,
 							vmodel: "commodity_id",
 							controller: "Commoditys",
-							form: 'showWarehouseAddCommodity',
+							hasFooter: true,
+							syncfield: 'Commodity',
+							form: "showWarehouseAddCommodity",
 						},
 						{
 							name: "Tên hàng",
@@ -96,6 +98,7 @@ export default {
 							width: "300px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Left,
+							enable: true
 						},
 						{
 							name: "Kho",
@@ -106,8 +109,9 @@ export default {
 							api: this.$api.WAREHOUSE.Api,
 							style: this.$api.WAREHOUSE.Style,
 							vmodel: "warehouse_id",
+							hasFooter: true,
 							controller: "Warehouses",
-							form: 'showWarehouseAdd',
+							form: "showWarehouseAdd",
 						},
 						{
 							name: "TK nợ",
@@ -147,10 +151,11 @@ export default {
 							subfield: "unit_id",
 							display: "unit_name",
 							controller: "Units",
+							syncfield: "Unit",
 							style: [
 								{ name: "Tên đơn vị", field: "unit_name" },
 								{ name: "Tỷ lệ chuyển đổi", field: "rate" },
-							]
+							],
 						},
 						{
 							name: "Số lượng",
@@ -158,7 +163,8 @@ export default {
 							width: "150px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
-							total: true
+							total: true,
+							enable: true
 						},
 						{
 							name: "Đơn giá",
@@ -166,6 +172,7 @@ export default {
 							width: "150px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
+							enable: true
 						},
 						{
 							name: "Thành tiền",
@@ -173,7 +180,8 @@ export default {
 							width: "100px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
-							total: true
+							total: true,
+							enable: true
 						},
 						{
 							name: "Hạn sử dụng",
@@ -181,7 +189,7 @@ export default {
 							width: "150px",
 							type: TableDataStyle.TYPE.InputDate,
 							pos: TableDataStyle.POS.Center,
-							overtoday: true
+							overtoday: true,
 						},
 					],
 					OBJECT: {
@@ -193,7 +201,7 @@ export default {
 						style: this.$api.OBJECT.Style,
 						vmodel: "accountobject_id",
 						controller: "AccountObjects",
-						form: 'showEmployeeForm',
+						form: "showAccountObjectDetail",
 					},
 					EMPLOYEE: {
 						name: "Nhân viên",
@@ -204,8 +212,142 @@ export default {
 						style: this.$api.EMPLOYEE.Style,
 						vmodel: "employee_id",
 						controller: "Employees",
-						form: 'showEmployeeForm',
-					}
+						form: "showEmployeeDetail",
+					},
+					ACCOUNT_OBJECT_GROUP: {
+						field: "account_object_group_name",
+						pos: TableDataStyle.POS.Left,
+						api: this.$api.ACCOUNT_OBJECT_GROUP.Api,
+						style: this.$api.ACCOUNT_OBJECT_GROUP.Style,
+						vmodel: "accountobjectgroup_id",
+						controller: "AccountObjectGroups",
+						form: "showAccountObjectGroupDetail",
+					},
+					WAREHOUSE_ACCOUNT: {
+						field: "warehouse_account_number",
+						width: "150px",
+						type: TableDataStyle.TYPE.ComboboxNotAdd,
+						api: this.$api.DEBIT_ACCOUNT.Api,
+						style: this.$api.DEBIT_ACCOUNT.Style,
+						vmodel: "warehouse_account_id",
+						subfield: "account_id",
+						display: "account_number",
+						controller: "Accounts",
+						pos: TableDataStyle.POS.Left,
+					},
+					WAREHOUSE: {
+						name: "Kho",
+						field: "warehouse_code",
+						width: "150px",
+						type: TableDataStyle.TYPE.Combobox,
+						pos: TableDataStyle.POS.Left,
+						api: this.$api.WAREHOUSE.Api,
+						style: this.$api.WAREHOUSE.Style,
+						vmodel: "warehouse_id",
+						hasFooter: true,
+						controller: "Warehouses",
+						form: "showWarehouseAdd",
+					},
+					REVENUE_ACCOUNT: {
+						field: "revenue_account_number",
+						width: "150px",
+						type: TableDataStyle.TYPE.ComboboxNotAdd,
+						api: this.$api.DEBIT_ACCOUNT.Api,
+						style: this.$api.DEBIT_ACCOUNT.Style,
+						vmodel: "revenue_account_id",
+						subfield: "account_id",
+						display: "account_number",
+						controller: "Accounts",
+						pos: TableDataStyle.POS.Left,
+					},
+					COST_ACCOUNT: {
+						field: "cost_account_number",
+						width: "150px",
+						type: TableDataStyle.TYPE.ComboboxNotAdd,
+						api: this.$api.DEBIT_ACCOUNT.Api,
+						style: this.$api.DEBIT_ACCOUNT.Style,
+						vmodel: "cost_account_id",
+						subfield: "account_id",
+						display: "account_number",
+						controller: "Accounts",
+						pos: TableDataStyle.POS.Left,
+					},
+					DEPARTMENT: {
+						field: "department_name",
+						width: "150px",
+						type: TableDataStyle.TYPE.Combobox,
+						pos: TableDataStyle.POS.Left,
+						api: this.$api.DEPARTMENT.Api,
+						style: this.$api.DEPARTMENT.Style,
+						vmodel: "department_id",
+						controller: "Departments",
+					},
+					UNIT: {
+						field: "unit_name",
+						width: "150px",
+						type: TableDataStyle.TYPE.Combobox,
+						pos: TableDataStyle.POS.Left,
+						api: this.$api.UNIT.Api,
+						style: this.$api.UNIT.Style,
+						vmodel: "unit_id",
+						syncfield: 'ConversionUnitMaster',
+						controller: "Units",
+						form: "showWarehouseAddUnit"
+					},
+					CONVERSION_UNIT: [
+						{
+							name: "Đơn vị chuyển đổi",
+							field: "unit_name",
+							width: "150px",
+							type: TableDataStyle.TYPE.Combobox,
+							pos: TableDataStyle.POS.Left,
+							api: this.$api.UNIT.Api,
+							style: this.$api.UNIT.Style,
+							vmodel: "unit_id",
+							controller: "Units",
+							hasFooter: true,
+							syncfield: 'ConversionUnitDetail',
+							form: "showUnitAddCommodity",
+						},
+						{
+							name: "Tỷ lệ Chuyển đổi",
+							field: "rate",
+							width: "150px",
+							type: TableDataStyle.TYPE.Input,
+							pos: TableDataStyle.POS.Right,
+							syncfield: 'ConversionUnitDetail',
+							enable: true
+						},
+						{
+							name: "Mô tả",
+							field: "description",
+							width: "300px",
+							type: TableDataStyle.TYPE.Input,
+							pos: TableDataStyle.POS.Left,
+							enable: false
+						},
+					],
+					COMMODITY_GROUP: {
+						field: "commoditygroup_id",
+						width: "150px",
+						type: TableDataStyle.TYPE.Combobox,
+						pos: TableDataStyle.POS.Left,
+						api: this.$api.COMMODITY_GROUP.Api,
+						style: this.$api.COMMODITY_GROUP.Style,
+						vmodel: "commoditygroup_id",
+						controller: "CommodityGroups",
+						form: "showWarehouseAddCommodityGroup"
+					},
+					VOCATIVE: {
+						field: "vocative_name",
+						width: "150px",
+						type: TableDataStyle.TYPE.Combobox,
+						pos: TableDataStyle.POS.Left,
+						api: this.$api.VOCATIVE.Api,
+						style: this.$api.VOCATIVE.Style,
+						vmodel: "vocative_id",
+						controller: "Vocatives",
+					},
 				},
 			},
 		};

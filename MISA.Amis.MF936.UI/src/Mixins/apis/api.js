@@ -29,8 +29,9 @@ module.exports = {
         Style: [
             {name: 'Mã đối tượng', field: 'account_object_code'}, 
             {name: 'Tên đối tượng', field: 'account_object_name'},
-            {name: 'Mã số thuế', field: 'tax'},
-            {name: 'Địa chỉ', field: 'contact_address'}
+            {name: 'Mã số thuế', field: 'tax_code'},
+            {name: 'Địa chỉ', field: 'contact_address'},
+            {name: 'Số điện thoại', field: 'phone_number'}
         ]
     },
     DEBIT_ACCOUNT: {
@@ -45,6 +46,41 @@ module.exports = {
         Style: [
             {name: 'Số tài khoản', field: 'account_number'},
             {name: 'Tên tài khoản', field: 'account_name'},
+        ]
+    },
+    ACCOUNT_OBJECT_GROUP: {
+        Api: 'https://localhost:44350/api/v1/AccountObjectGroups/Filter?pageIndex=1&pageSize=20',
+        Style: [
+            {name: 'Tên nhóm khách hàng', field: 'account_object_group_name'},
+            {name: 'Mã nhóm khách hàng', field: 'account_object_group_code'},
+        ]
+
+    },
+    COMMODITY_GROUP: {
+        Api: 'https://localhost:44350/api/v1/CommodityGroups/Filter?pageIndex=1&pageSize=20',
+        Style: [
+            {name: 'Tên nhóm vật tư, hàng hoá, dịch vụ', field: 'commodity_group_name'},
+            {name: 'Mã nhóm vật tư, hàng hoá, dịch vụ', field: 'commodity_group_code'},
+        ]
+    },
+    DEPARTMENT: {
+        Api: 'https://localhost:44350/api/v1/Departments/Filter?pageIndex=1&pageSize=20', 
+        Style: [
+            {name: 'Tên phòng ban', field: 'department_name'},
+            {name: 'Mã phòng ban', field: 'department_code'},
+        ]
+    },
+    UNIT: {
+        Api: 'https://localhost:44350/api/v1/Units/Filter?pageIndex=1&pageSize=20', 
+        Style: [
+            {name: 'Tên đơn vị tính', field: 'unit_name'},
+            {name: 'Mã đơn vị tính', field: 'unit_code'},
+        ]
+    },
+    VOCATIVE: {
+        Api: 'https://localhost:44350/api/v1/Vocatives/Filter?pageIndex=1&pageSize=20', 
+        Style: [
+            {name: 'Tên Xưng hô', field: 'vocative_name'},
         ]
     }
 }

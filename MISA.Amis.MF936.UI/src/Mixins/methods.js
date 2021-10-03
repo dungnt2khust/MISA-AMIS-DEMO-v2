@@ -95,7 +95,7 @@ export default {
 		 * @returns {Boolean}
 		 * CreatedBy: NTDUNG(01/10/2021) - Referenced
 		 */
-		deepEqualObject(object1, object2, escapeFields) {
+		deepEqualObject(object1, object2, escapeFields = []) {
 			const keys1 = Object.keys(object1);
             const keys2 = Object.keys(object2);
             if (keys1.length !== keys2.length) {
@@ -109,13 +109,19 @@ export default {
                     areObjects && !this.deepEqualObject(val1, val2, escapeFields) ||
                     !areObjects
                 ) {
-					if (!escapeFields.indexOf(key)) 
-						if (key.includes('date') && val1 && val2) {
-							if (val1.substring(0, 10) != val2.substring(0, 10)) {
-								console.log(key)
+					if (escapeFields.indexOf(key) == -1) 
+						if (key.includes('date')) {
+							if (val1 && val2)
+								if (val1.substring(0, 10) != val2.substring(0, 10)) {
+									console.log(key)
+									return false;
+								}
+							else if (val1 && !val2) 
 								return false;
-							}
-						} else {
+							else if (!val1 && val2)
+								return false;
+						}
+						else {
 							if (val1 != val2) {
 								console.log(key)
 								return false;

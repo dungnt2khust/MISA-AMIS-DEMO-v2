@@ -1,51 +1,48 @@
 <template lang="">
 	<div class="listgrid">
-		<div class="listgrid__header">
-			<thead>
-				<tr>
-					<th
-						v-for="(item, index) in listGridStyle"
-						:style="{
-							'max-width': item['width'],
-							'text-transform': 'none',
-						}"
-						:key="index"
-					>
-						{{ item["name"] }}
-					</th>
-				</tr>
-			</thead>
-		</div>
-		<div class="listgrid__body" :style="{ 'max-height': '160px' }">
-			<tbody>
-				<tr
-					@click="chooseOption(indexData)"
-					v-for="(itemData, indexData) in listGridData"
-					:class="{
-						'listgrid--multi-selected': selectedOption(indexData),
+		<thead class="listgrid__header">
+			<tr>
+				<th
+					v-for="(item, index) in listGridStyle"
+					:style="{
+						'max-width': item['width'],
+						'text-transform': 'none',
 					}"
-					:key="indexData"
+					:key="index"
 				>
-					<td
-						v-for="(itemStyle, indexStyle) in listGridStyle"
-						:style="{ 'min-width': itemStyle['width'] }"
-						:key="indexStyle"
-					>
-						{{ itemData[itemStyle["field"]] }}
-					</td>
-					<td>
-						<div
-							v-if="
-								listSelected.findIndex((item) => {
-									return item == indexData;
-								}) != -1
-							"
-							class="listgrid__checked"
-						></div>
-					</td>
-				</tr>
-			</tbody>
-		</div>
+					{{ item["name"] }}
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody class="listgrid__body" :style="{ 'max-height': '160px' }">
+			<tr
+				@click="chooseOption(indexData)"
+				v-for="(itemData, indexData) in listGridData"
+				:class="{
+					'listgrid--multi-selected': selectedOption(indexData),
+				}"
+				:key="indexData"
+			>
+				<td
+					v-for="(itemStyle, indexStyle) in listGridStyle"
+					:style="{ 'min-width': itemStyle['width'] }"
+					:key="indexStyle"
+				>
+					{{ itemData[itemStyle["field"]] }}
+				</td>
+				<td>
+					<div
+						v-if="
+							listSelected.findIndex((item) => {
+								return item == indexData;
+							}) != -1
+						"
+						class="listgrid__checked"
+					></div>
+				</td>
+			</tr>
+		</tbody>
 	</div>
 </template>
 <script>
@@ -87,6 +84,7 @@
 					listSelected.splice(foundIdx, 1);
 				}
 				this.$emit("input", listSelected);
+				this.$emit("hideGrid");
 			},
 			/**
 			 * Kiểm tra đâu là lựa chọn đang được chọn

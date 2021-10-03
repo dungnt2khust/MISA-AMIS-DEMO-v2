@@ -9,7 +9,7 @@
 			:style="{ top: top + 'px', left: left + 'px' }"
 			class="fx-wrap filter__popup"
 		>
-			<div class="fx-100 filter__popup-item">
+			<div class="fx-1 filter__popup-item">
 				<base-combobox
 					label="Trạng thái ghi sổ"
 					:comboboxData="filterData['mention']"
@@ -17,7 +17,7 @@
 					v-model="currMention"
 				/>
 			</div>
-			<div class="fx-100 filter__popup-item">
+			<div class="fx-1 filter__popup-item">
 				<base-combobox
 					label="Loại nhập"
 					:comboboxData="filterData['type']"
@@ -49,10 +49,10 @@
 					v-model="currToDate"
 				/>
 			</div>
-			<div class="fx-100 filter__popup-item text-blue">
+			<div class="fx-1 filter__popup-item text-blue">
 				Lọc nâng cao
 			</div>
-			<div class="fx-100 fx-space-between filter__popup-btns">
+			<div class="fx-1 fx-space-between filter__popup-btns">
 				<div @click="resetFilter()" class="button">Đặt lại</div>
 				<div @click="filter()" class="button button--green">Lọc</div>
 			</div>

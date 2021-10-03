@@ -170,7 +170,7 @@ namespace Misa.ApplicationCore.Services
                 }
                 serviceResult.Data = new
                 {
-                    newMasterId = accountVoucher.accountobject_id,
+                    newMasterId = accountVoucher.accountvoucher_id,
                     newDetailIds = accountVoucherDetailIds
                 };
                 //serviceResult.Data = _accounVoucherRepository.updateAccountVoucher(accountVoucherID,data);

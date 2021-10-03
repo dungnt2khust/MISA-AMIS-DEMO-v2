@@ -108,15 +108,33 @@ module.exports = {
 
     //#region FORM
     FORM: {
-        Cancel: 'Huỷ',
-        Store: 'Cất',
-        StoreAndPrint: 'Cất và In',
-        Close: 'Đóng',
-        Help: 'Trợ giúp',
+        Cancel: 'Huỷ (Esc)',
+        Store: {
+            Label: 'Cất',
+            Tooltip: 'Cất (Ctrl + S)'
+        },
+        StoreAndPrint: {
+            Label: 'Cất và In',
+            Tooltip: 'Cất và In (Ctrl + Alt + P)'
+        },
+        Close: {
+            Label: 'Đóng',
+            Tooltip: 'Đóng (Esc)'
+        },
+        Help: 'Trợ giúp (F1)',
         Setting: 'Cài đặt',
-        Edit: 'Sửa',
-        Mention: 'Ghi sổ',
-        UnMention: 'Bỏ ghi'
+        Edit: {
+            Label: 'Sửa',
+            Tooltip: 'Sửa (Ctrl + E)'
+        },
+        Mention: {
+            Label: 'Ghi sổ',
+            Tooltip: 'Ghi sổ (Ctrl + G)'
+        },
+        UnMention: {
+            Label: 'Bỏ ghi',
+            Tooltip: 'Bỏ ghi (Ctrl + B)'
+        }
     },
     //#endregion
 
@@ -146,8 +164,60 @@ module.exports = {
         TotalPrice: 'Tổng tiền',
         Reference: 'Tham chiếu',
         AttachFile: 'Đính kèm'
-    } 
+    },
     //#endregion
 
+    //#region EMPLOYEE DETAIL
+    EMPLOYEE_DETAIL: {
+        Title: 'Thông tin nhân viên',
+        IsCustomer: 'Là khách hàng', 
+        IsSupplier: 'Là nhà cung cấp', 
+        EmployeeCode: 'Mã',
+        EmployeeName: 'Tên',
+        DateOfBirth: 'Ngày sinh', 
+        Gender: 'Giới tính', 
+        Department: 'Đơn vị',
+        IdentityNumber: 'Số CMND',
+        IdentityDate: 'Ngày cấp',
+        Position: 'Chức năng',
+        IdentityPlace: 'Nơi cấp',
+        Address: 'Địa chỉ',
+        PhoneNumber: 'ĐT di động',
+        LandlineNumber: 'ĐT cố định',
+        Email: 'Email',
+        BankAccount: 'Tài khoản ngân hàng',
+        BankName: 'Tên ngân hàng',
+        BankBranch: 'Chi nhánh'
+    },
+    //#endregion
+
+    //#region ACCOUNT OBJECT
+    ACCOUNT_OBJECT_DETAIL: {
+        Title: 'Thông tin khách hàng',
+        IsSupplier: 'Là nhà cung cấp',  
+        Organization: 'Tổ chức',
+        Personal: 'Cá nhân',
+        SupplierName: 'Tên nhà cung cấp', 
+        Vocative: 'Danh xưng',
+        FullName: 'Họ và tên',
+        Address: 'Địa chỉ',
+        AddressExample: 'VD: Số 82 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội',
+        AccountObjectCode: 'Mã khách hàng',
+        TaxCode: 'Mã số thuế', 
+        AccountObjectName: 'Tên khách hàng',
+        AccountObjectGroup: 'Nhóm khách hàng',
+        Employee: 'Nhân viên bán hàng',
+        Email: 'Email',
+        ContactInfo: 'Thông tin liên hệ',
+        PhoneNumber: 'Điện thoại di động', 
+        LandlineNumber: 'Điện thoại cố định',
+        LegalRepresentative: 'Đại diện theo PL',
+        IdentityInfo: 'Thông tin CMND/Thẻ căn cước',
+        IdentityNumber: 'Số CMND/Thẻ căn cước',
+        IdentityDate: 'Ngày cấp',
+        IdentityPlace: 'Nơi cấp',
+        FeatureNotAvaiable: 'Đang phát triển'
+    }
+    //#endregion
 };
 

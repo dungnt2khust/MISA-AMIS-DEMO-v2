@@ -125,12 +125,8 @@
                     }
         /* form body */
         .form__body {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
-            margin: 0 calc(32px - 13px);
+            flex: 1; 
+            padding: 0 26px !important;
         }
             .form__body-item {
                 flex-basis: 50%;
@@ -145,9 +141,11 @@
             }
         /* form footer */
         .form__footer {
-            padding: 20px 32px 32px;
+            padding: 20px 0 32px;
+            margin: 0 32px;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; 
+            border-top: 0.5px solid rgba(0, 0, 0, 0.2);
         }
             /* form button cancel */
             .form__button-cancel {

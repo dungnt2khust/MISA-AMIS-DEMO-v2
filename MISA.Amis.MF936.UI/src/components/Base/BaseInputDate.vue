@@ -7,7 +7,7 @@
 			<input
 				v-on="inputDateListeners"
 				type="text"
-				placeholder="DD/MM/YYYY"
+				:placeholder="placeholder != '' ? placeholder : 'DD/MM/YYYY'"
 				v-model="inputValue"
 				class="input input--date"
 				:class="{'input--disable': !enable}"
@@ -72,6 +72,10 @@
 			disable: {
 				type: Boolean,
 				default: false
+			},
+			placeholder: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {

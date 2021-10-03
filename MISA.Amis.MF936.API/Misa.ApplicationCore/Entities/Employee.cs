@@ -89,7 +89,7 @@ namespace Misa.ApplicationCore.Entities
         /// Chức danh
         /// </summary>
         [MisaExport("Chức danh")]
-        public string employee_position { get; set; }
+        public string position_name { get; set; }
 
         /// <summary>
         /// Email
@@ -104,7 +104,7 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Số điện thoại cố định
         /// </summary>
-        public string fix_phone_number { get; set; }
+        public string landline_number { get; set; }
 
         /// <summary>
         /// Nơi cấp

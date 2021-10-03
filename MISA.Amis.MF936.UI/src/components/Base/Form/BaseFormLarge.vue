@@ -1,5 +1,5 @@
 <template lang="">
-    <div v-show="formLargeState" class="formlarge">
+    <div class="formlarge">
         <div class="formlarge__header fx-space-between">
             <div class="fx-center">
                 <base-history class="mr-16"/>
@@ -39,11 +39,7 @@ export default {
         BaseSetting,
         BaseHistory,
     },
-    props: {
-        formLargeState: {
-            type: Boolean,
-            default: false
-        },
+    props: { 
         title: {
             type: String,
             default: ''
@@ -55,7 +51,7 @@ export default {
          * CreatedBy: NTDUNG (23/09/2021)
          */
         hideForm() {
-            this.$emit('input', false);
+            this.$emit('hideForm');
         }
     }
 }

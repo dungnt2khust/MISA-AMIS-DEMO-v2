@@ -43,6 +43,9 @@
 				@changePageInfo="changePageInfo($event)"
 			/>
 		</div>
+		<account-object-detail />
+		<employee-detail/>	
+		<account-object-group-detail />
 	</div>
 </template>
 <script>
@@ -62,6 +65,9 @@
 	import BaseFilter from "../../../Base/BaseFilter.vue";
 	import BaseButtonDouble from "../../../Base/Button/BaseButtonDouble.vue";
 	import BaseTab2 from "../../../Base/Tab/BaseTab2.vue";
+	import EmployeeDetail from "../../../views/warehouse/form/EmployeeDetail.vue"
+	import AccountObjectDetail from "../../../views/warehouse/form/AccountObjectDetail.vue"
+	import AccountObjectGroupDetail from "../../../views/warehouse/formsmall/AccountObjectGroupDetail.vue"
 
 	export default {
 		name: "WarehouseInwardOutwardList",
@@ -75,6 +81,9 @@
 			BaseFilter,
 			BaseButtonDouble,
 			BaseTab2,
+			EmployeeDetail,
+			AccountObjectDetail,
+			AccountObjectGroupDetail
 		},
 		props: {
 			warehouseDetailState: {
@@ -157,6 +166,11 @@
 			this.$bus.$on('reloadData', () => {
 				this.getData();
 			});
+		},
+		mounted() {
+			if (this.$route.params.mode == 'Add') {
+				this.addRecord();
+			}
 		},
 		methods: {
 			/**
@@ -337,8 +351,20 @@
 			 *  CreatedBy: NTDUNG (28/09/2021)
 			 */	
 			replication(id) {
-				console.log('Nhân bản', id);
-				this.callDialog('warn', this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+				this.$bus.$emit("showLoading");
+				voucherAPI
+					.getVoucherDetail(id)
+					.then((res) => {
+						this.$bus.$emit("showWarehouseDetail", {
+							mode: this.$enum.FORM_MODE.Replication,
+							data: res.data.Data,
+						});
+						this.$bus.$emit("hideLoading");
+					})
+					.catch((res) => {
+						this.$bus.$emit("hideLoading");
+						console.log(res);
+					});
 			},
 			/**
 			 * Trả về data theo id
