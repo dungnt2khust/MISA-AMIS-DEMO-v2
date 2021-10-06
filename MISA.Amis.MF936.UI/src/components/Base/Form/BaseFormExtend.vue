@@ -11,7 +11,7 @@
 					<base-cancel :method="hideForm"/>
 				</div>
 			</div>
-			<div class="formextend__body">
+			<div class="formextend__body" @scroll="scrollForm()">
 				<slot name="body"></slot>
             </div>
 			<div class="formextend__footer">
@@ -44,6 +44,9 @@ export default {
 	methods: {
 		hideForm() {
 			this.$emit('input', false);
+		},
+		scrollForm() {
+			this.$bus.$emit('hideListGrid');
 		}
 	}
 }

@@ -734,12 +734,13 @@
 				voucherAPI
 					.addVoucher(data)
 					.then((res) => {
+						// Tắt loading
+						this.$bus.$emit("hideLoading");
 						// Thong báo thành công
 						this.$bus.$emit(
 							"showToastMessage",
 							this.$resourcesVN.NOTIFY.AddSuccess
 						);
-
 						// Bind id master
 						this.$set(
 							this.masterContent,
@@ -769,11 +770,9 @@
 						setTimeout(() => {
 							this.cloneData();
 						}, 100);
-						// Tắt loading
-						this.$bus.$emit("hideLoading");
 					})
 					.catch((res) => {
-						console.log(res);
+						console.log(res.response);
 						this.$bus.$emit("hideLoading");
 					});
 			},
@@ -806,7 +805,7 @@
 						}, 100);
 					})
 					.catch((res) => {
-						console.log(res);
+						console.log(res.response);
 						this.$bus.$emit("hideLoading");
 					});
 			},

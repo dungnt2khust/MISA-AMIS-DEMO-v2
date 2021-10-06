@@ -217,15 +217,15 @@ namespace Misa.Infrastructure
 
                 parameters.Add("@fieldValue", entity.GetType().GetProperty(fieldName).GetValue(entity, null));
                 parameters.Add("@fieldName", fieldName);
-                parameters.Add($"@{_className}_id", (Guid)(entity.GetType().GetProperty($"{_className}_id").GetValue(entity, null)));
+                parameters.Add($"@{_className}_id", (entity.GetType().GetProperty($"{_className}_id").GetValue(entity, null)));
 
                 if (mode == "ADD")
                 {
-                    sqlQuery = $"SELECT * FROM {_className} WHERE @fieldName = @fieldValue";
+                    sqlQuery = $"SELECT * FROM {_className} WHERE {fieldName} = @fieldValue";
                 }
                 else if (mode == "UPDATE")
                 {
-                    sqlQuery = $"SELECT * FROM {_className} WHERE @fieldName = @fieldValue AND {_className}_id != @{_className}_id";
+                    sqlQuery = $"SELECT * FROM {_className} WHERE {fieldName} = @fieldValue AND {_className}_id != @{_className}_id";
                 }
 
                 // Lấy dữ liệu và phản hồi cho client

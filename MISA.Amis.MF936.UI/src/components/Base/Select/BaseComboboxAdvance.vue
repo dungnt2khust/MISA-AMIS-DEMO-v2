@@ -183,7 +183,11 @@
 			this.$bus.$on("validate" + this.formName, () => {
 				this.validateCombobox();
 				if (this.errorMsg)
-					this.$bus.$emit("catchError" + this.formName, this.errorMsg, this.$refs.comboboxInput);
+					this.$bus.$emit(
+						"catchError" + this.formName,
+						this.errorMsg,
+						this.$refs.comboboxInput
+					);
 			});
 			// nhận lại dữ liệu
 			this.$bus.$on("changeOption" + this.vmodelField, (newValue, index) => {
@@ -203,7 +207,6 @@
 					focus: (event) => {
 						this.focusState = true;
 						this.dropdownButtonState = true;
-						this.errorMsg = "";
 						event.target.select();
 					},
 					input: () => {
@@ -216,8 +219,14 @@
 							}
 						}, 500);
 					},
+					blur: () => {
+						this.$nextTick(() => {
+							this.focusState = false;
+							this.showList = false;
+						});
+					},
 				});
-			},
+			},	
 		},
 		methods: {
 			/**
@@ -390,6 +399,8 @@
 					this.loadData();
 				} else {
 					this.$bus.$emit("hideListGrid");
+					if (!this.focusState && this.type == "small")
+						this.dropdownButtonState = false;
 				}
 			},
 			/**

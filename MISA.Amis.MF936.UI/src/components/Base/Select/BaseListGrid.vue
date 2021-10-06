@@ -8,6 +8,7 @@
 			left: left ? left + 'px' : 'unset',
 			bottom: bottom ? bottom + 'px' : 'unset',
 		}"
+		v-on="listGridListeners"
 	>
 		<thead class="listgrid__header">
 			<tr>
@@ -132,6 +133,13 @@
 					return "200px";
 				}
 			},
+			listGridListeners() {
+				return Object.assign({}, this.$listener, {
+					keydown: (event) => {
+						console.log(event);
+					}
+				})
+			}
 		},
 		methods: {
 			positionOfRecord(itemStyle) {

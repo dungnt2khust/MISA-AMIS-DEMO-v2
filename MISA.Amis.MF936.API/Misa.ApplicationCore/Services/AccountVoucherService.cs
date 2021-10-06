@@ -201,13 +201,36 @@ namespace Misa.ApplicationCore.Services
         {
             try
             {
-                var serviceResult = new ServiceResult();
                 var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
                 var accountObject = new AccountObject();
                 accountObject.accountobject_id = (Guid)accountVoucher.accountobject_id;
                 accountObject.employee_id = accountVoucher.employee_id;
 
                 var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
+
+                // Validate data
+                var serviceResult = _accountVoucherService.ValidateData(accountVoucher, "UPDATE");
+
+                if (!serviceResult.IsValid)
+                {
+                    return serviceResult;
+                }
+
+                //serviceResult = _accountObjectService.ValidateData(accountObject, "UPDATE");
+                //if (!serviceResult.IsValid)
+                //{
+                //    return serviceResult;
+                //}
+
+                foreach (AccountVoucherDetail accountVoucherDetail in accountVoucherDetails)
+                {
+                    serviceResult = _accountVoucherDetailService.ValidateData(accountVoucherDetail, "ADD");
+                    if (!serviceResult.IsValid)
+                    {
+                        return serviceResult;
+                    }
+                }
+
 
                 serviceResult.Data = _accountVoucherRepository.updateAccountVoucher(accountVoucher, accountObject, accountVoucherDetails);
 
