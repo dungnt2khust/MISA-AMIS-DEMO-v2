@@ -19,7 +19,6 @@ namespace Misa.ApplicationCore.Entities
         /// </summary>
         [MisaRequired]
         [MisaDisplayName("Mã hàng")]
-        [MisaUnique]
         [MisaExport("Mã hàng")]
         public Guid commodity_id { get; set; }
 
@@ -119,7 +118,7 @@ namespace Misa.ApplicationCore.Entities
         /// Đơn vị tính
         /// </summary>
         [MisaNotMap]
-        public List<Unit> units { get; set; }
+        public List<CommodityUnit> units { get; set; }
         
         /// <summary>
         /// Trạng thái 

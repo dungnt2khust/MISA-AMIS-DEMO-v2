@@ -20,7 +20,7 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Tài khoản nợ
         /// </summary>
-        public Guid debit_account { get; set; }
+        public Guid? debit_account_id { get; set; }
         /// <summary>
         /// Số tk nợ
         /// </summary>
@@ -35,7 +35,7 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Tài khoản có
         /// </summary>
-        public Guid credit_account { get; set; }
+        public Guid? credit_account_id { get; set; }
         /// <summary>
         /// Số tk nợ
         /// </summary>
@@ -47,6 +47,23 @@ namespace Misa.ApplicationCore.Entities
         /// </summary>
         [MisaNotMap]
         public string credit_account_name { get; set; }
+
+        /// <summary>
+        /// Tài khoản kho
+        /// </summary>
+        public Guid? warehouse_account_id{ get; set; }
+
+        /// <summary>
+        /// Số tk nợ
+        /// </summary>
+        [MisaNotMap]
+        public string warehouse_account_number { get; set; }
+
+        /// <summary>
+        /// Tên TK nợ
+        /// </summary>
+        [MisaNotMap]
+        public string warehouse_account_name { get; set; }
         /// <summary>
         /// ID kho
         /// </summary>
@@ -86,11 +103,21 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Đơn giá ngầm định
         /// </summary>
-        public decimal debit_amount { get; set; }
+        public decimal debit_amount { get; set; } 
+        /// <summary>
+        /// Số lượng tồn
+        /// </summary>
 
+        public decimal quantity { get; set; }
         /// <summary>
         /// Đơn vị tính
         /// </summary>
-        public List<Unit> units { get; set; }
+        [MisaNotMap]
+        public List<CommodityUnit> units { get; set; }
+        /// <summary>
+        /// Đơn vị tính chính
+        /// </summary>
+        [MisaNotMap]
+        public Guid? unit_id { get; set; }
     }
 }

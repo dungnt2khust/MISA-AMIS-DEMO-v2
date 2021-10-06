@@ -53,7 +53,7 @@
 										WAREHOUSE_TABLE.InWardDetail.VOCATIVE['vmodel']
 									]
 								"
-								:valueBind="
+								:value="
 									data[
 										WAREHOUSE_TABLE.InWardDetail.VOCATIVE['vmodel']
 									]
@@ -100,7 +100,7 @@
 										WAREHOUSE_TABLE.InWardDetail.ACCOUNT_OBJECT_GROUP['vmodel']
 									]
 								"
-								:valueBind="
+								:value="
 									data[
 										WAREHOUSE_TABLE.InWardDetail.ACCOUNT_OBJECT_GROUP['vmodel']
 									]
@@ -130,7 +130,7 @@
 										WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']
 									]
 								"
-								:valueBind="
+								:value="
 									data[
 										WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['vmodel']
 									]
@@ -283,7 +283,7 @@
 	import BaseFormPartitionTab from "../../../Base/Form/components/BaseFormPartitionTab.vue";
 
 	export default {
-		name: "AccoutOjectDetail",
+		name: "AccoutObjectDetail",
 		mixins: [warehouseTable, methods, globalComponents],
 		components: {
 			BaseForm,
@@ -314,7 +314,7 @@
 			this.$bus.$on("showAccountObjectDetail", () => {
 				this.data = {};
 				this.formState = true;
-				this.cloneData();
+				setTimeout(() => {this.cloneData()}, 100);
 			});
 		},
 		methods: {

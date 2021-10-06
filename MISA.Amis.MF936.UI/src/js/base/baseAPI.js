@@ -1,8 +1,9 @@
 import axios from "axios";
 export default class BaseAPI {
-	constructor(controller) {
+	constructor(controller, field) {
 		this.baseApiUrl = "https://localhost:44350/api/v1/";
 		this.controller = controller;
+		this.field = field;
 	}
 
 	/**
@@ -50,6 +51,34 @@ export default class BaseAPI {
 	}
 
 	/**
+	 * Lấy dữ liệu phân trang
+	 * @param {String} filterString dữ liệu Lọc
+	 * @param {Number} pageIndex trang hiện tại
+	 * @param {Number} pageSize Kích thước - số bản ghi trên
+	 * @returns {Promise}
+	 * CreatedBy: NTDUNG (01/09/2021)
+	 */
+	getFilterPaging(filterString, pageIndex, pageSize) {
+		var accountType;
+		switch (this.field) {
+			case "credit_account_id":
+			case "warehouse_account_id":
+				accountType = 6;
+				break;
+			case "debit_account_id":
+				accountType = 1;
+				break;
+		}
+		let api =
+			this.baseApiUrl +
+			this.controller +
+			`/Filter?searchData=${filterString}&pageIndex=${pageIndex}&pageSize=${pageSize}`;
+		if (accountType) api += `&type=${accountType}`;
+
+		return axios.get(api);
+	}
+
+	/**
 	 * Xóa nhiều theo Id
 	 * @param {Array} listData mảng chứa các id
 	 * @returns promise get từ call axios api
@@ -57,7 +86,7 @@ export default class BaseAPI {
 	 */
 	async deleteMany(body) {
 		let api = this.baseApiUrl + this.controller;
-		return await axios.delete(api, {data: body});
+		return await axios.delete(api, { data: body });
 	}
 	/**
 	 * Xóa theo id

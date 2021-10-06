@@ -51,6 +51,7 @@
 					<warehouse-commodity
 						:data="dataConversionUnit"
 						v-model="dataConversionUnit"
+						:currIdx="currIdx"
 					/>
 				</div>
 			</div>
@@ -165,6 +166,7 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			store() {
+				console.log(this.dataConversionUnit);
 				if (!this.deepEqualObject(this.dataConversionUnit, this.dataClone)) {
 					commodityAPI
 						.AddCommodity(this.dataConversionUnit)
@@ -201,7 +203,11 @@
 		watch: {
 			currIdx: function(value) {
 				if (value != -1) {
-					this.cloneData();
+					this.dataConversionUnit = {
+						dataMaster: {},
+						dataDetail: []
+					};
+					setTimeout(() => {this.cloneData()}, 1000);
 				}
 			}
 		}

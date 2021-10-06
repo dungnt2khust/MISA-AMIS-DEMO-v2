@@ -29,8 +29,6 @@ namespace Misa.Infrastructure
             _connectionString = configuration.GetConnectionString("MisaAmisConnection");
             _className = typeof(TEntity).Name.ToLower();
         }
-
-
         #endregion
 
         #region METHOD
@@ -202,7 +200,40 @@ namespace Misa.Infrastructure
                 return rowEffects;
             }
         }
+        
+        /// <summary>
+        /// Kiểm tra trùng lặp
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        public bool CheckDuplicate(TEntity entity, string fieldName, string mode)
+        {
+            using (_dbConnection = new NpgsqlConnection(_connectionString))
+            {
+                var parameters = new DynamicParameters();
+                var sqlQuery = "";
 
+                parameters.Add("@fieldValue", entity.GetType().GetProperty(fieldName).GetValue(entity, null));
+                parameters.Add("@fieldName", fieldName);
+                parameters.Add($"@{_className}_id", (Guid)(entity.GetType().GetProperty($"{_className}_id").GetValue(entity, null)));
+
+                if (mode == "ADD")
+                {
+                    sqlQuery = $"SELECT * FROM {_className} WHERE @fieldName = @fieldValue";
+                }
+                else if (mode == "UPDATE")
+                {
+                    sqlQuery = $"SELECT * FROM {_className} WHERE @fieldName = @fieldValue AND {_className}_id != @{_className}_id";
+                }
+
+                // Lấy dữ liệu và phản hồi cho client
+                var queryField = _dbConnection.Query<TEntity>(sqlQuery, param: parameters, commandType: CommandType.Text);
+
+                return queryField.ToList().Count() >= 1;
+            }
+        }
 
         #endregion
     }

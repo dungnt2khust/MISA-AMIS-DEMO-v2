@@ -5,9 +5,9 @@
 input {
     cursor: text !important;
 }
-.input-wrapper {
+/* .input-main {
     width: 100%;
-}
+} */
     .input-unit {
         font-size: 13px;
         font-family: MISANotoSan-Regular;
@@ -35,7 +35,7 @@ input {
         width: 100%;
     }   
     .input:focus {
-        border: var(--input-focus) !important;
+        border: var(--input-focus);
     } 
     .input:focus .input_icon {
         border: none;

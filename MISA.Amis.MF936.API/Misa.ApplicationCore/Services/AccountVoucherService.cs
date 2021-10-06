@@ -1,4 +1,5 @@
-﻿using Misa.ApplicationCore.Entities;
+﻿using Misa.ApplicationCore.Attributes;
+using Misa.ApplicationCore.Entities;
 using Misa.ApplicationCore.Enum;
 using Misa.ApplicationCore.Interfaces.Base;
 using Misa.ApplicationCore.Interfaces.Repository;
@@ -15,21 +16,24 @@ namespace Misa.ApplicationCore.Services
     public class AccountVoucherService : BaseService<AccountVoucher>, IAccountVoucherService
     {
         #region Declare
-        IAccountVoucherRepository _accounVoucherRepository;
-        IAccountVoucherDetailRepository _accountVoucherDetailRepository;
-        IAccountObjectRepository _accountObjectRepository;
-        ICommodityUnitRepository _commodityUnitRepository;
-        //readonly IBaseRepository<AccountVoucher> _baseRepository;
+        IAccountVoucherRepository _accountVoucherRepository;
+
+        IBaseService<AccountVoucher> _accountVoucherService;
+        IBaseService<AccountObject> _accountObjectService;
+        IBaseService<AccountVoucherDetail> _accountVoucherDetailService;
         #endregion
 
         #region Constructor
-        public AccountVoucherService(IBaseRepository<AccountVoucher> baseRepository, IAccountVoucherRepository accounVoucherRepository, IAccountVoucherDetailRepository accountVoucherDetailRepository, IAccountObjectRepository accountObjectRepository, ICommodityUnitRepository commodityUnitRepository) : base(baseRepository)
+        public AccountVoucherService(IBaseRepository<AccountVoucher> baseRepository, IAccountVoucherRepository accountVoucherRepository,
+            IBaseService<AccountVoucher> accountVoucherService, IBaseService<AccountObject> accountObjectService, IBaseService<AccountVoucherDetail> accountVoucherDetailService) : base(baseRepository)
+        
         {
-            _accounVoucherRepository = accounVoucherRepository;
             _baseRepository = baseRepository;
-            _accountVoucherDetailRepository = accountVoucherDetailRepository;
-            _accountObjectRepository = accountObjectRepository;
-            _commodityUnitRepository = commodityUnitRepository;
+            _accountVoucherRepository = accountVoucherRepository;
+
+            _accountVoucherService = accountVoucherService;
+            _accountObjectService = accountObjectService;
+            _accountVoucherDetailService = accountVoucherDetailService;
         }
 
         public ServiceResult getAccountVoucherPagingFilter(string searchData, int? mentionState, string voucherType, DateTime? startDate, DateTime? endDate, int pageIndex, int pageSize)
@@ -37,7 +41,7 @@ namespace Misa.ApplicationCore.Services
             try
             {
                 var serviceResult = new ServiceResult();
-                serviceResult.Data = _accounVoucherRepository.getAccountVoucherPagingFilter(searchData, mentionState, voucherType, startDate, endDate, pageIndex, pageSize);
+                serviceResult.Data = _accountVoucherRepository.getAccountVoucherPagingFilter(searchData, mentionState, voucherType, startDate, endDate, pageIndex, pageSize);
                 return serviceResult;
             }
             catch (Exception)
@@ -58,7 +62,7 @@ namespace Misa.ApplicationCore.Services
             try
             {
                 var serviceResult = new ServiceResult();
-                var rowEffects = _accounVoucherRepository.mentionMany(entityIds);
+                var rowEffects = _accountVoucherRepository.mentionMany(entityIds);
                 serviceResult.Data = new
                 {
                     rowEffects = rowEffects,
@@ -84,7 +88,7 @@ namespace Misa.ApplicationCore.Services
             try
             {
                 var serviceResult = new ServiceResult();
-                var rowEffects = _accounVoucherRepository.unMentionMany(entityIds);
+                var rowEffects = _accountVoucherRepository.unMentionMany(entityIds);
                 serviceResult.Data = new
                 {
                     rowEffects = rowEffects,
@@ -107,7 +111,7 @@ namespace Misa.ApplicationCore.Services
         public override ServiceResult GetEntityById(Guid entityId)
         {
             var serviceResult = new ServiceResult();
-            serviceResult.Data = _accounVoucherRepository.getAccountVoucherDetail(entityId);
+            serviceResult.Data = _accountVoucherRepository.getAccountVoucherDetail(entityId);
             return serviceResult;
         }
 
@@ -122,7 +126,7 @@ namespace Misa.ApplicationCore.Services
             try
             {
                 var serviceResult = new ServiceResult();
-                serviceResult.Data = _accounVoucherRepository.getAccountVoucherDetail(accountVoucherID);
+                serviceResult.Data = _accountVoucherRepository.getAccountVoucherDetail(accountVoucherID);
                 return serviceResult;
             }
             catch (Exception)
@@ -142,44 +146,46 @@ namespace Misa.ApplicationCore.Services
         {
             try
             {
-                var serviceResult = new ServiceResult();
+                // AccountVoucher
                 var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
+
+                // AccountObject
                 var accountObject = new AccountObject();
                 accountObject.accountobject_id = (Guid)accountVoucher.accountobject_id;
                 accountObject.employee_id = accountVoucher.employee_id;
-                // Thêm vào bảng đối tượng
-                _accountObjectRepository.Update(accountObject, accountObject.accountobject_id);
-                // Thêm vào bảng chính
-                accountVoucher.accountvoucher_id = Guid.NewGuid();
-                _baseRepository.Insert(accountVoucher);
-                // Thêm vào hàng tiền
+
+                // AccountVoucherDetails
                 var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
-                var accountVoucherDetailIds = new List<Guid>();
-                for (int i = 0; i < accountVoucherDetails.Count(); i++)
+                // Validate 
+                var serviceResult = _accountVoucherService.ValidateData(accountVoucher, "ADD");
+
+                if (!serviceResult.IsValid)
                 {
-                    var accountVoucherDetail = accountVoucherDetails[i];
-                    // Bind id của master
-                    accountVoucherDetail.accountvoucher_id = accountVoucher.accountvoucher_id;
-                    // Tạo id mới cho detail
-                    var newDetailId = Guid.NewGuid();
-                    accountVoucherDetail.accountvoucherdetail_id = newDetailId;
-                    accountVoucherDetailIds.Add(newDetailId);
-                    // Tạo mới detail
-                    _accountVoucherDetailRepository.Insert(accountVoucherDetail);
-                        
+                    return serviceResult;
                 }
-                serviceResult.Data = new
+
+                //serviceResult = _accountObjectService.ValidateData(accountObject, "UPDATE");
+                //if (!serviceResult.IsValid)
+                //{
+                //    return serviceResult;
+                //}
+
+                foreach (AccountVoucherDetail accountVoucherDetail in accountVoucherDetails)
                 {
-                    newMasterId = accountVoucher.accountvoucher_id,
-                    newDetailIds = accountVoucherDetailIds
-                };
-                //serviceResult.Data = _accounVoucherRepository.updateAccountVoucher(accountVoucherID,data);
+                    serviceResult = _accountVoucherDetailService.ValidateData(accountVoucherDetail, "ADD");
+                    if (!serviceResult.IsValid)
+                    {
+                        return serviceResult;
+                    }
+                }
+
+                serviceResult.IsValid = true;
+                serviceResult.Data = _accountVoucherRepository.addAccountVoucher(accountVoucher, accountObject, accountVoucherDetails);
 
                 return serviceResult;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -200,32 +206,10 @@ namespace Misa.ApplicationCore.Services
                 var accountObject = new AccountObject();
                 accountObject.accountobject_id = (Guid)accountVoucher.accountobject_id;
                 accountObject.employee_id = accountVoucher.employee_id;
-                // Thêm vào bảng đối tượng
-                _accountObjectRepository.Update(accountObject, accountObject.accountobject_id);
-                // Thêm vào bảng chính
-                _baseRepository.Update(accountVoucher, accountVoucherID);
-                // Thêm vào hàng tiền
-                var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
-                for (int i = 0; i < accountVoucherDetails.Count(); i++)
-                {
-                    var accountVoucherDetail = accountVoucherDetails[i];
-                    // Sửa đơn vị tính dược chọn
-                    var state = (int)accountVoucherDetail.GetType().GetProperty("state").GetValue(accountVoucherDetail, null);
 
-                    switch (state) {
-                        case (int)AccountVoucherDetailState.Add:
-                            _accountVoucherDetailRepository.Insert(accountVoucherDetail);
-                            break;
-                        case (int)AccountVoucherDetailState.Update: 
-                            _accountVoucherDetailRepository.Update(accountVoucherDetail, accountVoucherDetail.accountvoucherdetail_id);
-                            break;
-                        case (int)AccountVoucherDetailState.Delete:
-                            _accountVoucherDetailRepository.Delete(accountVoucherDetail.accountvoucherdetail_id);
-                            break;
-                    }
-                }
-                serviceResult.Data = accountVoucherDetails.Count();
-                //serviceResult.Data = _accounVoucherRepository.updateAccountVoucher(accountVoucherID,data);
+                var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
+
+                serviceResult.Data = _accountVoucherRepository.updateAccountVoucher(accountVoucher, accountObject, accountVoucherDetails);
 
                 return serviceResult;
             }
@@ -246,7 +230,7 @@ namespace Misa.ApplicationCore.Services
             try
             {
                 var serviceResult = new ServiceResult();
-                var voucher = _accounVoucherRepository.getNewVoucherCode();
+                var voucher = _accountVoucherRepository.getNewVoucherCode();
                 var currentVoucherCode = voucher.voucher_code;
                 var numberString = Regex.Match(currentVoucherCode, @"\d+").Value;
                 int numberCode = Int32.Parse(numberString);
@@ -271,6 +255,7 @@ namespace Misa.ApplicationCore.Services
                 throw;
             }
         }
+        
         #endregion
     }
 }

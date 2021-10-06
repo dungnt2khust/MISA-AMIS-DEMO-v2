@@ -1,5 +1,5 @@
 <template lang="">
-	<div class="tableinput-wrapper">
+	<div class="tableinput-wrapper" @scroll="scrollTable()">
 		<div class="tableinput__title">Hàng tiền</div>
 		<table class="tableinput" :class="{'tableinput--disable': !enable}">
 			<thead>
@@ -33,10 +33,9 @@
 								(itemStyle.type == TableDataStyle.TYPE.Combobox ||
 									itemStyle.type == TableDataStyle.TYPE.ComboboxNotAdd)
 							"
-							:api="itemStyle['api']"
 							:controller="itemStyle['controller']"
 							v-model="itemData[itemStyle['vmodel']]"
-							:valueBind="itemData[itemStyle['vmodel']]"
+							:value="itemData[itemStyle['vmodel']]"
 							:vmodelField="itemStyle['vmodel']"
 							:field="itemStyle['field']"
 							:default="
@@ -55,6 +54,10 @@
 							:syncfield="itemStyle['syncfield']"
 							:hasFooter="itemStyle['hasFooter']"
 							:disable="!enable"
+							:formName="formName"
+							:required="itemStyle['required']"
+							:name="itemStyle['name']"
+							:escapeValue="escapeValue"
 						/>
 						<base-input
 							v-if="(itemStyle.type == TableDataStyle.TYPE.Input)"
@@ -65,6 +68,9 @@
 							:disable="!enable || !itemStyle['enable']"
 							:syncfield="itemStyle['syncfield']"
 							:index="indexData"
+							:formName="formName"
+							:required="itemStyle['required']"
+							:name="itemStyle['name']"
 						/>
 						<base-input-date
 							v-if="(itemStyle.type == TableDataStyle.TYPE.InputDate)"
@@ -73,6 +79,9 @@
 							:tabindex="indexData"
 							:overtoday="itemStyle['overtoday']"
 							:disable="!enable"
+							:required="itemStyle['required']"
+							:name="itemStyle['name']"
+							:formName="formName"
 						/>
 					</td>
 					<td>
@@ -149,6 +158,14 @@
 			enable: {
 				type: Boolean,
 				default: true
+			},
+			formName: {
+				type: String, 
+				defautl: ''
+			},
+			escapeValue: {
+				type: [String, Array],
+				default: null
 			}
 		},
 		data() {
@@ -248,6 +265,9 @@
 					});
 					return this.formatMoney(total);
 				}
+			},
+			scrollTable() {
+				this.$bus.$emit('hideListGrid');
 			}
 		},
 	};

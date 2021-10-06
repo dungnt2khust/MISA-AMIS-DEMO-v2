@@ -1,8 +1,9 @@
 <template lang="">
 	<div class="input-main" :style="{'width': width}">
 		<span v-if="label != ''" class="label">
-			{{ label }} <span v-if="required" class="text-red">*</span></span
-		>
+			{{ label }} 
+            <!-- <span v-if="required" class="text-red">*</span> -->
+        </span>
         <div class="fx-center-ver">
             <input
                 v-on="inputListeners"
@@ -14,6 +15,7 @@
                 :placeholder="placeholder"
                 :readonly="!enable"
                 :type="type"
+                :style="{border: noborder ? 'none !important' : ''}"
                 ref="input"
                 v-if="!disable"
             />
@@ -104,7 +106,15 @@
             formName: {
                 type: String,
                 default: ''
-            }
+            },
+            name: {
+                type: String,
+                default: ''
+            },
+            noborder: {
+                type: Boolean,
+                default: false
+            } 
 		},
 		data() {
 			return {
@@ -116,7 +126,8 @@
         created() {
             this.$bus.$on('validate' + this.formName, () => {
                 this.validateInput(this.value);
-                this.$bus.$emit('catchError' + this.formName, this.errorMsg)
+                if (this.errorMsg)
+                    this.$bus.$emit('catchError' + this.formName, this.errorMsg, this.$refs.input);
             })
         },
         computed: {
@@ -180,9 +191,14 @@
              * ModifiedBy: NTDUNG (06/08/2021)
              */
             validateInput(value) {
+                this.isError = false;
+                this.errorMsg = '';
                 if (value === null || value === '') {
                     if (this.required) {
-                        this.errorMsg = this.$resourcesVN.RequireField.replace('@', this.label);
+                        if (this.label)
+                            this.errorMsg = this.$resourcesVN.RequireField.replace('@', this.label);
+                        else 
+                            this.errorMsg = this.$resourcesVN.RequireField.replace('@', this.name);
                         this.isError = true;
                     }
                 } else {
@@ -257,6 +273,10 @@
             formState: function(state) {
                 if (state)
                     this.isError = false;
+            },
+            value: function() {
+                this.isError = false;
+                this.errorMsg = '';
             }
         },
 	};

@@ -12,7 +12,7 @@ class CommodityAPI extends BaseAPI {
      * CreatedBy: NTDUNG(01/10/2021)
      */
     async AddCommodity(body) {
-        let url = this.baseApiUrl + this.controller + `/Commoditys/add`;
+        let url = this.baseApiUrl + this.controller + `/add`;
         return axios.post(url, body);
     }
 	

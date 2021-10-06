@@ -12,5 +12,7 @@ namespace Misa.ApplicationCore.Entities
         public bool IsValid { get; set; } = true;
 
         public object Data { get; set; }
+
+        public string Msg { get; set; }
     }
 }

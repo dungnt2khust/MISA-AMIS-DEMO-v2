@@ -30,6 +30,7 @@
 				<td
 					v-for="(itemStyle, indexStyle) in tableStyle"
 					@click="choose(indexStyle, itemData[tableId])"
+					:title="formatTableData(itemData[itemStyle['field']], itemStyle['field'])"
 					:class="recordStyle(itemStyle)"
 					:key="indexStyle"
 				>

@@ -1,10 +1,14 @@
 <template lang="">
 	<div class="comboboxmultichoose">
-		<div class="comboboxadvance-wrapper" :class="'comboboxadvance--' + type">
+		<div class="comboboxadvance-wrapper" :class="['comboboxadvance--' + type]">
 			<span v-if="label != ''" class="label">
 				{{ label }} <span v-if="required" class="text-red">*</span>
 			</span>
-			<div class="comboboxadvance" :style="{ width: width }">
+			<div
+				class="comboboxadvance"
+				:class="{ 'comboboxadvance--focus': focusState }"
+				:style="{ width: width }"
+			>
 				<div class="comboboxadvance__main">
 					<div class="comboboxadvance__input-wrapper" style="padding: 0">
 						<div class="comboboxadvance__selection">
@@ -14,16 +18,26 @@
 								:key="index"
 							>
 								<div class="comboboxadvance__selection-title">
-									{{ listGridData[item][listGridStyle[0]["field"]] }}
+									{{ item[listGridStyle[0]["field"]] }}
 								</div>
 								<div
 									@click="listSelected.splice(index, 1)"
 									class="comboboxadvance__selection-icon"
 								></div>
 							</div>
+							<input
+								v-on="inputListeners"
+								v-model="filterString"
+								type="text"
+								class="comboboxadvance__input-multichoose"
+							/>
 						</div>
 					</div>
-					<div v-if="type != 'small'" @click="showForm()" class="comboboxadvance__icon"></div>
+					<div
+						v-if="type != 'small'"
+						@click="showForm()"
+						class="comboboxadvance__icon"
+					></div>
 				</div>
 				<base-dropdown-button v-model="showList" :showList="showList" />
 				<base-list-grid-multichoose
@@ -34,6 +48,7 @@
 					:listSelected="listSelected"
 					:listGridStyle="listGridStyle"
 					:listGridData="listGridData"
+					:vmodelField="vmodelField"
 				/>
 			</div>
 		</div>
@@ -41,7 +56,7 @@
 </template>
 <script>
 	// LIBRARY
-	import axios from "axios";
+	import baseAPI from "../../../js/base/baseAPI.js";
 	// COMPONENTS
 	import BaseDropdownButton from "./BaseDropdownButton.vue";
 	import BaseListGridMultichoose from "./BaseListGridMultichoose.vue";
@@ -77,10 +92,6 @@
 				type: Number,
 				default: -1,
 			},
-			api: {
-				type: String,
-				default: "",
-			},
 			controller: {
 				type: String,
 				default: "",
@@ -91,11 +102,11 @@
 					return [];
 				},
 			},
-			valueBind: {
+			value: {
 				type: Array,
 				default: function() {
 					return [];
-				}
+				},
 			},
 			vmodelField: {
 				type: String,
@@ -147,13 +158,40 @@
 				type: Boolean,
 				default: false,
 			},
+			defaultIndex: {
+				type: Number,
+				default: -1,
+			},
 		},
 		data() {
 			return {
 				showList: false,
 				listSelected: [],
-				listGridData: []
+				listGridData: [],
+				baseAPI: new baseAPI(this.controller),
+				filterString: "",
+				focusState: false,
+				inputTimeout: null,
 			};
+		},
+		computed: {
+			inputListeners() {
+				return Object.assign({}, this.$listener, {
+					input: () => {
+						clearTimeout(this.inputTimeout);
+
+						this.inputTimeout = setTimeout(() => {
+							this.loadData(true);
+						}, 500)
+					},
+					blur: () => {
+						this.focusState = false;
+					},
+					focus: () => {
+						this.focusState = true;
+					},
+				});
+			},
 		},
 		methods: {
 			/**
@@ -168,6 +206,36 @@
 					);
 				} else if (this.enable) this.$bus.$emit(this.form);
 			},
+			/**
+			 * Load data
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			loadData(value, mode) {
+				if (value) {
+					if (!this.data)
+						this.baseAPI
+							.getFilterPaging(this.filterString, 1, 20)
+							.then((res) => {
+								console.log(res);
+								this.listGridData = res.data[this.controller];
+								if (mode) {
+									this.listSelected = [this.listGridData[this.defaultIndex]];
+								}
+							})
+							.catch((res) => {
+								console.log(res);
+							});
+					else this.listGridData = this.data;
+				}
+			},
+			/**
+			 * Thay đổi trạng thái focus
+			 * @param {Boolean} value
+			 * CreatedBy: NTDUNG(05/10/2021)
+			 */
+			changeFocusState(value) {
+				this.focusState = value;
+			},
 		},
 		watch: {
 			/**
@@ -176,29 +244,25 @@
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
 			showList: function(value) {
-				if (value) {
-					if (!this.data)
-						axios
-							.get(this.api)
-							.then((res) => {
-								console.log(res);
-								this.listGridData = res.data[this.controller];
-							})
-							.catch((res) => {
-								console.log(res);
-							});
-					else this.listGridData = this.data;
-				}
+				this.loadData(value);
 			},
 			listSelected: {
 				handler(value) {
 					var newData = [];
-					value.forEach(item => {
-						newData.push(this.listGridData[item][this.vmodelField]);
+					value.forEach((item) => {
+						newData.push(item[this.vmodelField]);
 					});
-					this.$emit('input', newData);
+					this.$emit("input", newData);
 				},
 				deep: true,
+			},
+			defaultIndex: {
+				handler(value) {
+					if (value != -1) {
+						this.loadData(true, 1);
+					}
+				},
+				immediate: true,
 			},
 		},
 	};

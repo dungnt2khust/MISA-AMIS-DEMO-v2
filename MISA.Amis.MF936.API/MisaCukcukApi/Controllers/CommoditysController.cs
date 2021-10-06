@@ -55,5 +55,29 @@ namespace Misa.API.Controllers
             }
 
         }
+   
+        [HttpPost("add")] 
+        public IActionResult InsertCommodity([FromBody] CommodityData commodityData)
+        {
+            try
+            {
+                var serviceResult = _commodityService.InsertCommodity(commodityData);
+                return Ok(serviceResult.Data);
+            }
+            catch (Exception ex)
+            {
+                var errorObj = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Resources.Exception_ErrorMsg,
+                    errorCode = "misa-001",
+                    moreInfo = "https://openapi.misa.com.vn/errorcode/misa-001",
+                    traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
+                };
+
+                return StatusCode(500, errorObj);
+            }
+        }
+    
     }
 }

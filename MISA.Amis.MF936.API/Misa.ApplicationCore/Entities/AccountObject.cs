@@ -19,7 +19,6 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Mã khách hàng
         /// </summary>
-        [MisaRequired]
         [MisaDisplayName("Mã khách hàng")]
         [MisaUnique]
         [MisaExport("Mã khách hàng")]
@@ -28,7 +27,6 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Tên khách hàng
         /// </summary>
-        [MisaRequired]
         [MisaDisplayName("Tên khách hàng")]
         [MisaExport("Tên khách hàng")]
         public string account_object_name { get; set; }

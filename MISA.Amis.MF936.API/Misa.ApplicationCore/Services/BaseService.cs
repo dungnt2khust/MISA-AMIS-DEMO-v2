@@ -28,7 +28,6 @@ namespace Misa.ApplicationCore.Services
         #endregion
 
         #region Method
-
         /// <summary>
         /// Xóa theo Id
         /// </summary>
@@ -54,7 +53,7 @@ namespace Misa.ApplicationCore.Services
 
                 throw;
             }
-            
+
         }
 
         /// <summary>
@@ -82,7 +81,7 @@ namespace Misa.ApplicationCore.Services
 
                 throw;
             }
-            
+
         }
 
         /// <summary>
@@ -104,7 +103,7 @@ namespace Misa.ApplicationCore.Services
 
                 throw;
             }
-           
+
         }
 
         /// <summary>
@@ -127,7 +126,7 @@ namespace Misa.ApplicationCore.Services
 
                 throw;
             }
-            
+
         }
 
         /// <summary>
@@ -173,7 +172,7 @@ namespace Misa.ApplicationCore.Services
 
                 throw;
             }
-           
+
         }
 
         /// <summary>
@@ -220,9 +219,9 @@ namespace Misa.ApplicationCore.Services
 
                 throw;
             }
-            
-        }
 
+        }
+        #endregion
         #region Private Method
 
 
@@ -289,7 +288,73 @@ namespace Misa.ApplicationCore.Services
             }
             return null;
         }
-        #endregion
+
+        /// <summary>
+        /// Kiểm tra trùng lặp
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        public ServiceResult CheckDuplicate(TEntity entity, string fieldName, string mode)
+        {
+            try
+            {
+                var serviceResult = new ServiceResult();
+                serviceResult.IsValid = _baseRepository.CheckDuplicate(entity, fieldName, mode);
+                return serviceResult;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+    
+        }
+        /// <summary>
+        /// Validate data
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        public ServiceResult ValidateData(TEntity entity, string mode)
+        {
+            var serviceResult = new ServiceResult();
+            var properties = entity.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+                var propName = property.Name;
+                var propValue = property.GetValue(entity);
+                var propMisaDislayName = property.GetCustomAttributes(typeof(MisaDisplayName), true);
+
+                // Trường bắt buộc
+                if (property.IsDefined(typeof(MisaRequired), false))
+                {
+                    var fieldName = propMisaDislayName.Length > 0 ? (propMisaDislayName[0] as MisaDisplayName).FieldName : property.Name;
+                    if (propValue == null || propValue.ToString() == "")
+                    {
+                        serviceResult.IsValid = false;
+                        serviceResult.Msg = string.Format(Resources.ResourceVN.Exception_Required, fieldName);
+                        return serviceResult;
+                    }
+                };
+                // Kiểm tra trùng lặp
+                if (property.IsDefined(typeof(MisaUnique), false))
+                {
+                    var fieldName = propMisaDislayName.Length > 0 ? (propMisaDislayName[0] as MisaDisplayName).FieldName : property.Name;
+
+                    var duplicate = _baseRepository.CheckDuplicate(entity, propName, mode);
+                    if (duplicate)
+                    {
+                        serviceResult.IsValid = false;
+                        serviceResult.Msg = string.Format(Resources.ResourceVN.Exception_Duplication, fieldName);
+                        return serviceResult;
+                    }
+                };
+            }
+            serviceResult.IsValid = true;
+            return serviceResult;
+        }
         #endregion
     }
 }

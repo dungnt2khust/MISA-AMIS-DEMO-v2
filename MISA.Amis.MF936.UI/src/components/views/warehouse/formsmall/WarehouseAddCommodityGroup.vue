@@ -74,7 +74,9 @@
 		created() {
 			this.$bus.$on("showWarehouseAddCommodityGroup", () => {
 				this.formState = true;
-				this.cloneData();
+				setTimeout(() => {
+					this.cloneData();
+				}, 100);
 			});
 			this.$bus.$on("catchError" + this.name, (data) => {
 				if (!this.errorMsg) {
@@ -127,10 +129,8 @@
 								});
 							this.formState = false;
 						} else this.formState = false;
-					else {
-						this.callDialog(this.$enum.DIALOG_TYPE.Error, 'Sai mẹ thông tin rồi, nhập lại đê');
-					}
-				}, 100);
+					else this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg);
+				}, 40);
 			},
 			/**
 			 * Cất và thêm

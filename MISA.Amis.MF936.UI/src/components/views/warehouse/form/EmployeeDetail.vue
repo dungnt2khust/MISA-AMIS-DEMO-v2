@@ -40,14 +40,13 @@
 						<div class="fx-1 mb-12">
 							<base-combobox-advance
 								:label="$resourcesVN.EMPLOYEE_DETAIL.Department"
-								:api="WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['api']"
 								:controller="
 									WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['controller']
 								"
 								v-model="
 									data[WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['vmodel']]
 								"
-								:valueBind="
+								:value="
 									data[WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['vmodel']]
 								"
 								:vmodelField="WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['vmodel']"
@@ -218,7 +217,7 @@
 		created() {
 			this.$bus.$on("showEmployeeDetail", () => {
 				this.formState = true;
-				this.cloneData();
+				setTimeout(() => {this.cloneData()}, 100);
 			});
 		},
 		methods: {

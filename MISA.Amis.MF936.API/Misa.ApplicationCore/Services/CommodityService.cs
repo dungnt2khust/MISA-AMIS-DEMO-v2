@@ -49,6 +49,26 @@ namespace Misa.ApplicationCore.Services
             }
 
         }
+
+        /// <summary>
+        /// Thêm mói hàng hoá
+        /// </summary>
+        /// <param name="commodityData"></param>
+        /// <returns></returns>
+        public ServiceResult InsertCommodity(CommodityData commodityData)
+        {
+            try
+            {
+                var serviceResult = new ServiceResult();
+                serviceResult.Data = _commodityRepository.InsertCommodity(commodityData);
+                return serviceResult;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         #endregion
     }
 }

@@ -145,7 +145,7 @@
 			 */
 			resetFilter() {
 				this.currMention = 0;
-				this.currType = -1;
+				this.currType = 0;
 				this.currPeriod = 0;
 				this.bindDate(this.currPeriod);
 			},

@@ -54,7 +54,7 @@ namespace Misa.ApplicationCore.Interfaces.Repository
         /// <param name="data"></param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(30/09/2021)
-        int addAccountVoucher(AccountVoucherData data);
+        object addAccountVoucher(AccountVoucher accountVoucher, AccountObject accountObject, List<AccountVoucherDetail> accountVoucherDetails);
 
         /// <summary>
         /// Chỉnh sửa phiếu nhập
@@ -63,7 +63,7 @@ namespace Misa.ApplicationCore.Interfaces.Repository
         /// <param name="data"></param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(30/09/2021)
-        int updateAccountVoucher(Guid accountVoucherID, AccountVoucherData data);
+        object updateAccountVoucher(AccountVoucher accountVoucher, AccountObject accountObject, List<AccountVoucherDetail> accountVoucherDetails);
 
         /// <summary>
         /// Lấy mã chứng từ mới

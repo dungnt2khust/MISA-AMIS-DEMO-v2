@@ -13,7 +13,7 @@
                 <base-cancel @click.native="hideForm()"/>
             </div>
         </div>
-        <div class="formlarge__body">
+        <div class="formlarge__body" @scroll="scrollForm()">
             <slot name="body"></slot> 
         </div>  
         <div class="formlarge__footer fx-space-between">
@@ -52,6 +52,9 @@ export default {
          */
         hideForm() {
             this.$emit('hideForm');
+        },
+        scrollForm() {
+            this.$bus.$emit('hideListGrid');
         }
     }
 }

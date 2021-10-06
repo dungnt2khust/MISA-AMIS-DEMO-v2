@@ -9,6 +9,7 @@
 							:required="true"
 							:value="data['warehouse_code']"
 							v-model="data['warehouse_code']"
+							:formName="name"
 						/>
 					</div>
 					<div class="mt-8 fx-2/3">
@@ -17,19 +18,19 @@
 							:required="true"
 							:value="data['warehouse_name']"
 							v-model="data['warehouse_name']"
+							:formName="name"
 						/>
 					</div>
 					<div class="fx-1/3 mt-8">
 						<base-combobox-advance
 							label="Tài khoản kho"
-							:api="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['api']"
 							:controller="
 								WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['controller']
 							"
 							v-model="
 								data[WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['vmodel']]
 							"
-							:valueBind="
+							:value="
 								data[WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['vmodel']]
 							"
 							:vmodelField="
@@ -49,6 +50,8 @@
 								WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['style']
 							"
 							:form="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['form']"
+							:required="true"
+							:formName="name"
 						/>
 					</div>
 					<div class=" fx-1 mt-8">
@@ -105,12 +108,21 @@
 				data: {},
 				dataClone: {},
 				warehouseAPI: new baseAPI("Warehouses"),
+				name: "Warehouse",
+				errorMsg: "",
 			};
 		},
 		created() {
 			this.$bus.$on("showWarehouseAdd", () => {
 				this.formState = true;
-				this.cloneData();
+				setTimeout(() => {
+					this.cloneData();
+				}, 100);
+			});
+			this.$bus.$on("catchError" + this.name, (data) => {
+				if (!this.errorMsg) {
+					this.errorMsg = data;
+				}
 			});
 		},
 		methods: {
@@ -143,17 +155,23 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			store() {
-				if (!this.deepEqualObject(this.data, this.dataClone)) {
-					this.warehouseAPI
-						.post(this.data)
-						.then((res) => {
-							console.log(res);
-						})
-						.catch((res) => {
-							console.log(res);
-						});
-					this.formState = false;
-				} else this.formState = false;
+				this.errorMsg = "";
+				this.$bus.$emit("validate" + this.name);
+				setTimeout(() => {
+					if (!this.errorMsg)
+						if (!this.deepEqualObject(this.data, this.dataClone)) {
+							this.warehouseAPI
+								.post(this.data)
+								.then((res) => {
+									console.log(res);
+								})
+								.catch((res) => {
+									console.log(res);
+								});
+							this.formState = false;
+						} else this.formState = false;
+					else this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg);
+				}, 100);
 			},
 			/**
 			 * Cất và thêm

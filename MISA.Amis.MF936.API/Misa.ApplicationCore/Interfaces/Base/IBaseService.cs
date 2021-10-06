@@ -63,5 +63,24 @@ namespace Misa.ApplicationCore.Interfaces.Base
         /// ModifiedBy: NTDUNG(27/8/2021)
         ServiceResult DeleteMultiple(List<Guid> entityIds);
 
+        /// <summary>
+        /// Kiểm tra trùng lặp
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(04/10/2021)
+        ServiceResult CheckDuplicate(TEntity entity, string fieldName, string mode);
+
+        /// <summary>
+        /// Validate data
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(04/10/2021)
+        ServiceResult ValidateData(TEntity entity, string mode);
+
     }
 }

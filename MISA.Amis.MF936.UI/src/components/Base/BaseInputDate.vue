@@ -1,8 +1,9 @@
 <template lang="">
 	<div class="input-wrapper">
 		<span v-if="label != ''" class="label label--date">
-			{{ label }} <span v-if="required" class="text-red">*</span></span
-		>
+			{{ label }} 
+			<!-- <span v-if="required" class="text-red">*</span> -->
+		</span>
 		<div class="input__main">
 			<input
 				v-on="inputDateListeners"
@@ -10,9 +11,11 @@
 				:placeholder="placeholder != '' ? placeholder : 'DD/MM/YYYY'"
 				v-model="inputValue"
 				class="input input--date"
-				:class="{'input--disable': !enable}"
+				:class="{'input--disable': !enable, 'border-error': errorMsg ? true : false}"
+				ref="inputDate"
 				:tabindex="tabindex"
 				:readonly="!enable"
+				:title="errorMsg ? errorMsg : ''"
 				v-if="!disable"
 			/>
 			<div v-if="disable" class="input__span--date">{{inputValue}}</div>
@@ -76,14 +79,23 @@
 			placeholder: {
 				type: String,
 				default: ''
-			}
+			},
+			formName: {
+				type: String,
+				default: ''
+			},
+			name: {
+                type: String,
+                default: ''
+            },
 		},
 		data() {
 			return {
 				datePickerState: false,
 				currDate: null,
 				firstFocus: false,
-				inputValue: ''
+				inputValue: '',
+				errorMsg: ''
 			};
 		},
         computed: {
@@ -96,6 +108,7 @@
                 return Object.assign({}, this.$listener, {
 					blur: () => {
 						this.firstFocus = false;
+						this.validateInput();
 					},
 					focus: (event) => {
 						if (!this.firstFocus) {
@@ -105,6 +118,13 @@
 					}
 				});
             },	      
+        },
+		created() {
+            this.$bus.$on('validate' + this.formName, () => {
+                this.validateInput();
+				if (this.errorMsg)
+					this.$bus.$emit('catchError' + this.formName, this.errorMsg, this.$refs.inputDate);
+            })
         },
 		methods: {
 			/**
@@ -126,6 +146,21 @@
 			toggleDatePicker() {
 				if (this.enable)
 					this.datePickerState = !this.datePickerState;
+			},
+			/**
+			 * Validate Input
+			 * CreatedBy: NTDUNG (04/10/2021)
+			 */
+			validateInput() {
+				this.errorMsg = '';
+				if(this.required) {
+					if (!this.inputValue)
+						if(this.label)
+							this.errorMsg = this.formatString(this.$resourcesVN.NOTIFY.FieldRequired, this.label);
+						else 
+						this.errorMsg = this.formatString(this.$resourcesVN.NOTIFY.FieldRequired, this.name);
+				}
+			
 			}
 		},
 		watch: {
@@ -146,6 +181,7 @@
 			 */	
 			value: {
 				handler(newValue) {
+					this.errorMsg = '';
 					if (newValue) {
 						this.currDate = newValue.substring(0, 10);
 						this.resolvedValue();

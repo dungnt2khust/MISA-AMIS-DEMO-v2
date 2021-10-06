@@ -38,6 +38,12 @@ namespace Misa.ApplicationCore.Entities
         [MisaNotMap]
         public int is_main_unit { get; set; }
 
+        /// <summary>
+        /// Đang được chọn
+        /// </summary>
+        [MisaNotMap]
+        public int selected { get; set; }
+
         #endregion
     }
 }

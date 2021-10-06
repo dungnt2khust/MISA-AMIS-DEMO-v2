@@ -10,7 +10,7 @@
 			<div class="formpartition__icon"></div>
 			<div class="formpartition__title">{{ label }}</div>
 		</div>
-		<div v-if="formPartitionState" class="formpartition__body">
+		<div v-show="formPartitionState" class="formpartition__body">
 			<slot name="body"></slot>
 		</div>
 	</div>

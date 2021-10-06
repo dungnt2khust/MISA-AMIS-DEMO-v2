@@ -70,12 +70,12 @@ export default {
                     let endOfMonth = moment("2021-05-01").endOf('month').format('YYYY-MM-DD');
                     return [monthStart, endOfMonth];
                 }
-                case "june":{
+                case "jun":{
                     let monthStart = moment("2021-06-01").startOf('month').format('YYYY-MM-DD');
                     let endOfMonth = moment("2021-06-01").endOf('month').format('YYYY-MM-DD');
                     return [monthStart, endOfMonth];
                 }
-                case "july":{
+                case "jul":{
                     let monthStart = moment("2021-07-01").startOf('month').format('YYYY-MM-DD');
                     let endOfMonth = moment("2021-07-01").endOf('month').format('YYYY-MM-DD');
                     return [monthStart, endOfMonth];

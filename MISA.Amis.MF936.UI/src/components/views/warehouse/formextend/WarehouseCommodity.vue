@@ -18,14 +18,13 @@
 			<base-combobox-multi-choose
 				label="Nhóm VTHH"
 				class="fx-4/5 mt-8"
-				:api="WAREHOUSE_TABLE.InWardDetail.COMMODITY_GROUP['api']"
 				:controller="WAREHOUSE_TABLE.InWardDetail.COMMODITY_GROUP['controller']"
 				v-model="
 					data['dataMaster'][
 						WAREHOUSE_TABLE.InWardDetail.COMMODITY_GROUP['vmodel']
 					]
 				"
-				:valueBind="
+				:value="
 					data['dataMaster'][
 						WAREHOUSE_TABLE.InWardDetail.COMMODITY_GROUP['vmodel']
 					]
@@ -41,19 +40,16 @@
 				:display="WAREHOUSE_TABLE.InWardDetail.COMMODITY_GROUP['display']"
 				:listGridStyle="WAREHOUSE_TABLE.InWardDetail.COMMODITY_GROUP['style']"
 				:form="WAREHOUSE_TABLE.InWardDetail.COMMODITY_GROUP['form']"
+				:defaultIndex="currIdx"
 			/>
 			<base-combobox-advance
 				label="Đơn vị tính chính"
-				class="fx-1 mt-8"
-				width="200px"
-				:api="WAREHOUSE_TABLE.InWardDetail.UNIT['api']"
+				class="fx-1/4 mt-8"
 				:controller="WAREHOUSE_TABLE.InWardDetail.UNIT['controller']"
 				v-model="
 					data['dataMaster'][WAREHOUSE_TABLE.InWardDetail.UNIT['vmodel']]
 				"
-				:valueBind="
-					data['dataMaster'][WAREHOUSE_TABLE.InWardDetail.UNIT['vmodel']]
-				"
+				:value="data['dataMaster'][WAREHOUSE_TABLE.InWardDetail.UNIT['vmodel']]"
 				:vmodelField="WAREHOUSE_TABLE.InWardDetail.UNIT['vmodel']"
 				:field="WAREHOUSE_TABLE.InWardDetail.UNIT['field']"
 				:default="
@@ -65,7 +61,24 @@
 				:form="WAREHOUSE_TABLE.InWardDetail.UNIT['form']"
 				:syncfield="WAREHOUSE_TABLE.InWardDetail.UNIT['syncfield']"
 			/>
-			<base-text-area label="Mô tả" class="fx-1 mt-8" />
+
+			<div class="fx-1 mt-20">
+				<div class="fx-nm-wrap pt-20 border-top">
+					<base-input
+						label="Số lượng"
+						v-model="data['dataMaster']['quantity']"
+						:value="data['dataMaster']['quantity']"
+						class="fx-np-1/4 pr-8"
+						:pos="$enum.POS.Right"
+					/>
+					<base-text-area
+						label="Mô tả"
+						v-model="data['dataMaster']['description']"
+						:value="data['dataMaster']['description']"
+						class="fx-np-1 mt-8"
+					/>
+				</div>
+			</div>
 		</div>
 		<base-form-partition label="Thông tin ngầm định">
 			<template v-slot:body>
@@ -75,14 +88,13 @@
 							label="Kho ngầm định"
 							class="pr-26"
 							width="150px"
-							:api="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['api']"
 							:controller="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['controller']"
 							v-model="
 								data['dataMaster'][
 									WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['vmodel']
 								]
 							"
-							:valueBind="
+							:value="
 								data['dataMaster'][
 									WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['vmodel']
 								]
@@ -104,7 +116,6 @@
 							class="pr-26"
 							type="small"
 							width="150px"
-							:api="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['api']"
 							:controller="
 								WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['controller']
 							"
@@ -113,7 +124,7 @@
 									WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['vmodel']
 								]
 							"
-							:valueBind="
+							:value="
 								data['dataMaster'][
 									WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['vmodel']
 								]
@@ -142,6 +153,8 @@
 							label="Đơn giá mua gần nhất"
 							width="155px"
 							:pos="$enum.POS.Right"
+							v-model="data['dataMaster']['debit_amount']"
+							:value="data['dataMaster']['debit_amount']"
 						/>
 					</div>
 					<div class="fx">
@@ -150,70 +163,68 @@
 							class="pr-26 mt-16"
 							width="150px"
 							type="small"
-							:api="WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['api']"
 							:controller="
-								WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['controller']
+								WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['controller']
 							"
 							v-model="
 								data['dataMaster'][
-									WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['vmodel']
+									WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['vmodel']
 								]
 							"
-							:valueBind="
+							:value="
 								data['dataMaster'][
-									WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['vmodel']
+									WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['vmodel']
 								]
 							"
 							:vmodelField="
-								WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['vmodel']
+								WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['vmodel']
 							"
-							:field="WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['field']"
+							:field="WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['field']"
 							:default="
 								data['dataMaster'][
-									WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['field']
+									WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['field']
 								]
 							"
 							:subfield="
-								WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['subfield']
+								WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['subfield']
 							"
-							:display="WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['display']"
+							:display="WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['display']"
 							:listGridStyle="
-								WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['style']
+								WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['style']
 							"
-							:form="WAREHOUSE_TABLE.InWardDetail.REVENUE_ACCOUNT['form']"
+							:form="WAREHOUSE_TABLE.InWardDetail.DEBIT_ACCOUNT['form']"
 						/>
 						<base-combobox-advance
 							label="TK chi phí"
 							class="pr-26 mt-16"
 							width="150px"
 							type="small"
-							:api="WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['api']"
 							:controller="
-								WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['controller']
+								WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['controller']
 							"
 							v-model="
 								data['dataMaster'][
-									WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['vmodel']
+									WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['vmodel']
 								]
 							"
-							:valueBind="
+							:value="
 								data['dataMaster'][
-									WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['vmodel']
+									WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['vmodel']
 								]
 							"
-							:vmodelField="WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['vmodel']"
-							:field="WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['field']"
+							:vmodelField="WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['vmodel']"
+							:field="WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['field']"
 							:default="
 								data['dataMaster'][
-									WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['field']
+									WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['field']
 								]
 							"
-							:subfield="WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['subfield']"
-							:display="WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['display']"
+							:subfield="WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['subfield']"
+							:display="WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['display']"
 							:listGridStyle="
-								WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['style']
+								WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['style']
 							"
-							:form="WAREHOUSE_TABLE.InWardDetail.COST_ACCOUNT['form']"
+							:form="WAREHOUSE_TABLE.InWardDetail.CREDIT_ACCOUNT['form']"
 						/>
 					</div>
 				</div>
@@ -236,6 +247,7 @@
 					}"
 					:tableStyle="WAREHOUSE_TABLE.InWardDetail.CONVERSION_UNIT"
 					:tableData="data['dataDetail']"
+					:escapeValue="data['dataMaster']['unit_id']"
 					v-model="data['dataDetail']"
 				/>
 			</template>
@@ -272,6 +284,10 @@
 				default: function() {
 					return {};
 				},
+			},
+			currIdx: {
+				type: Number,
+				default: -1,
 			},
 		},
 		created() {
@@ -349,7 +365,6 @@
 				conversionUnit: [],
 			};
 		},
-		methods: {},
 	};
 </script>
 <style></style>

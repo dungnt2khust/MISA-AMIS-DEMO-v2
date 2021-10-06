@@ -34,6 +34,11 @@
                width: 100%;
                outline: none; 
             }
+            .comboboxadvance__input-multichoose {
+                flex: 1;
+                outline: none;
+                padding-left: 10px;
+            }
         .comboboxadvance__icon {
             width: 32px;
             display: flex; 

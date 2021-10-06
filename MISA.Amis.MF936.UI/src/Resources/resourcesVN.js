@@ -145,6 +145,8 @@ module.exports = {
         DeleteSuccess: 'Xoá thành công',
         AddSuccess: 'Thêm mới thành công',
         UpdateSuccess: 'Chỉnh sửa thành công',
+        FieldRequired: '{0} không được để trống',
+        NoData: 'Không có dữ liệu hiển thị.'
     },
     //#endregion
     

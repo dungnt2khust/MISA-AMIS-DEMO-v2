@@ -78,7 +78,7 @@
 		created() {
 			this.$bus.$on("showAccountObjectGroupDetail", () => {
 				this.formState = true;
-				this.cloneData();
+				setTimeout(() => {this.cloneData()}, 100);
 			});
 		},
 		methods: {

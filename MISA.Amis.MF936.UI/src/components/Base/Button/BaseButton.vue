@@ -1,6 +1,5 @@
 <template lang="">
 	<div
-		tabindex="20"
 		v-on="tooltipListeners(tooltip)"
 		@click="buttonOnClick()"
 		class="button"

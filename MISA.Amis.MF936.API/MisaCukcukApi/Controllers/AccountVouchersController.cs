@@ -141,11 +141,11 @@ namespace Misa.API.Controllers
                 var serviceResult = _accountVoucherService.addAccountVoucher(data);
                 if (serviceResult.IsValid)
                 {
-                    return StatusCode(201, serviceResult.Data);
+                    return StatusCode(201, serviceResult);
                 }
                 else
                 {
-                    return BadRequest(serviceResult.Data);
+                    return BadRequest(serviceResult);
                 }
             }
             catch (Exception ex)

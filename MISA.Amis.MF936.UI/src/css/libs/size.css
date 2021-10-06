@@ -3,7 +3,7 @@
     user-select: none !important;
 }
 .border-error {
-    border-color: red !important;
+    border: 1px solid red !important;
 }
 /* WIDTH */
 .w-100 {

@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using Misa.ApplicationCore.Attributes;
 using Misa.ApplicationCore.Entities;
+using Misa.ApplicationCore.Enum;
 using Misa.ApplicationCore.Interfaces.Repository;
 using Npgsql;
 using System;
@@ -104,10 +106,11 @@ namespace Misa.Infrastructure
                         dynamicParameters1.Add("@commodity_id", commodityId);
                         var sql2 = "select * from view_commodity_unit vcu2 where vcu2.commodity_id = @commodity_id";
                         var units = _dbConnection.Query<CommodityUnit>(sql2, param: dynamicParameters1, commandType: CommandType.Text);
+
+                        item.units = (List<CommodityUnit>)units;
                         inwardDetail.Add(new
                         {
-                            voucher_detail = item,
-                            units = units,
+                            voucher_detail = item
                         });
                     }
                 }
@@ -152,7 +155,7 @@ namespace Misa.Infrastructure
                 return rowEffects;
             }
         }
-        
+
         /// <summary>
         /// Bỏ ghi nhiều
         /// </summary>
@@ -180,16 +183,100 @@ namespace Misa.Infrastructure
                 return rowEffects;
             }
         }
-        
+
         /// <summary>
         /// Thêm mới phiếu nhập
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(30/09/2021)
-        public int addAccountVoucher(AccountVoucherData data)
+        public object addAccountVoucher(AccountVoucher accountVoucher, AccountObject accountObject, List<AccountVoucherDetail> accountVoucherDetails)
         {
-            return 100;
+            NpgsqlConnection npgsqlConnection = null;
+            IDbTransaction transaction = null;
+            Guid masterId = Guid.NewGuid();
+            List<Guid> detailIds = new List<Guid>();
+            try
+            {
+                // Tạo kết nối, transaction
+                npgsqlConnection = new NpgsqlConnection(_connectionString);
+                npgsqlConnection.Open();
+                transaction = npgsqlConnection.BeginTransaction();
+
+                // Id mới cho master 
+                accountVoucher.accountvoucher_id = Guid.NewGuid();
+                masterId = accountVoucher.accountvoucher_id;
+                // Thêm mới vào master
+                DynamicParameters dynamicParametersAccountVoucher = new DynamicParameters();
+                var propertiesAccountVoucher = accountVoucher.GetType().GetProperties();
+                foreach (var property in propertiesAccountVoucher)
+                {
+                    if (property.IsDefined(typeof(MisaNotMap), false)) continue;
+                    var propName = property.Name;
+                    var propValue = property.GetValue(accountVoucher);
+                    dynamicParametersAccountVoucher.Add($"@{propName}", propValue);
+
+                }
+                var proceduceAccountVoucher = $"func_insert_accountvoucher";
+                var rowEffectsAccountVoucher = npgsqlConnection.Execute(proceduceAccountVoucher, param: dynamicParametersAccountVoucher, commandType: CommandType.StoredProcedure);
+
+                // Cập nhật Object
+                DynamicParameters dynamicParametersAccountObject = new DynamicParameters();
+                var propertiesAccountObject = accountObject.GetType().GetProperties();
+                foreach (var property in propertiesAccountObject)
+                {
+                    if (property.IsDefined(typeof(MisaNotMap), false)) continue;
+                    var propName = property.Name;
+                    var propValue = property.GetValue(accountObject);
+                    dynamicParametersAccountObject.Add($"@{propName}_update", propValue);
+
+                }
+                var proceduceAccountObject = $"func_update_accountobject";
+                var rowEffectsAccountObject = npgsqlConnection.Execute(proceduceAccountObject, param: dynamicParametersAccountObject, commandType: CommandType.StoredProcedure);
+
+                // Thêm mới detail
+                DynamicParameters dynamicParametersAccountVoucherDetail = new DynamicParameters();
+                foreach(AccountVoucherDetail accountVoucherDetail in accountVoucherDetails) {
+                    var propertiesAccountVoucherDetail = accountVoucherDetail.GetType().GetProperties();
+                    // Tạo id detail
+                    accountVoucherDetail.accountvoucherdetail_id = Guid.NewGuid();
+                    accountVoucherDetail.accountvoucher_id = masterId;
+                    detailIds.Add(accountVoucherDetail.accountvoucherdetail_id);
+
+                    foreach (var property in propertiesAccountVoucherDetail)
+                    {
+                        if (property.IsDefined(typeof(MisaNotMap), false)) continue;
+                        var propName = property.Name;
+                        var propValue = property.GetValue(accountVoucherDetail);
+                        dynamicParametersAccountVoucherDetail.Add($"@{propName}", propValue);
+
+                    }
+                    var proceduceAccountVoucherDetail = $"func_insert_accountvoucherdetail";
+                    var rowEffectsAccountVoucherDetail = npgsqlConnection.Execute(proceduceAccountVoucherDetail, param: dynamicParametersAccountVoucherDetail,
+                        commandType: CommandType.StoredProcedure);
+                }
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                    return new
+                    {
+                    };
+                }
+                throw;
+            }
+            finally
+            {
+                if (npgsqlConnection != null) npgsqlConnection.Close(); 
+            }
+            return new
+            {
+                newMasterId = masterId,
+                newDetailIds = detailIds
+            };
         }
 
         /// <summary>
@@ -199,11 +286,125 @@ namespace Misa.Infrastructure
         /// <param name="data"></param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(30/09/2021)
-        public int updateAccountVoucher(Guid accountVoucherID, AccountVoucherData data)
+        public object updateAccountVoucher(AccountVoucher accountVoucher, AccountObject accountObject, List<AccountVoucherDetail> accountVoucherDetails)
         {
-            var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
-            //var accountVoucherDetail = data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
-            return 1;
+            NpgsqlConnection npgsqlConnection = null;
+            IDbTransaction transaction = null;
+            Guid masterId = Guid.NewGuid();
+            List<Guid> detailIds = new List<Guid>();
+            try
+            {
+                // Tạo kết nối, transaction
+                npgsqlConnection = new NpgsqlConnection(_connectionString);
+                npgsqlConnection.Open();
+                transaction = npgsqlConnection.BeginTransaction();
+
+                masterId = accountVoucher.accountvoucher_id;
+                // Cập nhật vào master
+                DynamicParameters dynamicParametersAccountVoucher = new DynamicParameters();
+                var propertiesAccountVoucher = accountVoucher.GetType().GetProperties();
+                foreach (var property in propertiesAccountVoucher)
+                {
+                    if (property.IsDefined(typeof(MisaNotMap), false)) continue;
+                    var propName = property.Name;
+                    var propValue = property.GetValue(accountVoucher);
+                    dynamicParametersAccountVoucher.Add($"@{propName}_update", propValue);
+
+                }
+                var proceduceAccountVoucher = $"func_update_accountvoucher";
+                var rowEffectsAccountVoucher = npgsqlConnection.Execute(proceduceAccountVoucher, param: dynamicParametersAccountVoucher, commandType: CommandType.StoredProcedure);
+
+                // Cập nhật Object
+                DynamicParameters dynamicParametersAccountObject = new DynamicParameters();
+                var propertiesAccountObject = accountObject.GetType().GetProperties();
+                foreach (var property in propertiesAccountObject)
+                {
+                    if (property.IsDefined(typeof(MisaNotMap), false)) continue;
+                    var propName = property.Name;
+                    var propValue = property.GetValue(accountObject);
+                    dynamicParametersAccountObject.Add($"@{propName}_update", propValue);
+
+                }
+                var proceduceAccountObject = $"func_update_accountobject";
+                var rowEffectsAccountObject = npgsqlConnection.Execute(proceduceAccountObject, param: dynamicParametersAccountObject, commandType: CommandType.StoredProcedure);
+
+                // Thêm mới detail
+                foreach (AccountVoucherDetail accountVoucherDetail in accountVoucherDetails)
+                {
+                    var propertiesAccountVoucherDetail = accountVoucherDetail.GetType().GetProperties();
+                    var state = (int)accountVoucherDetail.GetType().GetProperty("state").GetValue(accountVoucherDetail, null);
+
+                    // Gán id master
+                    accountVoucherDetail.accountvoucher_id = accountVoucher.accountvoucher_id;
+
+
+                    switch(state)
+                    {
+                        case (int)AccountVoucherDetailState.Add:
+                            DynamicParameters insertParams = new DynamicParameters();
+                            // Tạo id detail thêm mới
+                            accountVoucherDetail.accountvoucherdetail_id = Guid.NewGuid();                        
+
+                            foreach (var property in propertiesAccountVoucherDetail)
+                            {
+                                if (property.IsDefined(typeof(MisaNotMap), false)) continue;
+                                var propName = property.Name;
+                                var propValue = property.GetValue(accountVoucherDetail);
+                                insertParams.Add($"@{propName}", propValue);
+
+                            }
+                            var proceduceInsert = $"func_insert_accountvoucherdetail";
+                            var rowEffectsInsert = npgsqlConnection.Execute(proceduceInsert, param: insertParams,
+                                commandType: CommandType.StoredProcedure);
+                            break;
+                        case (int)AccountVoucherDetailState.Update:
+                            DynamicParameters updateParams = new DynamicParameters();
+                            // Chỉnh sửa
+                            foreach (var property in propertiesAccountVoucherDetail)
+                            {
+                                if (property.IsDefined(typeof(MisaNotMap), false)) continue;
+                                var propName = property.Name;
+                                var propValue = property.GetValue(accountVoucherDetail);
+                                updateParams.Add($"@{propName}_update", propValue);
+
+                            }
+                            var procedureUpdate = $"func_update_accountvoucherdetail";
+                            var rowEffectsUpdate = npgsqlConnection.Execute(procedureUpdate, param: updateParams,
+                                commandType: CommandType.StoredProcedure);
+                            break;
+                        case (int)AccountVoucherDetailState.Delete:
+                            // Xoá 
+                            DynamicParameters deleteParams = new DynamicParameters();
+                            deleteParams.Add("@accountvoucherdetail_id_delete", accountVoucherDetail.accountvoucherdetail_id);
+                           
+                            var procedureDelete = $"func_delete_accountvoucherdetail";
+                            var rowEffectsDelete = npgsqlConnection.Execute(procedureDelete, param: deleteParams,
+                                commandType: CommandType.StoredProcedure);
+                            break;
+                    }
+                    // Tạo id detail
+                    
+                }
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                    return new
+                    {
+                        newMasterId = masterId,
+                        newDetailIds = detailIds
+                    };
+                }
+                throw;
+            }
+            finally
+            {
+                if (npgsqlConnection != null) npgsqlConnection.Close();
+            }
+            return new object();
         }
 
         public AccountVoucher getNewVoucherCode()

@@ -21,6 +21,11 @@ namespace Misa.ApplicationCore.Interfaces.Repository
         /// modifiedBy: NTDUNG(27/8/2021)
         object GetCommodityFilterPaging(string searchData, int pageIndex, int pageSize);
 
-        //int InsertCommodity(Com)
+        /// <summary>
+        /// Thêm hàng hoá
+        /// </summary>
+        /// <param name="commodityData"></param>
+        /// <returns></returns>
+        int InsertCommodity(CommodityData commodityData);
     }
 }

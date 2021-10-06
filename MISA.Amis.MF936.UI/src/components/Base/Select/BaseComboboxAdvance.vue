@@ -1,17 +1,22 @@
 <template lang="">
 	<div
 		class="comboboxadvance-wrapper"
-		:class="'comboboxadvance--' + type"
+		:class="['comboboxadvance--' + type]"
 		:style="{ 'max-width': width }"
 	>
 		<span v-if="label != ''" class="label">
-			{{ label }} <span v-if="required" class="text-red">*</span>
+			{{ label }}
+			<!-- <span v-if="required" class="text-red">*</span> -->
 		</span>
-		<div v-if="disable" class="input__span">{{ foundSelectedItem() }}</div>
+		<div v-if="disable" class="input__span">{{ inputValue }}</div>
 		<div
 			v-if="!disable"
 			class="comboboxadvance"
-			:class="{ 'comboboxadvance--focus': focusState }"
+			:class="{
+				'comboboxadvance--focus': focusState,
+				'border-error': errorMsg ? true : false,
+			}"
+			ref="comboboxadvance"
 		>
 			<div
 				class="comboboxadvance__main"
@@ -24,9 +29,10 @@
 						type="text"
 						class="comboboxadvance__input"
 						:tabindex="tabindex"
-						:value="foundSelectedItem()"
+						v-model="inputValue"
 						:placeholder="placeholder"
 						:readonly="!enable"
+						:title="errorMsg != '' ? errorMsg : ''"
 					/>
 				</div>
 				<div
@@ -38,49 +44,26 @@
 			<base-dropdown-button
 				v-show="dropdownButtonState"
 				v-model="showList"
-				:method="focusInput"
 				:showList="showList"
 				:focusState="focusState"
 				:enable="enable"
 			/>
-			<base-list-grid
-				v-show="showList"
-				:showList="showList"
-				v-model="showList"
-				:listGridStyle="listGridStyle"
-				:listGridData="listGridData"
-				:valueBind="valueBind"
-				:vmodelField="vmodelField"
-				:controller="controller"
-				:subfield="subfield"
-				:hasFooter="hasFooter"
-				@changeOption="changeOption($event)"
-				:type="type"
-			>
-				<template v-slot:footer>
-					<div @click="showForm()" class="comboboxadvance__add">
-						<div class="comboboxadvance__icon"></div>
-						Thêm mới (F9)
-					</div>
-				</template>
-			</base-list-grid>
 		</div>
 	</div>
 </template>
 <script>
 	// LIBRARY
-	import axios from "axios";
 	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
+	import methods from "../../../mixins/methods";
+	import baseAPI from "../../../js/base/baseAPI.js";
 	// COMPONENTS
 	import BaseDropdownButton from "../Select/BaseDropdownButton.vue";
-	import BaseListGrid from "../Select/BaseListGrid.vue";
 
 	export default {
 		name: "BaseComboboxAdvance",
-		mixins: [globalComponents],
+		mixins: [globalComponents, methods],
 		components: {
 			BaseDropdownButton,
-			BaseListGrid,
 		},
 		props: {
 			label: {
@@ -107,10 +90,6 @@
 				type: Number,
 				default: -1,
 			},
-			api: {
-				type: String,
-				default: "",
-			},
 			controller: {
 				type: String,
 				default: "",
@@ -121,7 +100,7 @@
 					return [];
 				},
 			},
-			valueBind: {
+			value: {
 				type: String,
 				default: "",
 			},
@@ -171,7 +150,19 @@
 			},
 			syncfield: {
 				type: String,
-				default: '',
+				default: "",
+			},
+			formName: {
+				type: String,
+				default: "",
+			},
+			name: {
+				type: String,
+				default: "",
+			},
+			escapeValue: {
+				type: [Array, String],
+				default: null,
 			},
 		},
 		data() {
@@ -181,7 +172,26 @@
 				dropdownButtonState: this.type != "small",
 				listGridData: [],
 				inputTimeout: null,
+				errorMsg: "",
+				inputValue: "",
+				filterString: "",
+				baseAPI: new baseAPI(this.controller, this.vmodelField),
+				size: null,
 			};
+		},
+		created() {
+			this.$bus.$on("validate" + this.formName, () => {
+				this.validateCombobox();
+				if (this.errorMsg)
+					this.$bus.$emit("catchError" + this.formName, this.errorMsg, this.$refs.comboboxInput);
+			});
+			// nhận lại dữ liệu
+			this.$bus.$on("changeOption" + this.vmodelField, (newValue, index) => {
+				if (index == this.index) {
+					this.changeOption(newValue);
+					this.showList = false;
+				}
+			});
 		},
 		computed: {
 			/**
@@ -193,29 +203,17 @@
 					focus: (event) => {
 						this.focusState = true;
 						this.dropdownButtonState = true;
+						this.errorMsg = "";
 						event.target.select();
 					},
-					blur: () => {
-						this.focusState = false;
-						if (this.showList) {
-							this.showList = false;
-							this.dropdownButtonState = false;
-						}
-					},
-					input: (event) => {
+					input: () => {
 						clearTimeout(this.inputTimeout);
 
 						this.inputTimeout = setTimeout(() => {
-							if (!this.data)
-								axios
-									.get(this.api + `&searchData=${event.target.value}`)
-									.then((res) => {
-										console.log(res);
-										this.listGridData = res.data[this.controller];
-									})
-									.catch((res) => {
-										console.log(res);
-									});
+							if (!this.data) {
+								this.filterString = this.inputValue;
+								this.loadData();
+							}
 						}, 500);
 					},
 				});
@@ -226,20 +224,22 @@
 			 * Giá trị hiện tại
 			 * @param {String} value
 			 * CreatedBy: NTDUNG (29/09/2021)
+			 * ModifiedBy: NTDUNG (05/10/2021)
 			 */
-			foundSelectedItem() {
-				if (this.valueBind) {
+			setInputValue() {
+				if (this.value) {
 					var foundIdx = this.listGridData.findIndex((item) => {
-						if (this.subfield) return item[this.subfield] == this.valueBind;
-						else return item[this.vmodelField] == this.valueBind;
+						if (this.subfield) return item[this.subfield] == this.value;
+						else return item[this.vmodelField] == this.value;
 					});
 					if (foundIdx != -1) {
-						if (this.display) return this.listGridData[foundIdx][this.display];
-						else return this.listGridData[foundIdx][this.field];
+						if (this.display)
+							this.inputValue = this.listGridData[foundIdx][this.display];
+						else this.inputValue = this.listGridData[foundIdx][this.field];
 					} else {
-						return this.default;
+						this.inputValue = this.default;
 					}
-				} else return "";
+				} else this.inputValue = "";
 			},
 			/**
 			 * Focus input khi nút dropdown được nhấn
@@ -258,15 +258,15 @@
 			 * @param {String} value
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
-			changeOption(value) {
-				if (value != this.valueBind) {
-					this.$emit("input", value);
+			changeOption(newValue) {
+				if (newValue != this.value) {
+					this.$emit("input", newValue);
 					this.$nextTick(() => {
 						if (this.syncfield) {
 							this.$bus.$emit(
 								"change" + this.syncfield,
 								this.index,
-								this.valueBind,
+								this.value,
 								this.listGridData
 							);
 						}
@@ -286,6 +286,97 @@
 					);
 				} else if (this.enable) this.$bus.$emit(this.form);
 			},
+			/**
+			 * Validate combobox
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			validateCombobox() {
+				// Reset lỗi
+				this.errorMsg = "";
+				// Check required
+				if (this.required) {
+					if (!this.inputValue) {
+						if (this.label)
+							this.errorMsg = this.formatString(
+								this.$resourcesVN.NOTIFY.FieldRequired,
+								this.label
+							);
+						else
+							this.errorMsg = this.formatString(
+								this.$resourcesVN.NOTIFY.FieldRequired,
+								this.name
+							);
+					} else {
+						this.errorMsg = "";
+					}
+				}
+			},
+			/**
+			 * Tải dữ liệu
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			loadData() {
+				if (!this.data)
+					this.baseAPI
+						.getFilterPaging(this.filterString, 1, 20)
+						.then((res) => {
+							console.log(res);
+							this.listGridData = res.data[this.controller];
+							this.showListGrid();
+							// if (this.escapeValue) {
+							// 	if (!Array.isArray(this.escapeValue)) {
+							// 		var foundIdx = this.listGridData.findIndex((item) => {
+							// 			return item[this.vmodelField] == this.escapeValue;
+							// 		});
+							// 		this.listGridData.splice(foundIdx, 1);
+							// 	} else {
+							// 		this.escapeValue.forEach((item) => {
+							// 			var foundIdx = this.listGridData.findIndex((subItem) => {
+							// 				return subItem[this.vmodelField] == item;
+							// 			});
+							// 			this.listGridData.splice(foundIdx, 1);
+							// 		});
+							// 	}
+							// }
+						})
+						.catch((res) => {
+							console.log(res);
+						});
+				else {
+					this.listGridData = this.data;
+					this.showListGrid();
+				}
+			},
+			/**
+			 * Hiện list
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
+			showListGrid() {
+				var size = this.$refs.comboboxadvance.getBoundingClientRect();
+				this.size = {
+					top: size.top,
+					left: size.left,
+					right: size.right,
+					bottom: size.bottom,
+					height: size.height,
+					width: size.width,
+				};
+				this.$bus.$emit("showListGrid", {
+					type: this.type,
+					listSelected: this.listSelected,
+					listGridStyle: this.listGridStyle,
+					listGridData: this.listGridData,
+					valueBind: this.value,
+					vmodelField: this.vmodelField,
+					subfield: this.subfield,
+					controller: this.controller,
+					hasFooter: this.hasFooter,
+					size: this.size,
+					name: this.vmodelField,
+					form: this.form,
+					index: this.index,
+				});
+			},
 		},
 		watch: {
 			/**
@@ -295,25 +386,23 @@
 			 */
 			showList: function(value) {
 				if (value) {
-					if (!this.data)
-						axios
-							.get(this.api)
-							.then((res) => {
-								console.log(res);
-								this.listGridData = res.data[this.controller];
-							})
-							.catch((res) => {
-								console.log(res);
-							});
-					else this.listGridData = this.data;
+					this.filterString = "";
+					this.loadData();
+				} else {
+					this.$bus.$emit("hideListGrid");
 				}
 			},
 			/**
 			 * Giá trị bind thay đổi thì cập nhật lại dữ liệu
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
-			valueBind: function() {
-				this.foundSelectedItem();
+			value: {
+				handler() {
+					this.errorMsg = "";
+					this.setInputValue();
+				},
+				deep: true,
+				immediate: true,
 			},
 		},
 	};

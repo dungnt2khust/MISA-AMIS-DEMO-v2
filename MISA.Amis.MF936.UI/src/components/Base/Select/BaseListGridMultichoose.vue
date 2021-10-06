@@ -17,10 +17,10 @@
 		</thead>
 		<tbody class="listgrid__body" :style="{ 'max-height': '160px' }">
 			<tr
-				@click="chooseOption(indexData)"
+				@click="chooseOption(itemData)"
 				v-for="(itemData, indexData) in listGridData"
 				:class="{
-					'listgrid--multi-selected': selectedOption(indexData),
+					'listgrid--multi-selected': selectedOption(itemData),
 				}"
 				:key="indexData"
 			>
@@ -35,7 +35,7 @@
 					<div
 						v-if="
 							listSelected.findIndex((item) => {
-								return item == indexData;
+								return item[vmodelField] == itemData[vmodelField];
 							}) != -1
 						"
 						class="listgrid__checked"
@@ -43,6 +43,9 @@
 				</td>
 			</tr>
 		</tbody>
+		<div v-if="!listGridData.length" class="listgrid__nodata">
+			{{ $resourcesVN.NOTIFY.Nodata}}
+		</div>
 	</div>
 </template>
 <script>
@@ -63,6 +66,10 @@
 				type: Array,
 				default: function() {},
 			},
+			vmodelField: {
+				type: String, 
+				default: ""
+			}
 		},
 		data() {
 			return {};
@@ -70,16 +77,16 @@
 		methods: {
 			/**
 			 * Chọn một item trong list
-			 * @param {Number} index
+			 * @param {Object} itemData
 			 * CreatedBy: NTDUNG (26/09/2021)
 			 */
-			chooseOption(index) {
+			chooseOption(itemData) {
 				var listSelected = this.listSelected;
 				var foundIdx = listSelected.findIndex((item) => {
-					return item == index;
+					return item[this.vmodelField] == itemData[this.vmodelField];
 				});
 				if (foundIdx == -1) {
-					listSelected.push(index);
+					listSelected.push(itemData);
 				} else {
 					listSelected.splice(foundIdx, 1);
 				}
@@ -88,13 +95,13 @@
 			},
 			/**
 			 * Kiểm tra đâu là lựa chọn đang được chọn
-			 * @param {Number} index
+			 * @param {Object} itemData
 			 * CreatedBy: NTDUNG (26/09/2021)
 			 */
-			selectedOption(index) {
+			selectedOption(itemData) {
 				if (this.type == "multichoose") {
 					var foundIdx = this.listSelected.findIndex((item) => {
-						return item == index;
+						return item[this.vmodelField] == itemData[this.vmodelField];
 					});
 					if (foundIdx != -1) return true;
 					else return false;

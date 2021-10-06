@@ -20,5 +20,12 @@ namespace Misa.ApplicationCore.Interfaces.Services
         /// CreatedBy: NTDUNG(27/8/2021)
         /// ModifiedBy: NTDUNG(27/8/2021)
         ServiceResult GetCommodityFilterPaging(string searchData, int pageIndex, int pageSize);
+        
+        /// <summary>
+        /// Thêm mới hàng hoá
+        /// </summary>
+        /// <param name="commodityData"></param>
+        /// <returns></returns>
+        ServiceResult InsertCommodity(CommodityData commodityData);
     }
 }
