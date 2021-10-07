@@ -6,13 +6,17 @@
 				:value="data['dataMaster']['commodity_name']"
 				v-model="data['dataMaster']['commodity_name']"
 				:required="true"
+				:showRequired="true"
+				:formName="formName"
 				class="fx-1"
 			/>
 			<base-input
 				label="Mã"
 				:value="data['dataMaster']['commodity_code']"
 				v-model="data['dataMaster']['commodity_code']"
+				:showRequired="true"
 				:required="true"
+				:formName="formName"
 				class="fx-1/5 mt-8"
 			/>
 			<base-combobox-multi-choose
@@ -60,6 +64,9 @@
 				:listGridStyle="WAREHOUSE_TABLE.InWardDetail.UNIT['style']"
 				:form="WAREHOUSE_TABLE.InWardDetail.UNIT['form']"
 				:syncfield="WAREHOUSE_TABLE.InWardDetail.UNIT['syncfield']"
+				:required="true"
+				:showRequired="true"
+				:formName="formName"
 			/>
 
 			<div class="fx-1 mt-20">
@@ -70,6 +77,8 @@
 						:value="data['dataMaster']['quantity']"
 						class="fx-np-1/4 pr-8"
 						:pos="$enum.POS.Right"
+						:required="true"
+						:formName="formName"
 					/>
 					<base-text-area
 						label="Mô tả"
@@ -110,6 +119,8 @@
 							:display="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['display']"
 							:listGridStyle="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['style']"
 							:form="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['form']"
+							:required="true"
+							:formName="formName"
 						/>
 						<base-combobox-advance
 							label="TK kho"
@@ -248,7 +259,8 @@
 					:tableStyle="WAREHOUSE_TABLE.InWardDetail.CONVERSION_UNIT"
 					:tableData="data['dataDetail']"
 					:escapeValue="data['dataMaster']['unit_id']"
-					v-model="data['dataDetail']"
+					v-model="data['dataDetail']"	
+					:formName="formName"
 				/>
 			</template>
 		</base-form-partition>
@@ -289,6 +301,10 @@
 				type: Number,
 				default: -1,
 			},
+			formName: {
+				type: String,
+				default: ''
+			}
 		},
 		created() {
 			this.$bus.$on("changeConversionUnitDetail", (index, newId, data) => {

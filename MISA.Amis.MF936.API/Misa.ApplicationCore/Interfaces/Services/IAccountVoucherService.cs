@@ -64,12 +64,5 @@ namespace Misa.ApplicationCore.Interfaces.Services
         /// <returns></returns>
         /// CreatedBy: NTDUNG(30/09/2021)
         ServiceResult updateAccountVoucher(Guid accountVoucherID, AccountVoucherData data);
-
-        /// <summary>
-        /// Lấy mã chứng từ mới
-        /// </summary>
-        /// <returns></returns>
-        /// CreatedBy: NTDUNG(30/09/2021)
-        ServiceResult getNewVoucherCode();
     }
 }

@@ -87,11 +87,7 @@
 			placeholder: {
 				type: String,
 				default: "",
-			},
-			tabindex: {
-				type: Number,
-				default: -1,
-			},
+			},	
 			controller: {
 				type: String,
 				default: "",

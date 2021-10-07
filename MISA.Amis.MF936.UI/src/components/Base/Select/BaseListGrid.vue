@@ -111,14 +111,13 @@
 
 				this.left = this.size.left;
 
-				this.$nextTick(() => {
-					var height = this.$refs.listgrid.getBoundingClientRect().height;
-					if (this.size.bottom + height  + 60 > window.innerHeight) {
-						this.top = this.size.top - height - 4;
-					} else{
-						this.top = this.size.bottom + 4;
-					}
-				});	
+				if (this.size.bottom + 200 + 60 > window.innerHeight) {
+					this.bottom = window.innerHeight - this.size.top + 4;
+					this.top = 0;
+				} else {
+					this.top = this.size.bottom + 4;
+					this.bottom = 0;
+				}
 			});
 
 			this.$bus.$on("hideListGrid", () => {
@@ -137,9 +136,9 @@
 				return Object.assign({}, this.$listener, {
 					keydown: (event) => {
 						console.log(event);
-					}
-				})
-			}
+					},
+				});
+			},
 		},
 		methods: {
 			positionOfRecord(itemStyle) {
@@ -169,11 +168,15 @@
 				if (!this.subfield)
 					this.$bus.$emit(
 						"changeOption" + this.name,
-						itemData[this.vmodelField], 
+						itemData[this.vmodelField],
 						this.index
 					);
 				else
-					this.$bus.$emit("changeOption" + this.name, itemData[this.subfield], this.index);
+					this.$bus.$emit(
+						"changeOption" + this.name,
+						itemData[this.subfield],
+						this.index
+					);
 				this.listGridState = false;
 			},
 			/**

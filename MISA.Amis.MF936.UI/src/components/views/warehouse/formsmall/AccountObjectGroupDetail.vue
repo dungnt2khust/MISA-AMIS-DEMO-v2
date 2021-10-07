@@ -13,6 +13,9 @@
 							:value="data['account_object_group_code']"
 							v-model="data['account_object_group_code']"
 							:required="true"
+							:showRequired="true"
+							:formName="name"
+							ref="inputFocus"
 						/>
 					</div>
 					<div class="mt-8 fx-2/3">
@@ -21,6 +24,8 @@
 							:value="data['account_object_group_name']"
 							v-model="data['account_object_group_name']"
 							:required="true"
+							:showRequired="true"
+							:formName="name"
 						/>
 					</div>
 					<div class=" fx-1 mt-8">
@@ -72,13 +77,26 @@
 			return {
 				formState: false,
 				data: {},
+				dataClone: {},
 				accountObjectGroupAPI: new baseAPI("AccountObjectGroups"),
+				name: "AccountObjectGroup",
+				errorMsg: "",
+				element: null,
 			};
 		},
 		created() {
 			this.$bus.$on("showAccountObjectGroupDetail", () => {
 				this.formState = true;
-				setTimeout(() => {this.cloneData()}, 100);
+				
+				// Bind dữ liệu
+				this.bindData();	
+			});
+
+			this.$bus.$on("catchError" + this.name, (msg, element) => {
+				if (!this.errorMsg) {
+					this.errorMsg = msg;
+					this.element = element;
+				}
 			});
 		},
 		methods: {
@@ -111,18 +129,37 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			store() {
-				if (!this.deepEqualObject(this.data, this.dataClone)) {
-					this.accountObjectGroupAPI
-						.post(this.data)
-						.then((res) => {
-							console.log(res);
-						})
-						.catch((res) => {
-							console.log(res);
-						});
-					this.formState = false;
-				} else this.formState = false;
-			},
+				this.validateData();
+				setTimeout(() => {
+					if (!this.errorMsg)
+						if (!this.deepEqualObject(this.data, this.dataClone)) {
+							this.$bus.$emit("showLoading");
+							this.accountObjectGroupAPI
+								.post(this.data)
+								.then(() => {
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+									// Thong báo thành công
+									this.$bus.$emit("showToastMessage", {
+										message: this.$resourcesVN.NOTIFY.AddSuccess,
+										duration: 2000,
+									});
+									this.formState = false;
+								})
+								.catch((res) => {
+									this.showError(res);
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+								});
+						} else this.formState = false;
+					else
+						this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
+							() => {
+								this.element.focus();
+							}
+						);
+				}, 100);
+			},	
 			/**
 			 * Cất và thêm
 			 * CreatedBy: NTDUNG (03/10/2021)
@@ -136,6 +173,29 @@
 			 */
 			cloneData() {
 				this.dataClone = { ...this.data };
+			},
+			/**
+			 * Validate data
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			validateData() {
+				this.errorMsg = "";
+				this.$bus.$emit("validate" + this.name);
+			},
+			/**
+			 * Bind dữ liệu
+			 * CreatedBy: NTDUNG (07/10/2021)
+			 */
+			bindData() {
+				// Lấy mã đơn vị tính
+				this.accountObjectGroupAPI.getNewCode().then((res) => {
+					this.data = {};
+					this.$set(this.data, "account_object_group_code", res.data);
+					this.$nextTick(() => {
+						this.$refs.inputFocus.$el.querySelector("input").focus();
+					});
+					this.cloneData();
+				});
 			},
 		},
 	};

@@ -140,25 +140,14 @@ namespace Misa.ApplicationCore.Services
         {
             try
             {
-                var serviceResult = new ServiceResult();
                 //Validate dữ liệu
                 //Validate chung
-                var validateData = ValidateData(entity);
-                if (validateData != null)
+                var serviceResult = ValidateData(entity, "ADD");
+                if (!serviceResult.IsValid)
                 {
-                    serviceResult.IsValid = false;
-                    serviceResult.Data = validateData;
                     return serviceResult;
                 }
-                //Validate riêng
-                var validateCustom = ValidateCustom(entity);
-                if (validateCustom != null)
-                {
-                    serviceResult.IsValid = false;
-                    serviceResult.Data = validateCustom;
-                    return serviceResult;
-                }
-                //Thêm dữ liệu
+               //Thêm dữ liệu
                 var rowEffects = _baseRepository.Insert(entity);
                 serviceResult.Data = new
                 {
@@ -187,22 +176,11 @@ namespace Misa.ApplicationCore.Services
         {
             try
             {
-                var serviceResult = new ServiceResult();
                 //Validate dữ liệu
                 //Validate chung
-                var validateData = ValidateData(entity, entityId);
-                if (validateData != null)
+                var serviceResult = ValidateData(entity, "UPDATE");
+                if (!serviceResult.IsValid)
                 {
-                    serviceResult.IsValid = false;
-                    serviceResult.Data = validateData;
-                    return serviceResult;
-                }
-                //Validate riêng
-                var validateCustom = ValidateCustom(entity);
-                if (validateCustom != null)
-                {
-                    serviceResult.IsValid = false;
-                    serviceResult.Data = validateCustom;
                     return serviceResult;
                 }
                 //Thêm dữ liệu
@@ -223,100 +201,13 @@ namespace Misa.ApplicationCore.Services
         }
         #endregion
         #region Private Method
-
-
-        /// <summary>
-        /// Validate dữ liệu khi thêm mới
-        /// </summary>
-        /// <param name="entity">thông tin cần validate</param>
-        /// <returns>error object nếu dữ liệu không thỏa mãn, null nếu thỏa mãn</returns>
-        /// CreatedBy: NTDUNG(27/8/2021)
-        /// ModifiedBy: NTDUNG(27/8/2021)
-        private object ValidateData(TEntity entity, Guid? entityId = null)
-        {
-            //Kiểm tra các trường bắt buộc nhập
-            var checkRequiredField = CheckRequiredField(entity);
-            if (checkRequiredField != null)
-            {
-                return checkRequiredField;
-            }
-            return null;
-        }
-
-
-        /// <summary>
-        /// Validate dữ liệu riêng
-        /// </summary>
-        /// <param name="entity">thông tin cần validate</param>
-        /// <returns></returns>
-        /// CreatedBy: NTDUNG(27/8/2021)
-        /// ModifiedBy: NTDUNG(27/8/2021)
-        protected virtual object ValidateCustom(TEntity entity)
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Kiểm tra các trường bắt buộc nhập
-        /// </summary>
-        /// <param name="entity">Thông tin kiểm tra</param>
-        /// <returns>object error nếu có trường để trống, null nếu thỏa mã</returns>
-        /// CreatedBy: NTDUNG(27/8/2021)
-        /// ModifiedBy: NTDUNG(27/8/2021)
-        private object CheckRequiredField(TEntity entity)
-        {
-            foreach (var property in entity.GetType().GetProperties())
-            {
-                var propMisaRequired = property.GetCustomAttributes(typeof(MisaRequired), true);
-                var propMisaDislayName = property.GetCustomAttributes(typeof(MisaDisplayName), true);
-                if (propMisaRequired.Length > 0)
-                {
-                    var fieldName = propMisaDislayName.Length > 0 ? (propMisaDislayName[0] as MisaDisplayName).FieldName : property.Name;
-                    if (property.GetValue(entity) == null || string.IsNullOrEmpty(property.GetValue(entity).ToString()) || property.GetValue(entity).ToString() == Guid.Empty.ToString())
-                    {
-                        var errorObj = new
-                        {
-                            devMessage = string.Format(Resources.ResourceVN.Exception_Required, property.Name),
-                            userMsg = string.Format(Resources.ResourceVN.Exception_Required, fieldName),
-                            errorCode = "MISA01",
-                            moreInfo = "https://openapi.misa.com.vn/errorcode/misa-001",
-                            traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
-                        };
-                        return errorObj;
-                    }
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Kiểm tra trùng lặp
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="fieldName"></param>
-        /// <param name="mode"></param>
-        /// <returns></returns>
-        public ServiceResult CheckDuplicate(TEntity entity, string fieldName, string mode)
-        {
-            try
-            {
-                var serviceResult = new ServiceResult();
-                serviceResult.IsValid = _baseRepository.CheckDuplicate(entity, fieldName, mode);
-                return serviceResult;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-    
-        }
         /// <summary>
         /// Validate data
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="mode"></param>
         /// <returns></returns>
+        /// CreatedBy: NTDUNG(07/10/2021)
         public ServiceResult ValidateData(TEntity entity, string mode)
         {
             var serviceResult = new ServiceResult();
@@ -354,6 +245,25 @@ namespace Misa.ApplicationCore.Services
             }
             serviceResult.IsValid = true;
             return serviceResult;
+        }
+
+        /// <summary>
+        /// Lấy mã mới
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(07/10/2021)
+        public ServiceResult GetNewCode()
+        {
+            try
+            {
+                var serviceResult = new ServiceResult();
+                serviceResult.Data = _baseRepository.GetNewCode();
+                return serviceResult;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
         #endregion
     }

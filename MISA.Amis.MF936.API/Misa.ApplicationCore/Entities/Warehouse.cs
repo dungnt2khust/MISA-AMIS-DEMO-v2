@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Misa.ApplicationCore.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +17,14 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Mã kho
         /// </summary>
+        [MisaUnique]
+        [MisaDisplayName("Mã kho")]
         public string warehouse_code { get; set; }
 
         /// <summary>
         /// Tên kho
         /// </summary>
+        [MisaUnique]
         public string warehouse_name { get; set; }
 
         /// <summary>

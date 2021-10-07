@@ -13,7 +13,6 @@
 				class="input input--date"
 				:class="{'input--disable': !enable, 'border-error': errorMsg ? true : false}"
 				ref="inputDate"
-				:tabindex="tabindex"
 				:readonly="!enable"
 				:title="errorMsg ? errorMsg : ''"
 				v-if="!disable"
@@ -59,11 +58,7 @@
 			value: {
 				type: String,
 				default: null
-			},
-			tabindex: {
-				type: Number,
-				default: -1
-			},
+			},	
 			overtoday: {
 				type: Boolean,
 				default: false

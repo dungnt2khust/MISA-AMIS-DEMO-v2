@@ -1,10 +1,6 @@
 <template lang="">
 	<div class="formsmall__overlay">
-		<div
-			class="formsmall"
-			v-on="formListeners"
-			:style="positionOfForm"
-		>
+		<div class="formsmall" v-on="formListeners" :style="positionOfForm">
 			<div class="formsmall__header">
 				<h2 class="formsmall__header-title">{{ title }}</h2>
 				<div class="formsmall__header-close">
@@ -16,14 +12,14 @@
 				<slot name="body"></slot>
 			</div>
 			<div class="formsmall__footer fx-space-between">
-				<slot name="footer"></slot>	
+				<slot name="footer"></slot>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 	// LIBRARY
-	import globalComponents from "../../../mixins/globalComponents/globalComponents.js"
+	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
 	// COMPONENTS
 	import BaseHelp from "./components/BaseHelp.vue";
 	import BaseCancel from "./components/BaseCancel.vue";
@@ -40,17 +36,18 @@
 				type: String,
 				default: "",
 			},
-            width: {
-                type: String,
-                default: ''
-            }
+			width: {
+				type: String,
+				default: "",
+			},
 		},
 		data() {
 			return {
 				dragState: false,
 				dragX: 0,
-				dragY: 0
-			}
+				dragY: 0,
+				position: "unset",
+			};
 		},
 		computed: {
 			formListeners: function() {
@@ -72,7 +69,7 @@
 					},
 					// Khi trong mode drag thì tìm ra offset và đặt position
 					mousemove: (event) => {
-						if (this.dragState) {	
+						if (this.dragState) {
 							// Gán vị trí mới
 							dragXEnd = event.clientX;
 							dragYEnd = event.clientY;
@@ -87,7 +84,12 @@
 			 * CreatedBy: NTDUNG (31/08/2021)
 			 */
 			positionOfForm() {
-				return {width: this.width, 'max-width': this.width, top: this.dragY + "px", left: this.dragX + "px" };
+				return {
+					width: this.width,
+					"max-width": this.width,
+					top: this.dragY == "50%" ? this.dragY : this.dragY + "px",
+					left: this.dragX == "50%" ? this.dragX : this.dragX + "px",
+				};
 			},
 		},
 		methods: {
@@ -96,16 +98,16 @@
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
 			help() {
-				this.callDialog('warn', this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
 			},
 			/**
 			 * Ẩn form
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
 			hideForm() {
-				this.$emit('hideForm');
-			}
-		}
+				this.$emit("hideForm");
+			},
+		},
 	};
 </script>
 <style>

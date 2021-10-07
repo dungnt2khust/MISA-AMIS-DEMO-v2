@@ -50,7 +50,6 @@
 							:form="itemStyle['form']"
 							:index="indexData"
 							type="small"
-							:tabindex="indexData"
 							:syncfield="itemStyle['syncfield']"
 							:hasFooter="itemStyle['hasFooter']"
 							:disable="!enable"
@@ -64,19 +63,18 @@
 							:value="itemData[itemStyle['field']]"
 							v-model="itemData[itemStyle['field']]"
 							:pos="itemStyle.pos"
-							:tabindex="indexData"
 							:disable="!enable || !itemStyle['enable']"
 							:syncfield="itemStyle['syncfield']"
 							:index="indexData"
 							:formName="formName"
 							:required="itemStyle['required']"
 							:name="itemStyle['name']"
+							:format="itemStyle['format']"
 						/>
 						<base-input-date
 							v-if="(itemStyle.type == TableDataStyle.TYPE.InputDate)"
 							:value="itemData[itemStyle['field']]"
 							v-model="itemData[itemStyle['field']]"
-							:tabindex="indexData"
 							:overtoday="itemStyle['overtoday']"
 							:disable="!enable"
 							:required="itemStyle['required']"
@@ -215,8 +213,11 @@
 			 */
 			deleteAllRecords() {
 				var tableData = this.tableData;
-				tableData.forEach((item) => {	
-					item["state"] = VoucherDetailState.DELETE;
+				tableData.forEach((item, index) => {	
+					if (item['state'] == VoucherDetailState.ADD)  
+						tableData.splice(index, 1);
+					else 
+						item["state"] = VoucherDetailState.DELETE;
 				});
 
 				this.changeTableData(tableData);

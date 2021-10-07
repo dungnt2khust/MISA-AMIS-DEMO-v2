@@ -52,6 +52,7 @@
 						:data="dataConversionUnit"
 						v-model="dataConversionUnit"
 						:currIdx="currIdx"
+						:formName="name"
 					/>
 				</div>
 			</div>
@@ -69,9 +70,10 @@
 </template>
 <script>
 	// LIBRARY
-	import commodityAPI from "../../../../js/components/commodityAPI"
-	import globalComponents from "../../../../mixins/globalComponents/globalComponents.js"
-	import methods from "../../../../mixins/methods"
+	import commodityAPI from "../../../../js/components/commodityAPI";
+	import baseAPI from "../../../../js/base/baseAPI";
+	import globalComponents from "../../../../mixins/globalComponents/globalComponents.js";
+	import methods from "../../../../mixins/methods";
 	// COMPONENTS
 	import BaseFormExtend from "../../../Base/Form/BaseFormExtend.vue";
 	import WarehouseCommodity from "./WarehouseCommodity.vue";
@@ -88,8 +90,8 @@
 		data() {
 			return {
 				dataConversionUnit: {
-					dataMaster: {}, 
-					dataDetail: []
+					dataMaster: {},
+					dataDetail: [],
 				},
 				dataClone: {},
 				fullscreen: false,
@@ -128,6 +130,10 @@
 						desc: "Công cụ dụng cụ mua về nhập kho chưa đưa vào sử dụng",
 					},
 				],
+				name: "Commodity",
+				errorMsg: "",
+				element: null,
+				baseAPI: new baseAPI("Commoditys")
 			};
 		},
 		created() {
@@ -166,18 +172,39 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			store() {
-				console.log(this.dataConversionUnit);
-				if (!this.deepEqualObject(this.dataConversionUnit, this.dataClone)) {
-					commodityAPI
-						.AddCommodity(this.dataConversionUnit)
-						.then((res) => {
-							console.log(res);
-						})
-						.catch((res) => {
-							console.log(res);
-						});
-					this.formState = false;
-				} else this.formState = false;
+				this.validateData();
+				setTimeout(() => {
+					if (!this.errorMsg)
+						if (
+							!this.deepEqualObject(this.dataConversionUnit, this.dataClone)
+						) {
+							this.$bus.$emit("showLoading");
+							commodityAPI
+								.AddCommodity(this.dataConversionUnit)
+								.then(() => {
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+									// Thong báo thành công
+									this.$bus.$emit("showToastMessage", {
+										message: this.$resourcesVN.NOTIFY.AddSuccess,
+										duration: 2000,
+									});
+									this.formState = false;
+								})
+								.catch((res) => {
+									this.showError(res);
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+								});
+						} else this.formState = false;
+					else
+						this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
+							() => {
+								if (this.element)
+									this.element.focus();
+							}
+						);
+				}, 100);
 			},
 			/**
 			 * Cất và thêm
@@ -191,13 +218,21 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			cloneData() {
-				this.dataClone = { 
-					dataMaster: {...this.dataConversionUnit },
-					dataDetail: []
-				},
-				this.dataConversionUnit['dataDetail'].forEach((item) => {
-					this.dataClone['dataDetail'].push(item);
+				this.dataClone = {
+					dataMaster: { ...this.dataConversionUnit },
+					dataDetail: [],
+				};
+				this.dataConversionUnit["dataDetail"].forEach((item) => {
+					this.dataClone["dataDetail"].push(item);
 				});
+			},
+			/**
+			 * Validate data
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			validateData() {
+				this.errorMsg = "";
+				this.$bus.$emit("validate" + this.name);
 			},
 		},
 		watch: {
@@ -205,12 +240,28 @@
 				if (value != -1) {
 					this.dataConversionUnit = {
 						dataMaster: {},
-						dataDetail: []
+						dataDetail: [],
 					};
-					setTimeout(() => {this.cloneData()}, 1000);
+					this.baseAPI.getNewCode().then((res) => {
+						this.$set(
+							this.dataConversionUnit["dataMaster"],
+							"commodity_code",
+							res.data
+						);
+						setTimeout(() => {
+							this.cloneData();
+						}, 500);
+					});
+					
+					this.$bus.$on("catchError" + this.name, (msg, element) => {
+						if (!this.errorMsg) {
+							this.errorMsg = msg;
+							this.element = element;
+						}
+					});
 				}
-			}
-		}
+			},
+		},
 	};
 </script>
 <style>

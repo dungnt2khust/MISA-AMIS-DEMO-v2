@@ -180,7 +180,8 @@ namespace Misa.ApplicationCore.Services
                 }
 
                 serviceResult.IsValid = true;
-                serviceResult.Data = _accountVoucherRepository.addAccountVoucher(accountVoucher, accountObject, accountVoucherDetails);
+                serviceResult.Data = _accountVoucherRepository.addAccountVoucher(accountVoucher, accountObject, accountVoucherDetails); 
+                serviceResult.Msg = Resources.ResourceVN.Success_Insert;
 
                 return serviceResult;
             }
@@ -232,7 +233,9 @@ namespace Misa.ApplicationCore.Services
                 }
 
 
+                serviceResult.IsValid = true;
                 serviceResult.Data = _accountVoucherRepository.updateAccountVoucher(accountVoucher, accountObject, accountVoucherDetails);
+                serviceResult.Msg = Resources.ResourceVN.Success_Update;
 
                 return serviceResult;
             }
@@ -241,44 +244,7 @@ namespace Misa.ApplicationCore.Services
 
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lấy mã chứng từ mới
-        /// </summary>
-        /// <returns></returns>
-        /// CreatedBy: NTDUNG(30/09/2021)
-        public ServiceResult getNewVoucherCode()
-        {
-            try
-            {
-                var serviceResult = new ServiceResult();
-                var voucher = _accountVoucherRepository.getNewVoucherCode();
-                var currentVoucherCode = voucher.voucher_code;
-                var numberString = Regex.Match(currentVoucherCode, @"\d+").Value;
-                int numberCode = Int32.Parse(numberString);
-                numberCode = numberCode + 1;
-                numberString = numberCode.ToString();
-                var numberStringLength = numberString.Length;
-                var newVoucherCode = "BK";
-                if (numberStringLength < 6)
-                {
-                    for (int i = 0; i < 6 - numberStringLength; ++i)
-                    {
-                        newVoucherCode = newVoucherCode + "0";
-                    }
-                }
-                newVoucherCode = newVoucherCode + numberString;
-                serviceResult.Data = newVoucherCode;
-                return serviceResult;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        
+        }        
         #endregion
     }
 }

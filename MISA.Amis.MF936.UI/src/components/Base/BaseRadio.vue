@@ -9,7 +9,7 @@
                 @click="changeRadio(index)"
 				@keydown="radioItemOnKeydown($event, index)"
 				:key="index"
-				:tabindex="tabIdx"
+				tabindex="0"
 				:ref="'radio' + index"
 			>
 				<div class="radio__border">
@@ -100,8 +100,6 @@
 				handler(value) {
 					if (value !== null)
 						this.currIdx = value;
-					else 
-						this.currIdx = 0;
 				},
 				immediate: true
 			}

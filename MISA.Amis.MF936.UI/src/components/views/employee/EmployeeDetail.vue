@@ -47,7 +47,6 @@
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
 						class="w-2/5"
-						:tabindex="1"
 					/>
 					<base-input
 						label="Tên"
@@ -58,7 +57,6 @@
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
 						class="w-3/5"
-						:tabindex="2"
 					/>
 				</div>
 				<div class="form__body-item fx">
@@ -67,7 +65,6 @@
 						:value="data['DateOfBirth']"
 						v-model="data['DateOfBirth']"
 						class="w-2/5"
-						:tabindex="5"
 					/>
 					<base-radio
 						label="Giới tính"
@@ -101,14 +98,12 @@
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
 						class="w-3/5"
-						:tabindex="7"
 					/>
 					<base-input-date
 						label="Ngày cấp"
 						:value="data['IdentityDate']"
 						v-model="data['IdentityDate']"
 						class="w-2/5"
-						:tabindex="8"
 					/>
 				</div>
 				<div class="form__body-item">
@@ -119,7 +114,6 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						:tabindex="4"
 					/>
 				</div>
 				<div class="form__body-item">
@@ -130,7 +124,6 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						:tabindex="9"
 					/>
 				</div>
 				<div class="form__body-item fx-1">
@@ -141,7 +134,6 @@
 						:validateState="validateState"
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
-						:tabindex="10"
 					/>
 				</div>
 				<div class="form__body-item fx fx-1">
@@ -154,7 +146,6 @@
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
 						class="w-1/4"
-						:tabindex="11"
 					/>
 					<base-input
 						label="ĐT cố định"
@@ -165,7 +156,6 @@
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
 						class="w-1/4"
-						:tabindex="12"
 					/>
 					<base-input
 						label="Email"
@@ -176,7 +166,6 @@
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
 						class="w-1/4"
-						:tabindex="13"
 					/>
 				</div>
 				<div class="form__body-item fx fx-1">
@@ -188,7 +177,6 @@
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
 						class="w-1/4"
-						:tabindex="14"
 					/>
 					<base-input
 						label="Tên ngân hàng"
@@ -198,7 +186,6 @@
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
 						class="w-1/4"
-						:tabindex="15"
 					/>
 					<base-input
 						label="Chi nhánh"
@@ -208,7 +195,6 @@
 						:formState="formState"
 						@inputError="inputErrorHandle($event)"
 						class="w-1/4"
-						:tabindex="16"
 					/>
 				</div>
 			</div>

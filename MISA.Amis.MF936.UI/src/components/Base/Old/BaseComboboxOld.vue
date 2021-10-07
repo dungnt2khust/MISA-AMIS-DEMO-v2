@@ -19,11 +19,9 @@
 					class="combobox__input"
 					:title="comboboxError ? errorMsg : ''"
 					v-model="inputValue"
-					:tabindex="tabIdx"
 				/>
 			</div>
 			<div
-				tabindex="0"
 				@click="comboboxState = !comboboxState"
 				class="combobox__button"
 			>

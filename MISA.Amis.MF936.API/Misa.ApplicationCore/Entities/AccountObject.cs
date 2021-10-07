@@ -21,6 +21,7 @@ namespace Misa.ApplicationCore.Entities
         /// </summary>
         [MisaDisplayName("Mã khách hàng")]
         [MisaUnique]
+        [MisaRequired]
         [MisaExport("Mã khách hàng")]
         public string account_object_code { get; set; }
 
@@ -29,6 +30,7 @@ namespace Misa.ApplicationCore.Entities
         /// </summary>
         [MisaDisplayName("Tên khách hàng")]
         [MisaExport("Tên khách hàng")]
+        [MisaRequired]
         public string account_object_name { get; set; }
 
         /// <summary>
@@ -46,6 +48,11 @@ namespace Misa.ApplicationCore.Entities
         /// Địa chỉ liên hệ
         /// </summary>
         public string contact_address { get; set; }
+
+        /// <summary>
+        /// Loại đối tượng
+        /// </summary>
+        public int account_object_type { get; set; }
         /// <summary>
         /// Email
         /// </summary>

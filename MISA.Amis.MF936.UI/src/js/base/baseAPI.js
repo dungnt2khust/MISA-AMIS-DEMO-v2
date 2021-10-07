@@ -98,4 +98,14 @@ export default class BaseAPI {
 		let api = this.baseApiUrl + this.controller + "/" + id;
 		return axios.delete(api);
 	}
+
+	/**
+	 * Lấy mã mới
+	 * @returns {Promise}
+	 * CreatedBy: NTDUNG (07/10/2021)
+	 */
+	getNewCode() {
+		let api = this.baseApiUrl + this.controller + "/NewCode";
+		return axios.get(api);
+	}
 }

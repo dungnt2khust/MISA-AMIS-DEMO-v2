@@ -221,22 +221,19 @@ namespace Misa.Infrastructure
                 var rowEffectsAccountVoucher = npgsqlConnection.Execute(proceduceAccountVoucher, param: dynamicParametersAccountVoucher, commandType: CommandType.StoredProcedure);
 
                 // Cập nhật Object
+                // Cập nhật Object
                 DynamicParameters dynamicParametersAccountObject = new DynamicParameters();
-                var propertiesAccountObject = accountObject.GetType().GetProperties();
-                foreach (var property in propertiesAccountObject)
-                {
-                    if (property.IsDefined(typeof(MisaNotMap), false)) continue;
-                    var propName = property.Name;
-                    var propValue = property.GetValue(accountObject);
-                    dynamicParametersAccountObject.Add($"@{propName}_update", propValue);
 
-                }
-                var proceduceAccountObject = $"func_update_accountobject";
+                dynamicParametersAccountObject.Add("accountobject_id_update", accountObject.accountobject_id);
+                dynamicParametersAccountObject.Add("employee_id_update", accountObject.employee_id);
+
+                var proceduceAccountObject = $"func_update_accountobject_employee";
                 var rowEffectsAccountObject = npgsqlConnection.Execute(proceduceAccountObject, param: dynamicParametersAccountObject, commandType: CommandType.StoredProcedure);
 
                 // Thêm mới detail
                 DynamicParameters dynamicParametersAccountVoucherDetail = new DynamicParameters();
-                foreach(AccountVoucherDetail accountVoucherDetail in accountVoucherDetails) {
+                foreach (AccountVoucherDetail accountVoucherDetail in accountVoucherDetails)
+                {
                     var propertiesAccountVoucherDetail = accountVoucherDetail.GetType().GetProperties();
                     // Tạo id detail
                     accountVoucherDetail.accountvoucherdetail_id = Guid.NewGuid();
@@ -270,7 +267,7 @@ namespace Misa.Infrastructure
             }
             finally
             {
-                if (npgsqlConnection != null) npgsqlConnection.Close(); 
+                if (npgsqlConnection != null) npgsqlConnection.Close();
             }
             return new
             {
@@ -316,16 +313,11 @@ namespace Misa.Infrastructure
 
                 // Cập nhật Object
                 DynamicParameters dynamicParametersAccountObject = new DynamicParameters();
-                var propertiesAccountObject = accountObject.GetType().GetProperties();
-                foreach (var property in propertiesAccountObject)
-                {
-                    if (property.IsDefined(typeof(MisaNotMap), false)) continue;
-                    var propName = property.Name;
-                    var propValue = property.GetValue(accountObject);
-                    dynamicParametersAccountObject.Add($"@{propName}_update", propValue);
 
-                }
-                var proceduceAccountObject = $"func_update_accountobject";
+                dynamicParametersAccountObject.Add("accountobject_id_update", accountObject.accountobject_id);
+                dynamicParametersAccountObject.Add("employee_id_update", accountObject.employee_id);
+                
+                var proceduceAccountObject = $"func_update_accountobject_employee";
                 var rowEffectsAccountObject = npgsqlConnection.Execute(proceduceAccountObject, param: dynamicParametersAccountObject, commandType: CommandType.StoredProcedure);
 
                 // Thêm mới detail
@@ -338,12 +330,13 @@ namespace Misa.Infrastructure
                     accountVoucherDetail.accountvoucher_id = accountVoucher.accountvoucher_id;
 
 
-                    switch(state)
+                    switch (state)
                     {
                         case (int)AccountVoucherDetailState.Add:
                             DynamicParameters insertParams = new DynamicParameters();
                             // Tạo id detail thêm mới
-                            accountVoucherDetail.accountvoucherdetail_id = Guid.NewGuid();                        
+                            accountVoucherDetail.accountvoucherdetail_id = Guid.NewGuid();
+                            detailIds.Add(accountVoucherDetail.accountvoucherdetail_id);
 
                             foreach (var property in propertiesAccountVoucherDetail)
                             {
@@ -359,6 +352,7 @@ namespace Misa.Infrastructure
                             break;
                         case (int)AccountVoucherDetailState.Update:
                             DynamicParameters updateParams = new DynamicParameters();
+                            detailIds.Add(accountVoucherDetail.accountvoucherdetail_id);
                             // Chỉnh sửa
                             foreach (var property in propertiesAccountVoucherDetail)
                             {
@@ -376,14 +370,14 @@ namespace Misa.Infrastructure
                             // Xoá 
                             DynamicParameters deleteParams = new DynamicParameters();
                             deleteParams.Add("@accountvoucherdetail_id_delete", accountVoucherDetail.accountvoucherdetail_id);
-                           
+
                             var procedureDelete = $"func_delete_accountvoucherdetail";
                             var rowEffectsDelete = npgsqlConnection.Execute(procedureDelete, param: deleteParams,
                                 commandType: CommandType.StoredProcedure);
                             break;
                     }
                     // Tạo id detail
-                    
+
                 }
                 transaction.Commit();
             }
@@ -394,8 +388,6 @@ namespace Misa.Infrastructure
                     transaction.Rollback();
                     return new
                     {
-                        newMasterId = masterId,
-                        newDetailIds = detailIds
                     };
                 }
                 throw;
@@ -404,19 +396,10 @@ namespace Misa.Infrastructure
             {
                 if (npgsqlConnection != null) npgsqlConnection.Close();
             }
-            return new object();
-        }
-
-        public AccountVoucher getNewVoucherCode()
-        {
-            using (_dbConnection = new NpgsqlConnection(_connectionString))
-            {
-
-
-                var sqlCommand = "select * from public.accountvoucher av order by cast( public.func_extract_number(av.voucher_code) as int) DESC LIMIT 1";
-                var voucher = _dbConnection.Query<AccountVoucher>(sqlCommand).Single();
-                return voucher;
-            }
+            return new {
+                newMasterId = masterId,
+                newDetailIds = detailIds
+            };
         }
     }
 }

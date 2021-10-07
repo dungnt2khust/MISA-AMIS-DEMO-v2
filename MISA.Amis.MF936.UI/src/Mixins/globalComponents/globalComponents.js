@@ -21,18 +21,18 @@ export default {
 			return Object.assign({}, this.$listener, {
 				click: (event) => {
 					console.log(event.target);
-					if (!show)  {
+					if (!show) {
 						show = true;
 
 						var element = this.findParentByClass(event.target, "context-menu");
 
 						var elementRect = element.getBoundingClientRect();
-						
+
 						var elementPos = {
 							top: elementRect.top,
 							left: elementRect.left,
 							width: element.offsetWidth,
-							height: element.offsetHeight
+							height: element.offsetHeight,
 						};
 						this.$bus.$emit("showContextMenu", {
 							contextFunction: contextFunction,
@@ -40,22 +40,21 @@ export default {
 						});
 					} else {
 						show = false;
-						this.$bus.$emit('hideContextMenu');
+						this.$bus.$emit("hideContextMenu");
 					}
-					
 				},
 				focus: (event) => {
-					var element = this.findParentByClass(event.target, 'context-menu');
+					var element = this.findParentByClass(event.target, "context-menu");
 
-					element.classList.add('context-menu--selected');
+					element.classList.add("context-menu--selected");
 				},
 				blur: (event) => {
-					var element = this.findParentByClass(event.target, 'context-menu');
+					var element = this.findParentByClass(event.target, "context-menu");
 
-					element.classList.remove('context-menu--selected');
+					element.classList.remove("context-menu--selected");
 
-					this.$bus.$emit('hideContextMenu');
-				}
+					this.$bus.$emit("hideContextMenu");
+				},
 			});
 		},
 		/**
@@ -78,6 +77,14 @@ export default {
 				mouseleave: () => {
 					// Ẩn tooltip
 					this.$bus.$emit("hideTooltip");
+				},
+				mouseup: (event) => {
+					setTimeout(()=> {
+						if (!this.isVisible(event.target)) {
+							this.$bus.$emit("hideTooltip");
+						}
+					}, 100);
+					
 				},
 			});
 		},
@@ -117,6 +124,53 @@ export default {
 					}
 				}, 20);
 			});
+		},
+		/**
+		 * Kiểm tra xem element có đang hiển thị không
+		 * @param {Element} elem
+		 * @returns {Boolean}
+		 * CreatedBy: NTDUNG (28/09/2021)
+		 */
+		isVisible(elem) {
+			if (!(elem instanceof Element))
+				throw Error("DomUtil: elem is not an element.");
+			const style = getComputedStyle(elem);
+			if (style.display === "none") return false;
+			if (style.visibility !== "visible") return false;
+			if (style.opacity < 0.1) return false;
+			if (
+				elem.offsetWidth +
+					elem.offsetHeight +
+					elem.getBoundingClientRect().height +
+					elem.getBoundingClientRect().width ===
+				0
+			) {
+				return false;
+			}
+			const elemCenter = {
+				x: elem.getBoundingClientRect().left + elem.offsetWidth / 2,
+				y: elem.getBoundingClientRect().top + elem.offsetHeight / 2,
+			};
+			if (elemCenter.x < 0) return false;
+			if (
+				elemCenter.x >
+				(document.documentElement.clientWidth || window.innerWidth)
+			)
+				return false;
+			if (elemCenter.y < 0) return false;
+			if (
+				elemCenter.y >
+				(document.documentElement.clientHeight || window.innerHeight)
+			)
+				return false;
+			let pointContainer = document.elementFromPoint(
+				elemCenter.x,
+				elemCenter.y
+			);
+			do {
+				if (pointContainer === elem) return true;
+			} while ((pointContainer = pointContainer.parentNode));
+			return false;
 		},
 	},
 };

@@ -16,7 +16,7 @@
 					/>
 					<base-checkbox
 						:label="$resourcesVN.ACCOUNT_OBJECT_DETAIL.IsSupplier"
-						:value="data['is_supplier']"
+						:state="data['is_supplier']"
 						v-model="data['is_supplier']"
 					/>
 				</div>
@@ -26,10 +26,12 @@
 					<div class="fx-7-1/2 fx-nm-wrap">
 						<base-input
 							:label="$resourcesVN.ACCOUNT_OBJECT_DETAIL.AccountObjectCode"
-							ref="InputCode"
+							ref="inputFocus"
 							:required="true"
+							:showRequired="true"
 							:value="data['account_object_code']"
 							v-model="data['account_object_code']"
+							:formName="name"
 							class="fx-3/5 mb-12"
 						/>
 						<base-input
@@ -44,7 +46,6 @@
 								:label="$resourcesVN.ACCOUNT_OBJECT_DETAIL.SupplierName"
 								type="small"
 								:placeholder="$resourcesVN.ACCOUNT_OBJECT_DETAIL.Vocative"
-								:api="WAREHOUSE_TABLE.InWardDetail.VOCATIVE['api']"
 								:controller="
 									WAREHOUSE_TABLE.InWardDetail.VOCATIVE['controller']
 								"
@@ -72,11 +73,14 @@
 							/>
 						</div>
 						<base-input
-							label="."
+							:label="$resourcesVN.ACCOUNT_OBJECT_DETAIL.FullName"
 							:placeholder="$resourcesVN.ACCOUNT_OBJECT_DETAIL.FullName"
 							class="fx-2/3 mb-12"
 							:value="data['account_object_name']"
 							v-model="data['account_object_name']"
+							:required="true"
+							:showRequired="true"
+							:formName="name"
 						/>
 						<base-text-area
 							:label="$resourcesVN.ACCOUNT_OBJECT_DETAIL.Address"
@@ -91,7 +95,6 @@
 						<div class="fx-1 mb-12">
 							<base-combobox-advance
 								:label="$resourcesVN.ACCOUNT_OBJECT_DETAIL.AccountObjectGroup"
-								:api="WAREHOUSE_TABLE.InWardDetail.ACCOUNT_OBJECT_GROUP['api']"
 								:controller="
 									WAREHOUSE_TABLE.InWardDetail.ACCOUNT_OBJECT_GROUP['controller']
 								"
@@ -121,7 +124,6 @@
 						<div class="fx-1">
 							<base-combobox-advance
 								:label="$resourcesVN.ACCOUNT_OBJECT_DETAIL.Employee"
-								:api="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['api']"
 								:controller="
 									WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['controller']
 								"
@@ -308,13 +310,23 @@
 				data: {},
 				dataClone: {},
 				accountObjectAPI: new baseAPI("AccountObjects"),
+				name: "AccountObject",
+				errorMsg: "",
+				element: null,
 			};
 		},
 		created() {
 			this.$bus.$on("showAccountObjectDetail", () => {
-				this.data = {};
 				this.formState = true;
-				setTimeout(() => {this.cloneData()}, 100);
+				// Bind dữ liệu
+				this.bindData();
+			});
+
+			this.$bus.$on("catchError" + this.name, (msg, element) => {
+				if (!this.errorMsg) {
+					this.errorMsg = msg;
+					this.element = element;
+				}
 			});
 		},
 		methods: {
@@ -347,17 +359,36 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			store() {
-				if (!this.deepEqualObject(this.data, this.dataClone)) {
-					this.accountObjectAPI
-						.post(this.data)
-						.then((res) => {
-							console.log(res);
-						})
-						.catch((res) => {
-							console.log(res);
-						});
-					this.formState = false;
-				} else this.formState = false;
+				this.validateData();
+				setTimeout(() => {
+					if (!this.errorMsg)
+						if (!this.deepEqualObject(this.data, this.dataClone)) {
+							this.$bus.$emit("showLoading");
+							this.accountObjectAPI
+								.post(this.data)
+								.then(() => {
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+									// Thong báo thành công
+									this.$bus.$emit("showToastMessage", {
+										message: this.$resourcesVN.NOTIFY.AddSuccess,
+										duration: 2000,
+									});
+									this.formState = false;
+								})
+								.catch((res) => {
+									this.showError(res);
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+								});
+						} else this.formState = false;
+					else
+						this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
+							() => {
+								this.element.focus();
+							}
+						);
+				}, 100);
 			},
 			/**
 			 * Cất và thêm
@@ -372,6 +403,31 @@
 			 */
 			cloneData() {
 				this.dataClone = { ...this.data };
+			},
+			/**
+			 * Validate data
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			validateData() {
+				this.errorMsg = "";
+				this.$bus.$emit("validate" + this.name);
+			},
+			/**
+			 * Bind dữ liệu
+			 * CreatedBy: NTDUNG (07/10/2021)
+			 */
+			bindData() {
+				// Lấy mã đơn vị tính
+				this.accountObjectAPI.getNewCode().then((res) => {
+					this.data = {};
+					this.$set(this.data, "account_object_code", res.data);
+					this.$set(this.data, "account_object_type", 0);
+					this.$set(this.data, "is_supplier", 0);
+					this.$nextTick(() => {
+						this.$refs.inputFocus.$el.querySelector("input").focus();
+					});
+					this.cloneData();
+				});
 			},
 		},	
 	};

@@ -24,6 +24,18 @@ namespace Misa.API.Controllers
         }
         #endregion
 
+        /// <summary>
+        /// Lấy thông tin phân trang và lọc dữ liệu phiếu nhập
+        /// </summary>
+        /// <param name="searchData"></param>
+        /// <param name="mentionState"></param>
+        /// <param name="voucherType"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(07/10/2021)
         [HttpGet("Filter")]
         public IActionResult GetAccountVoucherPagingFilter([FromQuery] string searchData, [FromQuery] int? mentionState, [FromQuery] string voucherType, [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] int pageIndex, [FromQuery] int pageSize)
         {
@@ -47,6 +59,12 @@ namespace Misa.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Ghi sổ hàng loạt
+        /// </summary>
+        /// <param name="entityIds"></param>
+        /// <returns></returns> 
+        /// CreatedBy: NTDUNG(07/10/2021)
         [HttpPut("mention")]
         public IActionResult MentionMany([FromBody] List<Guid> entityIds)
         {
@@ -77,7 +95,13 @@ namespace Misa.API.Controllers
                 return StatusCode(500, errorObj);
             }
         }
-        
+       
+        /// <summary>
+        /// Bỏ ghi hàng loạt
+        /// </summary>
+        /// <param name="entityIds"></param>
+        /// <returns></returns> 
+        /// CreatedBy: NTDUNG(07/10/2021)
         [HttpPut("unmention")]
         public IActionResult UnMentionMany([FromBody] List<Guid> entityIds)
         {
@@ -109,6 +133,12 @@ namespace Misa.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Lấy thông tin chi tiết phiếu nhập
+        /// </summary>
+        /// <param name="accountVoucherID"></param>
+        /// <returns></returns> 
+        /// CreatedBy: NTDUNG(07/10/2021)
         [HttpGet("Detail/{accountVoucherID}")]
         public IActionResult getAccountVoucherDetail(Guid accountVoucherID)
         {
@@ -131,7 +161,13 @@ namespace Misa.API.Controllers
                 return StatusCode(500, errorObj);
             }
         }
-    
+   
+        /// <summary>
+        /// Thêm mới phiếu nhập
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns> 
+        /// CreatedBy: NTDUNG(07/10/2021)
         [HttpPost("add")]
         public IActionResult AddAccountVoucher([FromBody] AccountVoucherData data)
         {
@@ -163,8 +199,15 @@ namespace Misa.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Chỉnh sửa phiếu nhập
+        /// </summary>
+        /// <param name="accountVoucherID"></param>
+        /// <param name="data"></param>
+        /// <returns></returns> 
+        /// CreatedBy: NTDUNG(07/10/2021)
         [HttpPut("update/{accountVoucherID}")]
-        public IActionResult UpdateAccountVoucher(Guid accountVoucherID, [FromBody] AccountVoucherData data )
+        public IActionResult UpdateAccountVoucher(Guid accountVoucherID, [FromBody] AccountVoucherData data)
         {
             try
             {
@@ -172,11 +215,11 @@ namespace Misa.API.Controllers
                 var serviceResult = _accountVoucherService.updateAccountVoucher(accountVoucherID, data);
                 if (serviceResult.IsValid)
                 {
-                    return StatusCode(201, serviceResult.Data);
+                    return StatusCode(201, serviceResult);
                 }
                 else
                 {
-                    return BadRequest(serviceResult.Data);
+                    return BadRequest(serviceResult);
                 }
             }
             catch (Exception ex)
@@ -192,30 +235,6 @@ namespace Misa.API.Controllers
 
                 return StatusCode(500, errorObj);
             }
-        }
-
-        [HttpGet("NewVoucherCode")]
-        public IActionResult getNewVoucherCode()
-        {
-            try
-            {
-                var serviceResult = _accountVoucherService.getNewVoucherCode();
-                return Ok(serviceResult.Data);
-            }
-            catch (Exception ex)
-            {
-                var errorObj = new
-                {
-                    devMsg = ex.Message,
-                    userMsg = Resources.Exception_ErrorMsg,
-                    errorCode = "misa-001",
-                    moreInfo = "https://openapi.misa.com.vn/errorcode/misa-001",
-                    traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
-                };
-
-                return StatusCode(500, errorObj);
-            }
-        }
-
+        } 
     }
 }

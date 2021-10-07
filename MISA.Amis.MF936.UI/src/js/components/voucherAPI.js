@@ -78,13 +78,5 @@ class VoucherAPI extends BaseAPI {
 		let url = this.baseApiUrl + this.controller + `/update/${voucherId}`;
 		return axios.put(url, body);
 	}
-	/**
-	 * Lấy mã mới
-	 * CreatedBy: NTDUNG (30/09/2021)
-	 */
-	getNewCode() {
-		let url = this.baseApiUrl + this.controller + '/NewVoucherCode';
-		return axios.get(url);
-	}
 }
 export default new VoucherAPI();

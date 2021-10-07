@@ -18,7 +18,6 @@
 					type="text"
 					class="combobox__input"
                     :value="inputValue"
-					:tabindex="tabIdx"
                     :readonly="!enable"
                     v-on="inputListeners"
 				/>

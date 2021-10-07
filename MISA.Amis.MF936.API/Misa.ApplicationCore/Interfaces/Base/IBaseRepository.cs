@@ -84,5 +84,12 @@ namespace Misa.ApplicationCore.Interfaces.Base
         /// <returns></returns>
         /// CreatedBy: NTDUNG(04/10/2021)
         Boolean CheckDuplicate(TEntity entity, string fieldName, string mode);
+
+        /// <summary>
+        /// Lấy mã nhân viên mới
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(07/10/2021)
+        string GetNewCode();
     }
 }

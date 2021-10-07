@@ -35,7 +35,7 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// số lượng
         /// </summary>
-        public int? quantity { get; set; }
+        public decimal? quantity { get; set; }
 
         /// <summary>
         /// Đơn giá

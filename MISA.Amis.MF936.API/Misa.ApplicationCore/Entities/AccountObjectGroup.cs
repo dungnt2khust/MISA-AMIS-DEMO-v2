@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Misa.ApplicationCore.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,10 +17,15 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Mã nhóm đối tượng
         /// </summary>
+        [MisaRequired]
+        [MisaUnique]
+        [MisaDisplayName("Mã nhóm khách hàng")]
         public string account_object_group_code { get; set; }
         /// <summary>
         /// Tên nhóm đối tượng
         /// </summary>
+        [MisaRequired]
+        [MisaDisplayName("Tên nhóm khách hàng")]
         public string account_object_group_name { get; set; }
         #endregion
     }

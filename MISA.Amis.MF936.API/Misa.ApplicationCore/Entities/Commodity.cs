@@ -16,6 +16,8 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Tên hàng hóa
         /// </summary>
+        [MisaRequired]
+        [MisaDisplayName("Tên hàng hoá")]
         public string commodity_name { get; set; }
         /// <summary>
         /// Tài khoản nợ
@@ -98,6 +100,9 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Mã hàng
         /// </summary>
+        [MisaRequired]
+        [MisaUnique]
+        [MisaDisplayName("Mã hàng hoá")]
         public string commodity_code { get; set; }
 
         /// <summary>

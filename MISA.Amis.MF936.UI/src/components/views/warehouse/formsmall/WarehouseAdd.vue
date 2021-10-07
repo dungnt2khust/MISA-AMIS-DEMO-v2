@@ -10,15 +10,19 @@
 							:value="data['warehouse_code']"
 							v-model="data['warehouse_code']"
 							:formName="name"
+							:showRequired="true"
+							ref="inputFocus"
 						/>
 					</div>
 					<div class="mt-8 fx-2/3">
 						<base-input
 							label="Tên"
+							ref="firstFocus"
 							:required="true"
 							:value="data['warehouse_name']"
 							v-model="data['warehouse_name']"
 							:formName="name"
+							:showRequired="true"
 						/>
 					</div>
 					<div class="fx-1/3 mt-8">
@@ -50,7 +54,6 @@
 								WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['style']
 							"
 							:form="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE_ACCOUNT['form']"
-							:required="true"
 							:formName="name"
 						/>
 					</div>
@@ -110,18 +113,21 @@
 				warehouseAPI: new baseAPI("Warehouses"),
 				name: "Warehouse",
 				errorMsg: "",
+				element: null,
 			};
 		},
 		created() {
 			this.$bus.$on("showWarehouseAdd", () => {
 				this.formState = true;
-				setTimeout(() => {
-					this.cloneData();
-				}, 100);
+
+				// Bind dữ liệu
+				this.bindData();
+				
 			});
-			this.$bus.$on("catchError" + this.name, (data) => {
+			this.$bus.$on("catchError" + this.name, (msg, element) => {
 				if (!this.errorMsg) {
-					this.errorMsg = data;
+					this.errorMsg = msg;
+					this.element = element;
 				}
 			});
 		},
@@ -155,22 +161,35 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			store() {
-				this.errorMsg = "";
-				this.$bus.$emit("validate" + this.name);
+				this.validateData();
 				setTimeout(() => {
 					if (!this.errorMsg)
 						if (!this.deepEqualObject(this.data, this.dataClone)) {
+							this.$bus.$emit("showLoading");
 							this.warehouseAPI
 								.post(this.data)
-								.then((res) => {
-									console.log(res);
+								.then(() => {
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+									// Thong báo thành công
+									this.$bus.$emit("showToastMessage", {
+										message: this.$resourcesVN.NOTIFY.AddSuccess,
+										duration: 2000,
+									});
+									this.formState = false;
 								})
 								.catch((res) => {
-									console.log(res);
+									this.showError(res);	
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
 								});
-							this.formState = false;
 						} else this.formState = false;
-					else this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg);
+					else
+						this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
+							() => {
+								this.element.focus();
+							}
+						);
 				}, 100);
 			},
 			/**
@@ -187,6 +206,27 @@
 			cloneData() {
 				this.dataClone = { ...this.data };
 			},
+			/**
+			 * Validate data
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			validateData() {
+				this.errorMsg = "";
+				this.$bus.$emit("validate" + this.name);
+			},
+			/**
+			 * Bind dữ liệu
+			 * CreatedBy: NTDUNG (07/10/2021)
+			 */
+			bindData() {
+				// Lấy mã kho mới
+				this.warehouseAPI.getNewCode().then((res) => {
+					this.data = {};
+					this.$set(this.data, "warehouse_code", res.data);
+					this.$refs.inputFocus.$el.querySelector('input').focus();
+					this.cloneData();	
+				});
+			}
 		},
 	};
 </script>

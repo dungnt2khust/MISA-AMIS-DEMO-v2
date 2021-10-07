@@ -115,11 +115,11 @@ namespace Misa.API.Controllers
                 var serviceResult = _baseService.Insert(entity);
                 if (serviceResult.IsValid)
                 {
-                    return StatusCode(201, serviceResult.Data);
+                    return StatusCode(201, serviceResult);
                 }
                 else
                 {
-                    return BadRequest(serviceResult.Data);
+                    return BadRequest(serviceResult);
                 }
             }
             catch (Exception ex)
@@ -155,11 +155,11 @@ namespace Misa.API.Controllers
                 if (serviceResult.IsValid)
                 {
 
-                    return Ok(serviceResult.Data);
+                    return Ok(serviceResult);
                 }
                 else
                 {
-                    return BadRequest(serviceResult.Data);
+                    return BadRequest(serviceResult);
                 }
 
             }
@@ -223,6 +223,34 @@ namespace Misa.API.Controllers
             try
             {
                 var serviceResult = _baseService.DeleteMultiple(entityIds);
+                return Ok(serviceResult.Data);
+            }
+            catch (Exception ex)
+            {
+                var errorObj = new
+                {
+                    devMsg = ex.Message,
+                    userMsg = Resources.Exception_ErrorMsg,
+                    errorCode = "misa-001",
+                    moreInfo = "https://openapi.misa.com.vn/errorcode/misa-001",
+                    traceId = "ba9587fd-1a79-4ac5-a0ca-2c9f74dfd3fb"
+                };
+
+                return StatusCode(500, errorObj);
+            }
+        }
+       
+        /// <summary>
+        /// Lấy mã mới
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(07/10/2021)
+        [HttpGet("NewCode")] 
+        public IActionResult GetNewCode()
+        {
+            try
+            {
+                var serviceResult = _baseService.GetNewCode();
                 return Ok(serviceResult.Data);
             }
             catch (Exception ex)

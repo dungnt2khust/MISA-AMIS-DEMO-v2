@@ -234,6 +234,22 @@ namespace Misa.Infrastructure
                 return queryField.ToList().Count() >= 1;
             }
         }
+        
+        /// <summary>
+        /// Lấy mã mới
+        /// </summary>
+        /// <returns></returns>
+        /// CreatedBy: NTDUNG(07/10/2021)
+        public string GetNewCode()
+        {
+
+            using (_dbConnection = new NpgsqlConnection(_connectionString))
+            {
+                var proceduce = $"func_get_new_{_className}_code";
+                var newCode = _dbConnection.Query<string>(proceduce, commandType: CommandType.StoredProcedure);
+                return newCode.ToList()[0];
+            }
+        }
 
         #endregion
     }

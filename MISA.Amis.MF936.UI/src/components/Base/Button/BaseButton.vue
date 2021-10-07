@@ -1,12 +1,12 @@
 <template lang="">
-	<div
+	<button
 		v-on="tooltipListeners(tooltip)"
 		@click="buttonOnClick()"
 		class="button"
 		:class="[{'button--disable': !enable}, 'button--' + type]"
 	>
 		{{ label }}
-	</div>
+	</button>
 </template>
 <script>
 	// LIBRARY

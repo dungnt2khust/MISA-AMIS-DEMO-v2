@@ -6,7 +6,7 @@
 	>
 		<span v-if="label != ''" class="label">
 			{{ label }}
-			<!-- <span v-if="required" class="text-red">*</span> -->
+			<span v-if="required && showRequired" class="text-red">*</span>
 		</span>
 		<div v-if="disable" class="input__span">{{ inputValue }}</div>
 		<div
@@ -28,7 +28,6 @@
 						v-on="inputListeners"
 						type="text"
 						class="comboboxadvance__input"
-						:tabindex="tabindex"
 						v-model="inputValue"
 						:placeholder="placeholder"
 						:readonly="!enable"
@@ -85,10 +84,6 @@
 			placeholder: {
 				type: String,
 				default: "",
-			},
-			tabindex: {
-				type: Number,
-				default: -1,
 			},
 			controller: {
 				type: String,
@@ -164,6 +159,10 @@
 				type: [Array, String],
 				default: null,
 			},
+			showRequired: {
+				type: Boolean,
+				default: false
+			}
 		},
 		data() {
 			return {
@@ -219,12 +218,12 @@
 							}
 						}, 500);
 					},
-					blur: () => {
-						this.$nextTick(() => {
-							this.focusState = false;
-							this.showList = false;
-						});
-					},
+					// blur: () => {
+					// 	this.$nextTick(() => {
+					// 		this.focusState = false;
+					// 		this.showList = false;
+					// 	});
+					// },
 				});
 			},	
 		},

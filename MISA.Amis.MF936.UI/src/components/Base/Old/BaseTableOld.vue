@@ -48,7 +48,6 @@
 							Sửa
 						</div>
 						<div
-							tabindex="1"
 							@blur="contextMenuOnBlur($event)"
 							@click="contextMenuOnClick($event, indexData)"
 							class="context-menu"

@@ -71,11 +71,11 @@ namespace Misa.Infrastructure
         {
             using (_dbConnection = new NpgsqlConnection(_connectionString))
             {
-                var proceduce = "func_test";
+                var proceduce = "func_get_new_employee_code";
 
-                var newEmployeecCode = _dbConnection.Query<dynamic>(proceduce, commandType: CommandType.StoredProcedure);
-                string test = "adfd";
-                return test;
+                var newEmployeeCode = _dbConnection.Query<String>(proceduce, commandType: CommandType.StoredProcedure);
+                var newCode = newEmployeeCode.ToList()[0];
+                return newCode;
 
             }
         }

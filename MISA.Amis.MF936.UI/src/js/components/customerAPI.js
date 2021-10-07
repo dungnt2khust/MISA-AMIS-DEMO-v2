@@ -21,16 +21,6 @@ class CustomerAPI extends BaseAPI{
     }
 
     /**
-     * Lấy mã nhân viên mới
-     * @return promise
-     * CreatedBy: NTDUNG (01/09/2021)
-     */
-    getNewCustomerCode(){
-        let api = this.baseApiUrl + this.controller + "/NewCustomerCode";
-        return axios.get(api);
-    }
-
-    /**
      * Xuất dữ liệu ra file excel
      * @returns promise
      * CreatedBy: NTDUNG (01/09/2021)

@@ -1,6 +1,6 @@
 <template lang="">
 	<div
-		:tabindex="disable ? '' : 0"
+		tabindex="0"
 		class="checkbox"
 		@click="checkboxOnClick()"
 		@keydown.enter="checkboxOnClick()"
@@ -31,7 +31,7 @@
 			},
 			state: {
 				type: [Number, Boolean],
-				default: false,
+				default: 0,
 			},
 		},
 		data() {
@@ -54,8 +54,14 @@
 			 * @param {Boolean} newState
 			 * CreatedBy: NTDUNG (01/09/2021)
 			 */
-			state: function(newState) {
-				this.checkboxState = newState ? true : false;
+			state: {
+				handler(newState) {
+					this.checkboxState = newState ? true : false;
+					if (newState === undefined && newState === null)
+						this.$emit('input', 1);
+				},
+				immediate: true,
+				deep: true
 			},
 			/**
 			 * Khi checkboxState thay đổi thì emit ra ngoài component cha
@@ -63,9 +69,9 @@
 			 * CreatedBy: NTDUNG (01/09/2021)
 			 */
 			checkboxState: function(newState) {
-				if (this.state === true || this.state === false)
-					this.$emit("input", newState);
-				else 
+				// if (this.state === true || this.state === false)
+				// 	this.$emit("input", newState);
+				// else 
 					this.$emit("input", newState ? 1 : 0);
 			},
 		},

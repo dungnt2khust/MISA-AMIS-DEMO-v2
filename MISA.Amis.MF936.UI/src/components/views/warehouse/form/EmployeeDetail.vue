@@ -23,10 +23,12 @@
 					<div class="fx-7-1/2 fx-nm-wrap">
 						<base-input
 							:label="$resourcesVN.EMPLOYEE_DETAIL.EmployeeCode"
-							ref="InputCode"
-							:required="true"
 							:value="data['employee_code']"
 							v-model="data['employee_code']"
+							:required="true"
+							:showRequired="true"
+							:formName="name"
+							ref="inputFocus"
 							class="fx-2/5 mb-12"
 						/>
 						<base-input
@@ -34,6 +36,7 @@
 							:required="true"
 							:value="data['employee_name']"
 							v-model="data['employee_name']"
+							:formName="name"
 							class="fx-3/5"
 						/>
 
@@ -46,9 +49,7 @@
 								v-model="
 									data[WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['vmodel']]
 								"
-								:value="
-									data[WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['vmodel']]
-								"
+								:value="data[WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['vmodel']]"
 								:vmodelField="WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['vmodel']"
 								:field="WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['field']"
 								:default="
@@ -59,6 +60,7 @@
 								"
 								:form="WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['form']"
 								type="small"
+								:formName="name"
 							/>
 						</div>
 						<base-input
@@ -212,12 +214,23 @@
 				formState: false,
 				listPartitionTab: ["Liên hệ", "Tài khoản ngân hàng"],
 				currFormPartitionTab: 0,
+				name: "AccountObjectGroup",
+				errorMsg: "",
+				element: null,
 			};
 		},
 		created() {
 			this.$bus.$on("showEmployeeDetail", () => {
 				this.formState = true;
-				setTimeout(() => {this.cloneData()}, 100);
+
+				// Bind dữ liệu
+				this.bindData();
+			});
+			this.$bus.$on("catchError" + this.name, (msg, element) => {
+				if (!this.errorMsg) {
+					this.errorMsg = msg;
+					this.element = element;
+				}
 			});
 		},
 		methods: {
@@ -250,17 +263,36 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			store() {
-				if (!this.deepEqualObject(this.data, this.dataClone)) {
-					this.employeeAPI
-						.post(this.data)
-						.then((res) => {
-							console.log(res);
-						})
-						.catch((res) => {
-							console.log(res);
-						});
-					this.formState = false;
-				} else this.formState = false;
+				this.validateData();
+				setTimeout(() => {
+					if (!this.errorMsg)
+						if (!this.deepEqualObject(this.data, this.dataClone)) {
+							this.$bus.$emit("showLoading");
+							this.employeeAPI
+								.post(this.data)
+								.then(() => {
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+									// Thong báo thành công
+									this.$bus.$emit("showToastMessage", {
+										message: this.$resourcesVN.NOTIFY.AddSuccess,
+										duration: 2000,
+									});
+									this.formState = false;
+								})
+								.catch((res) => {
+									this.showError(res);
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+								});
+						} else this.formState = false;
+					else
+						this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
+							() => {
+								this.element.focus();
+							}
+						);
+				}, 100);
 			},
 			/**
 			 * Cất và thêm
@@ -275,6 +307,29 @@
 			 */
 			cloneData() {
 				this.dataClone = { ...this.data };
+			},
+			/**
+			 * Validate data
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			validateData() {
+				this.errorMsg = "";
+				this.$bus.$emit("validate" + this.name);
+			},
+			/**
+			 * Bind dữ liệu
+			 * CreatedBy: NTDUNG (07/10/2021)
+			 */
+			bindData() {
+				// Lấy mã đơn vị tính
+				this.employeeAPI.getNewCode().then((res) => {
+					this.data = {};
+					this.$set(this.data, "employee_code", res.data);
+					this.$nextTick(() => {
+						this.$refs.inputFocus.$el.querySelector("input").focus();
+					});
+					this.cloneData();
+				});
 			},
 		},
 	};

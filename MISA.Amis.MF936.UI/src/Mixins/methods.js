@@ -178,9 +178,10 @@ export default {
 		 * @returns {String}
 		 */
 		formatMoney(value) {
-			if (value)
-				return value.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-			else {
+			if (value) {
+				var number = Number(value);
+				return number.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+			} else {
 				var zero = 0;
 				return zero.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, "$&,");
 			}
@@ -206,22 +207,9 @@ export default {
 		 * CreatedBy: NTDUNG (04/09/2021)
 		 */
 		showError(res) {
-			if (!res.response) {
-				this.callDialog("error", "Có lỗi xảy ra. Vui lòng liên hệ MISA");
-			} else {
-				if (res.response.data) {
-					// Show lỗi cho người dùng
-					this.callDialog("warn", res.response.data.userMsg);
-					// Show lỗi dev
-					console.log({
-						devMsg: res.response.data.devMsg,
-						errorCode: res.response.data.errorCode,
-						traceId: res.response.data.traceId,
-					});
-				} else {
-					this.callDialog("error", res.response.data.Msg);
-				}
-			}
+			console.log(res)
+			if (res.response)
+				this.callDialog(this.$enum.DIALOG_TYPE.Warn, res.response.data.Msg);
 		},
 		/**
 		 * Chuyển chuỗi tiếng việt sang chuỗi bình thường

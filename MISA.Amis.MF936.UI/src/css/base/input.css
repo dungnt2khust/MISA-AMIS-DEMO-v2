@@ -4,6 +4,7 @@
 
 input {
     cursor: text !important;
+    outline: none !important; 
 }
 /* .input-main {
     width: 100%;

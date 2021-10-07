@@ -56,7 +56,6 @@
 								)
 							"
 							class="context-menu"
-							tabindex="0"
 						>
 							<div class="context-menu__icon"></div>
 						</div>

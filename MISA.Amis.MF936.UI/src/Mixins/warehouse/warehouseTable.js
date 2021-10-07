@@ -108,7 +108,7 @@ export default {
 						{
 							name: "Kho",
 							field: "warehouse_code",
-							width: "150px",
+							width: "120px",
 							type: TableDataStyle.TYPE.Combobox,
 							pos: TableDataStyle.POS.Left,
 							style: [
@@ -125,7 +125,7 @@ export default {
 						{
 							name: "TK nợ",
 							field: "debit_account_number",
-							width: "150px",
+							width: "120px",
 							type: TableDataStyle.TYPE.ComboboxNotAdd,
 							style: [
 								{ name: "Số tài khoản", field: "account_number" },
@@ -141,7 +141,7 @@ export default {
 						{
 							name: "TK có",
 							field: "credit_account_number",
-							width: "150px",
+							width: "120px",
 							type: TableDataStyle.TYPE.ComboboxNotAdd,
 							pos: TableDataStyle.POS.Left,
 							style: [
@@ -182,6 +182,7 @@ export default {
 							total: true,
 							enable: true,
 							required: true,
+							format: "money"
 						},
 						{
 							name: "Đơn giá",
@@ -191,15 +192,17 @@ export default {
 							pos: TableDataStyle.POS.Right,
 							enable: true,
 							required: true,
+							format: "money"
 						},
 						{
 							name: "Thành tiền",
 							field: "total_price",
-							width: "100px",
+							width: "150px",
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
 							total: true,
 							enable: true,
+							format: "money"
 						},
 						{
 							name: "Hạn sử dụng",
