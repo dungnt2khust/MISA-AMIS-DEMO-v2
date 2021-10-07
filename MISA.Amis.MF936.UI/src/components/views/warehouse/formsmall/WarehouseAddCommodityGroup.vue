@@ -13,7 +13,9 @@
 							:value="data['commodity_group_code']"
 							v-model="data['commodity_group_code']"
 							:required="true"
+							:showRequired="true"
 							:formName="name"
+							ref="inputFocus"
 						/>
 					</div>
 					<div class="mt-8 fx-2/3">
@@ -22,6 +24,7 @@
 							:value="data['commodity_group_name']"
 							v-model="data['commodity_group_name']"
 							:required="true"
+							:showRequired="true"
 							:formName="name"
 						/>
 					</div>
@@ -69,20 +72,23 @@
 				commodityGroupAPI: new baseAPI("CommodityGroups"),
 				name: "AddCommodityGroup",
 				errorMsg: "",
+				element: null
 			};
 		},
 		created() {
 			this.$bus.$on("showWarehouseAddCommodityGroup", () => {
 				this.formState = true;
-				setTimeout(() => {
-					this.cloneData();
-				}, 100);
+
+				// Bind dữ liệu
+				this.bindData();
+				
 			});
-			this.$bus.$on("catchError" + this.name, (data) => {
+			this.$bus.$on("catchError" + this.name, (msg, element) => {
 				if (!this.errorMsg) {
-					this.errorMsg = data;
+					this.errorMsg = msg;
+					this.element = element;
 				}
-			});
+			});	
 		},
 		methods: {
 			/**
@@ -114,23 +120,36 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			store() {
-				this.errorMsg = "";
-				this.$bus.$emit("validate" + this.name);
+				this.validateData();
 				setTimeout(() => {
 					if (!this.errorMsg)
 						if (!this.deepEqualObject(this.data, this.dataClone)) {
+							this.$bus.$emit("showLoading");
 							this.commodityGroupAPI
 								.post(this.data)
-								.then((res) => {
-									console.log(res);
+								.then(() => {
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
+									// Thong báo thành công
+									this.$bus.$emit("showToastMessage", {
+										message: this.$resourcesVN.NOTIFY.AddSuccess,
+										duration: 2000,
+									});
+									this.formState = false;
 								})
 								.catch((res) => {
-									console.log(res);
+									this.showError(res);	
+									// Tắt loading
+									this.$bus.$emit("hideLoading");
 								});
-							this.formState = false;
 						} else this.formState = false;
-					else this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg);
-				}, 40);
+					else
+						this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
+							() => {
+								this.element.focus();
+							}
+						);
+				}, 100);
 			},
 			/**
 			 * Cất và thêm
@@ -146,6 +165,24 @@
 			cloneData() {
 				this.dataClone = { ...this.data };
 			},
+			/**
+			 * Validate data
+			 * CreatedBy: NTDUNG (03/10/2021)
+			 */
+			validateData() {
+				this.errorMsg = "";
+				this.$bus.$emit("validate" + this.name);
+			},
+			/**
+			 * Bind dữ liệu
+			 * CreatedBy: NTDUNG (07/10/2021)
+			 */
+			bindData() {
+				// Lấy mã kho mới
+				this.data = {};
+				this.$nextTick(() => {this.$refs.inputFocus.$el.querySelector('input').focus()});
+				this.cloneData();	
+			}
 		},
 	};
 </script>
