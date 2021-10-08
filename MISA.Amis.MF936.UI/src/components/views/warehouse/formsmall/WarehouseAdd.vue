@@ -121,8 +121,7 @@
 				this.formState = true;
 
 				// Bind dữ liệu
-				this.bindData();
-				
+				this.bindData();				
 			});
 			this.$bus.$on("catchError" + this.name, (msg, element) => {
 				if (!this.errorMsg) {
@@ -130,6 +129,7 @@
 					this.element = element;
 				}
 			});
+			
 		},
 		methods: {
 			/**

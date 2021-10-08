@@ -66,7 +66,6 @@
 									:listGridStyle="WAREHOUSE_TABLE.InWardDetail.OBJECT['style']"
 									:form="WAREHOUSE_TABLE.InWardDetail.OBJECT['form']"
 									:label="$resourcesVN.WAREHOUSE_DETAIL.Object"
-									:required="true"
 									:formName="name"
 								/>
 							</div>
@@ -123,7 +122,6 @@
 									:form="WAREHOUSE_TABLE.InWardDetail.EMPLOYEE['form']"
 									label="Nhân viên"
 									:formName="name"
-									:required="true"
 								/>
 							</div>
 							<div class="fx-4/7 mb-10">
@@ -151,7 +149,7 @@
 									:range="{
 										from: {
 											Date: masterContent['voucher_date'],
-											ErrMsg: 'Ngày hoạch toán phải lớn hơn ngày chứng từ',
+											Field: $resourcesVN.WAREHOUSE_DETAIL.VoucherDate
 										},
 									}"
 								/>
@@ -163,13 +161,7 @@
 									:label="$resourcesVN.WAREHOUSE_DETAIL.VoucherDate"
 									:enable="enable"
 									:formName="name"
-									:required="true"
-									:range="{
-										to: {
-											Date: masterContent['voucher_date'],
-											ErrMsg: 'Ngày chứng từ phải nhỏ hơn ngày hoạch toán',
-										},
-									}"
+									:required="true"	
 								/>
 							</div>
 							<div class="fx-1 mb-10">
@@ -924,8 +916,14 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			validateData() {
+				// Show Lỗi
 				this.errorMsg = "";
 				this.$bus.$emit("validate" + this.name);
+
+				// // Validate
+				// var requiredFields = [''];
+				// for(var ())
+				// return true;
 			},
 		},
 		watch: {

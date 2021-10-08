@@ -22,7 +22,7 @@
 					v-show="itemData['state'] != 2"	
 					:key="indexData"
 				>
-					<td class="fx-center" >{{ indexData + 1 }}</td>
+					<td class="fx-center" >{{tableDisplay.indexOf(itemData) + 1}}</td>
 					<td
 						v-for="(itemStyle, indexStyle) in tableStyle"
 						:class="positionOfRecord(itemStyle)"
@@ -70,6 +70,7 @@
 							:required="itemStyle['required']"
 							:name="itemStyle['name']"
 							:format="itemStyle['format']"
+							:default="itemStyle['default']"
 						/>
 						<base-input-date
 							v-if="(itemStyle.type == TableDataStyle.TYPE.InputDate)"
@@ -171,6 +172,18 @@
 				TableDataStyle: TableDataStyle,
 			};
 		},
+		computed: {
+			/**
+			 * Table đang hiển thị
+			 * CreatedBy: NTDUNG (08/10/2021)
+			 */
+			tableDisplay() {
+				var tableData = this.tableData.filter(item => {
+					return item['state'] != VoucherDetailState.DELETE;
+				});
+				return tableData;
+			}
+		},
 		methods: {
 			/**
 			 * Đặt vị trí cho bản ghi
@@ -269,7 +282,7 @@
 			},
 			scrollTable() {
 				this.$bus.$emit('hideListGrid');
-			}
+			},
 		},
 	};
 </script>

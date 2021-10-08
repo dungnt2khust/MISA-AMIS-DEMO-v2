@@ -146,7 +146,8 @@ module.exports = {
         AddSuccess: 'Thêm mới thành công',
         UpdateSuccess: 'Chỉnh sửa thành công',
         FieldRequired: '{0} không được để trống',
-        NoData: 'Không có dữ liệu hiển thị.'
+        NoData: 'Không có dữ liệu hiển thị.',
+        MustThanDate: '<{0}> phải lớn hơn hoặc bằng <{1}>. Vui lòng kiểm tra lại.'
     },
     //#endregion
     

@@ -182,7 +182,8 @@ export default {
 							total: true,
 							enable: true,
 							required: true,
-							format: "money"
+							format: "money",
+							default: 1
 						},
 						{
 							name: "Đơn giá",

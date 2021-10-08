@@ -1,6 +1,10 @@
 <template lang="">
 	<div class="input-main" :style="{ width: width }">
-		<span v-if="label != ''" class="label" :style="{'visibility': label == '.' ? 'hidden' : 'visible'}">
+		<span
+			v-if="label != ''"
+			class="label"
+			:style="{ visibility: label == '.' ? 'hidden' : 'visible' }"
+		>
 			{{ label }}
 			<span v-if="required && showRequired" class="text-red">*</span>
 		</span>
@@ -125,6 +129,10 @@
 				type: String,
 				default: "",
 			},
+			default: {
+				type: Number,
+				default: null,
+			},
 		},
 		data() {
 			return {
@@ -192,7 +200,22 @@
 							// Bật mode focus
 							this.firstFocus = true;
 						}
-					} 
+					},
+					keydown: (event) => {
+						if (this.format == "money") {
+							var charCode = event.key.charCodeAt(0);
+							var key = event.key;
+							if (
+								(charCode < 48 || charCode > 57) &&
+								key != "Backspace" &&
+								key != "F1" &&
+								key != "Tab" &&
+								key != "Shift"
+							) {
+								event.preventDefault();
+							}
+						}
+					},
 				});
 			},
 			/**
@@ -222,7 +245,8 @@
 					if (this.value) {
 						return this.formatMoney(this.value);
 					} else {
-						return this.formatMoney(0);
+						if (this.default) return this.formatMoney(this.default);
+						else return this.formatMoney(0);
 					}
 				}
 				return this.value;

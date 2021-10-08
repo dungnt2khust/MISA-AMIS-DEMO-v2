@@ -72,7 +72,7 @@
 				commodityGroupAPI: new baseAPI("CommodityGroups"),
 				name: "AddCommodityGroup",
 				errorMsg: "",
-				element: null
+				element: null,
 			};
 		},
 		created() {
@@ -81,14 +81,13 @@
 
 				// Bind dữ liệu
 				this.bindData();
-				
 			});
 			this.$bus.$on("catchError" + this.name, (msg, element) => {
 				if (!this.errorMsg) {
 					this.errorMsg = msg;
 					this.element = element;
 				}
-			});	
+			});
 		},
 		methods: {
 			/**
@@ -138,7 +137,7 @@
 									this.formState = false;
 								})
 								.catch((res) => {
-									this.showError(res);	
+									this.showError(res);
 									// Tắt loading
 									this.$bus.$emit("hideLoading");
 								});
@@ -180,9 +179,11 @@
 			bindData() {
 				// Lấy mã kho mới
 				this.data = {};
-				this.$nextTick(() => {this.$refs.inputFocus.$el.querySelector('input').focus()});
-				this.cloneData();	
-			}
+				this.$nextTick(() => {
+					this.$refs.inputFocus.$el.querySelector("input").focus();
+				});
+				this.cloneData();
+			},
 		},
 	};
 </script>
