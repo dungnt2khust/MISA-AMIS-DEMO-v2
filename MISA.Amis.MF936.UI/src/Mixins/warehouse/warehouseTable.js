@@ -229,6 +229,7 @@ export default {
 						vmodel: "accountobject_id",
 						controller: "AccountObjects",
 						form: "showAccountObjectDetail",
+						// syncfield: "AccountObject"
 					},
 					EMPLOYEE: {
 						name: "Nhân viên",

@@ -518,6 +518,7 @@
 			this.$bus.$on("hideWarehouseDetail", () => {
 				this.formLargeState = false;
 			});
+			
 			/**
 			 * Sự kiện thay đổi hàng hoá ở hàng tiền
 			 * @param {Number} index
