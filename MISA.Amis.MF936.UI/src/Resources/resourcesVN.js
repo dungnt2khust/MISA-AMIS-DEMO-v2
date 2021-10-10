@@ -113,6 +113,11 @@ module.exports = {
             Label: 'Cất',
             Tooltip: 'Cất (Ctrl + S)'
         },
+        StoreAndAdd: {
+            Label: 'Cất và thêm',
+            Tooltip: 'Cất và thêm (Ctrl + Shift + S)'
+
+        },
         StoreAndPrint: {
             Label: 'Cất và In',
             Tooltip: 'Cất và In (Ctrl + Alt + P)'
@@ -167,7 +172,8 @@ module.exports = {
         VoucherCode: 'Số chứng từ',
         TotalPrice: 'Tổng tiền',
         Reference: 'Tham chiếu',
-        AttachFile: 'Đính kèm'
+        AttachFile: 'Đính kèm',
+        RequiredVoucherDetail: "Bạn phải nhập chứng từ chi tiết."
     },
     //#endregion
 

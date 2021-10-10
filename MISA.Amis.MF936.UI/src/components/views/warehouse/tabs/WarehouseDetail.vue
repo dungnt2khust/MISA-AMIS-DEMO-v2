@@ -12,10 +12,10 @@
 	<!-- eslint-disable -->
 	<div
 		tabindex="0"
-		v-on:keydown.ctrl.83.prevent="store"
-		v-on:keydown.ctrl.alt.80.prevent="storeAndPrint"
-		v-on:keydown.ctrl.71.prevent="mention"
-		v-on:keydown.ctrl.66.prevent="unMention"
+		v-on:keydown.ctrl.83.stop.prevent="store"
+		v-on:keydown.ctrl.alt.80.stop.prevent="storeAndPrint"
+		v-on:keydown.ctrl.71.stop.prevent="mention"
+		v-on:keydown.ctrl.66.stop.prevent="unMention"
 		v-on:keydown.27.prevent="hideForm"
 		v-if="formLargeState"
 		class="warehousedetail"
@@ -205,6 +205,7 @@
 						v-model="tableInputData"
 						:enable="enable"
 						:formName="name"
+						:formMode="mode"
 					/>
 				</div>
 			</template>
@@ -1040,6 +1041,11 @@
 					new Date(this.masterContent["voucher_date"])
 				)
 					formValid = false;
+				// 2. Phải có ít nhất một dòng trong bảng detail
+				if (this.tableInputData.length == 0) {
+					formValid = false;
+					this.errorMsg = this.$resourcesVN.WAREHOUSE_DETAIL.RequiredVoucherDetail;
+				}
 				//#endregion
 				return formValid;
 			},

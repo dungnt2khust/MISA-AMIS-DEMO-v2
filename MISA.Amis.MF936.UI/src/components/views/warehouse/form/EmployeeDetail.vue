@@ -2,6 +2,8 @@
 	<div v-if="formState" class="employeedetail">
 		<base-form
 			@hideForm="hideForm()"
+			@store="store()"
+			@storeAndAdd="storeAndAdd()"
 			:title="$resourcesVN.EMPLOYEE_DETAIL.Title"
 		>
 			<template v-slot:header>
@@ -159,21 +161,7 @@
 						</template>
 					</base-form-partition-tab>
 				</div>
-			</template>
-			<template v-slot:footer>
-				<base-button
-					:method="hideForm"
-					:label="$resourcesVN.FORM.Close.Label"
-				/>
-				<div class="form__control">
-					<base-button :method="store" :label="$resourcesVN.FORM.Store.Label" />
-					<base-button
-						type="green"
-						:method="storeAndAdd"
-						:label="$resourcesVN.FORM.StoreAndPrint.Label"
-					/>
-				</div>
-			</template>
+			</template>	
 		</base-form>
 	</div>
 </template>
@@ -189,7 +177,6 @@
 	import BaseInputDate from "../../../Base/BaseInputDate.vue";
 	import BaseInput from "../../../Base/BaseInput.vue";
 	import BaseRadio from "../../../Base/BaseRadio.vue";
-	import BaseButton from "../../../Base/Button/BaseButton.vue";
 	import BaseFormPartitionTab from "../../../Base/Form/components/BaseFormPartitionTab.vue";
 	import BaseComboboxAdvance from "../../../Base/Select/BaseComboboxAdvance.vue";
 
@@ -202,7 +189,6 @@
 			BaseInputDate,
 			BaseInput,
 			BaseRadio,
-			BaseButton,
 			BaseFormPartitionTab,
 			BaseComboboxAdvance,
 		},

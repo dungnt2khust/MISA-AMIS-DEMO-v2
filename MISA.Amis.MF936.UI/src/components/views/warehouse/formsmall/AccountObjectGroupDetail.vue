@@ -4,6 +4,8 @@
 			width="600px"
 			title="Thêm nhóm khách hàng, nhà cung cấp"
 			@hideForm="hideForm()"
+			@store="store()"
+			@storeAndAdd="storeAndAdd()"
 		>
 			<template v-slot:body>
 				<div class="fx-wrap">
@@ -37,13 +39,6 @@
 					</div>
 				</div>
 			</template>
-			<template v-slot:footer>
-				<base-button :method="hideForm" label="Huỷ" />
-				<div class="fx">
-					<base-button :method="store" label="Cất" class="mr-10" />
-					<base-button :method="storeAndAdd" type="green" label="Cất và Thêm" />
-				</div>
-			</template>
 		</base-form-small>
 	</div>
 </template>
@@ -56,7 +51,6 @@
 	import BaseFormSmall from "../../../Base/Form/BaseFormSmall.vue";
 	import BaseInput from "../../../Base/BaseInput.vue";
 	import BaseTextArea from "../../../Base/Input/BaseTextArea.vue";
-	import BaseButton from "../../../Base/Button/BaseButton.vue";
 
 	export default {
 		name: "AccountObjectGroupDetail",
@@ -65,7 +59,6 @@
 			BaseFormSmall,
 			BaseInput,
 			BaseTextArea,
-			BaseButton
 		},
 		props: {
 			width: {

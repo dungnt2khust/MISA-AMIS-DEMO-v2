@@ -80,6 +80,7 @@
 				top: 0,
 				left: 0,
 				bottom: 0,
+				data: null,
 			};
 		},
 		created() {
@@ -107,6 +108,13 @@
 					} else {
 						return item[this.vmodelField] == this.valueBind;
 					}
+				});
+
+				this.$nextTick(() => {
+					this.$el.querySelector(".listgrid--selected").scrollIntoView({
+						block: "center",
+						behaviour: "smooth",
+					});
 				});
 
 				this.left = this.size.left;
@@ -186,6 +194,7 @@
 			showForm() {
 				this.listGridState = false;
 				this.$bus.$emit(this.form);
+				this.$bus.$emit("hideGrid" + this.vmodelField);
 			},
 		},
 	};

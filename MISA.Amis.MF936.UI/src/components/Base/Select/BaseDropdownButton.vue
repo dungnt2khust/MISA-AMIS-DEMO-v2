@@ -11,29 +11,19 @@
 	export default {
 		name: "BaseDropdownButton",
 		props: {
-			showList: {
-				type: Boolean,
-				default: false
-			},
-			focusState: {
-				type: Boolean,
-				default: false
-			},
-			method: {
-				type: Function,
-				default: () => {}
-			},
 			enable: {
 				type: Boolean,
 				default: true
+			},
+			showList: {
+				type: Boolean,
+				default: false
 			}
 		},
 		methods: {
 			dropdownButtonOnClick() {
-				if (this.enable) {
-					this.method();
-				
-					this.$emit('input', !this.showList);
+				if (this.enable) {	
+					this.$emit('toggleListGrid');
 				}	
 			},
 		},

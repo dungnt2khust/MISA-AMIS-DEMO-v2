@@ -42,9 +42,8 @@
 			</div>
 			<base-dropdown-button
 				v-show="dropdownButtonState"
-				v-model="showList"
 				:showList="showList"
-				:focusState="focusState"
+				@toggleListGrid="toggleListGrid()"
 				:enable="enable"
 			/>
 		</div>
@@ -176,6 +175,7 @@
 				filterString: "",
 				baseAPI: new baseAPI(this.controller, this.vmodelField),
 				size: null,
+				timeoutBlur: null
 			};
 		},
 		created() {
@@ -195,6 +195,9 @@
 					this.showList = false;
 				}
 			});
+			this.$bus.$on("hideGrid" + this.vmodelField, () => {
+				this.showList = false;
+			})
 		},
 		computed: {
 			/**
@@ -219,12 +222,13 @@
 							}
 						}, 500);
 					},
-					// blur: () => {
-					// 	this.$nextTick(() => {
-					// 		this.focusState = false;
-					// 		this.showList = false;
-					// 	});
-					// },
+					blur: () => {
+						this.focusState = false;
+						this.timeoutBlur = setTimeout(() => {
+							if (this.type == "small" && !this.focusState)
+								this.dropdownButtonState = false;
+						}, 100);
+					},
 				});
 			},	
 		},
@@ -382,27 +386,24 @@
 					hasFooter: this.hasFooter,
 					size: this.size,
 					name: this.vmodelField,
-					form: this.form,
 					index: this.index,
+					form: this.form
 				});
 			},
-		},
-		watch: {
-			/**
-			 * KHi mở dropdown thì gọi api
-			 * @param {Boolean} value
-			 * CreatedBy: NTDUNG (29/09/2021)
-			 */
-			showList: function(value) {
-				if (value) {
+			toggleListGrid() {
+				this.$refs.comboboxInput.focus();
+				clearTimeout(this.timeoutBlur);
+				if (this.showList) {
+					this.showList = false;
+					this.$bus.$emit("hideListGrid");
+				} else {
 					this.filterString = "";
 					this.loadData();
-				} else {
-					this.$bus.$emit("hideListGrid");
-					if (!this.focusState && this.type == "small")
-						this.dropdownButtonState = false;
+					this.showList = true;
 				}
-			},
+			}
+		},
+		watch: {	
 			/**
 			 * Giá trị bind thay đổi thì cập nhật lại dữ liệu
 			 * CreatedBy: NTDUNG (29/09/2021)

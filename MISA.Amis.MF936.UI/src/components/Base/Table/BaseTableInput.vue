@@ -180,6 +180,10 @@
 				type: [String, Array],
 				default: null,
 			},
+			formMode: {
+				type: Number,
+				defautl: null,
+			},
 		},
 		data() {
 			return {
@@ -328,15 +332,15 @@
 			},
 		},
 		watch: {
-			tableData: {
+			formMode: {
 				handler(value) {
-					console.log(value.length, this.enable);
-					if (!value.length && this.enable) {
-						this.addRecord(1);
+					if (value === this.$enum.FORM_MODE.Add) {
+						if (!this.tableData.length && this.enable) {
+							this.addRecord(1);
+						}
 					}
 				},
 				immediate: true,
-				deep: true,
 			},
 		},
 	};

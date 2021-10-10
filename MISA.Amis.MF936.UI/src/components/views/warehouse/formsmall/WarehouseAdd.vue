@@ -1,6 +1,12 @@
 <template lang="">
 	<div v-if="formState" class="warehouseadd">
-		<base-form-small :width="width" title="Thêm Kho" @hideForm="hideForm()">
+		<base-form-small
+			:width="width"
+			title="Thêm Kho"
+			@hideForm="hideForm()"
+			@store="store()"
+			@storeAndAdd="storeAndAdd()"
+		>
 			<template v-slot:body>
 				<div class="fx-wrap">
 					<div class="mt-8 fx-1/3">
@@ -66,13 +72,6 @@
 					</div>
 				</div>
 			</template>
-			<template v-slot:footer>
-				<base-button :method="hideForm" label="Huỷ" />
-				<div class="fx">
-					<base-button :method="store" label="Cất" class="mr-10" />
-					<base-button :method="storeAndAdd" type="green" label="Cất và Thêm" />
-				</div>
-			</template>
 		</base-form-small>
 	</div>
 </template>
@@ -87,7 +86,6 @@
 	import BaseInput from "../../../Base/BaseInput.vue";
 	import BaseComboboxAdvance from "../../../Base/Select/BaseComboboxAdvance.vue";
 	import BaseTextArea from "../../../Base/Input/BaseTextArea.vue";
-	import BaseButton from "../../../Base/Button/BaseButton.vue";
 
 	export default {
 		name: "WarehouseAdd",
@@ -97,7 +95,6 @@
 			BaseInput,
 			BaseComboboxAdvance,
 			BaseTextArea,
-			BaseButton,
 		},
 		props: {
 			width: {
@@ -121,7 +118,7 @@
 				this.formState = true;
 
 				// Bind dữ liệu
-				this.bindData();				
+				this.bindData();
 			});
 			this.$bus.$on("catchError" + this.name, (msg, element) => {
 				if (!this.errorMsg) {
@@ -129,7 +126,6 @@
 					this.element = element;
 				}
 			});
-			
 		},
 		methods: {
 			/**
@@ -179,7 +175,7 @@
 									this.formState = false;
 								})
 								.catch((res) => {
-									this.showError(res);	
+									this.showError(res);
 									// Tắt loading
 									this.$bus.$emit("hideLoading");
 								});
@@ -223,10 +219,10 @@
 				this.warehouseAPI.getNewCode().then((res) => {
 					this.data = {};
 					this.$set(this.data, "warehouse_code", res.data);
-					this.$refs.inputFocus.$el.querySelector('input').focus();
-					this.cloneData();	
+					this.$refs.inputFocus.$el.querySelector("input").focus();
+					this.cloneData();
 				});
-			}
+			},
 		},
 	};
 </script>

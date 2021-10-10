@@ -190,7 +190,7 @@ namespace Misa.Infrastructure
         /// <param name="data"></param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(30/09/2021)
-        public object addAccountVoucher(AccountVoucher accountVoucher, AccountObject accountObject, List<AccountVoucherDetail> accountVoucherDetails)
+        public object addAccountVoucher(AccountVoucher accountVoucher, List<AccountVoucherDetail> accountVoucherDetails)
         {
             NpgsqlConnection npgsqlConnection = null;
             IDbTransaction transaction = null;
@@ -220,15 +220,7 @@ namespace Misa.Infrastructure
                 var proceduceAccountVoucher = $"func_insert_accountvoucher";
                 var rowEffectsAccountVoucher = npgsqlConnection.Execute(proceduceAccountVoucher, param: dynamicParametersAccountVoucher, commandType: CommandType.StoredProcedure);
 
-                // Cập nhật Object
-                // Cập nhật Object
-                DynamicParameters dynamicParametersAccountObject = new DynamicParameters();
-
-                dynamicParametersAccountObject.Add("accountobject_id_update", accountObject.accountobject_id);
-                dynamicParametersAccountObject.Add("employee_id_update", accountObject.employee_id);
-
-                var proceduceAccountObject = $"func_update_accountobject_employee";
-                var rowEffectsAccountObject = npgsqlConnection.Execute(proceduceAccountObject, param: dynamicParametersAccountObject, commandType: CommandType.StoredProcedure);
+                updateAccountObject(accountVoucher, npgsqlConnection);
 
                 // Thêm mới detail
                 DynamicParameters dynamicParametersAccountVoucherDetail = new DynamicParameters();
@@ -277,13 +269,33 @@ namespace Misa.Infrastructure
         }
 
         /// <summary>
+        /// Cập nhật thông tin đối tượng
+        /// </summary>
+        /// <param name="accountObject"></param>
+        /// <param name="npgsqlConnection"></param>
+        /// CreatedBy: NTDUNG (01/10/2021)
+        private static void updateAccountObject(AccountVoucher accountVoucher, NpgsqlConnection npgsqlConnection)
+        {
+            // Cập nhật Object
+            DynamicParameters dynamicParametersAccountObject = new DynamicParameters();
+
+            dynamicParametersAccountObject.Add("accountobject_id_update", accountVoucher.accountobject_id);
+            dynamicParametersAccountObject.Add("employee_id_update",accountVoucher.employee_id);
+            if (accountVoucher.accountobject_id != null && accountVoucher.employee_id != null)
+            {
+                var proceduceAccountObject = $"func_update_accountobject_employee";
+                var rowEffectsAccountObject = npgsqlConnection.Execute(proceduceAccountObject, param: dynamicParametersAccountObject, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        /// <summary>
         /// Chỉnh sửa phiếu nhập
         /// </summary>
         /// <param name="accountVoucherID"></param>
         /// <param name="data"></param>
         /// <returns></returns>
         /// CreatedBy: NTDUNG(30/09/2021)
-        public object updateAccountVoucher(AccountVoucher accountVoucher, AccountObject accountObject, List<AccountVoucherDetail> accountVoucherDetails)
+        public object updateAccountVoucher(AccountVoucher accountVoucher, List<AccountVoucherDetail> accountVoucherDetails)
         {
             NpgsqlConnection npgsqlConnection = null;
             IDbTransaction transaction = null;
@@ -311,15 +323,8 @@ namespace Misa.Infrastructure
                 var proceduceAccountVoucher = $"func_update_accountvoucher";
                 var rowEffectsAccountVoucher = npgsqlConnection.Execute(proceduceAccountVoucher, param: dynamicParametersAccountVoucher, commandType: CommandType.StoredProcedure);
 
-                // Cập nhật Object
-                DynamicParameters dynamicParametersAccountObject = new DynamicParameters();
-
-                dynamicParametersAccountObject.Add("accountobject_id_update", accountObject.accountobject_id);
-                dynamicParametersAccountObject.Add("employee_id_update", accountObject.employee_id);
+                updateAccountObject(accountVoucher, npgsqlConnection);
                 
-                var proceduceAccountObject = $"func_update_accountobject_employee";
-                var rowEffectsAccountObject = npgsqlConnection.Execute(proceduceAccountObject, param: dynamicParametersAccountObject, commandType: CommandType.StoredProcedure);
-
                 // Thêm mới detail
                 foreach (AccountVoucherDetail accountVoucherDetail in accountVoucherDetails)
                 {

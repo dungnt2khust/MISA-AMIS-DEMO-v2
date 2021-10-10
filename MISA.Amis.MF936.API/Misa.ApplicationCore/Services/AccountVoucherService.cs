@@ -148,14 +148,7 @@ namespace Misa.ApplicationCore.Services
             {
                 // AccountVoucher
                 var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
-
-                // AccountObject
-                var accountObject = new AccountObject();
-                if (accountVoucher.accountobject_id != null) 
-                    accountObject.accountobject_id = (Guid)accountVoucher.accountobject_id;
-                if (accountVoucher.employee_id != null)
-                    accountObject.employee_id = accountVoucher.employee_id;
-
+ 
                 // AccountVoucherDetails
                 var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
                 // Validate 
@@ -182,7 +175,7 @@ namespace Misa.ApplicationCore.Services
                 }
 
                 serviceResult.IsValid = true;
-                serviceResult.Data = _accountVoucherRepository.addAccountVoucher(accountVoucher, accountObject, accountVoucherDetails); 
+                serviceResult.Data = _accountVoucherRepository.addAccountVoucher(accountVoucher, accountVoucherDetails); 
                 serviceResult.Msg = Resources.ResourceVN.Success_Insert;
 
                 return serviceResult;
@@ -205,10 +198,7 @@ namespace Misa.ApplicationCore.Services
             try
             {
                 var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
-                var accountObject = new AccountObject();
-                accountObject.accountobject_id = (Guid)accountVoucher.accountobject_id;
-                accountObject.employee_id = accountVoucher.employee_id;
-
+                
                 var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
 
                 // Validate data
@@ -236,7 +226,7 @@ namespace Misa.ApplicationCore.Services
 
 
                 serviceResult.IsValid = true;
-                serviceResult.Data = _accountVoucherRepository.updateAccountVoucher(accountVoucher, accountObject, accountVoucherDetails);
+                serviceResult.Data = _accountVoucherRepository.updateAccountVoucher(accountVoucher, accountVoucherDetails);
                 serviceResult.Msg = Resources.ResourceVN.Success_Update;
 
                 return serviceResult;

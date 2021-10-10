@@ -1,14 +1,20 @@
 <template lang="">
 	<div v-show="formState" class="form">
+		<!-- eslint-disable -->
 		<div
+			tabindex="0"
+			v-on:keydown.ctrl.83.prevent="store"
+			v-on:keydown.ctrl.alt.83.prevent="storeAndAdd"
+			v-on:keydown.27.prevent="hideForm"
 			ref="form"
 			v-on="formListeners"
 			:style="positionOfForm"
 			class="form__main"
 		>
+		<!-- eslint-enable -->
 			<div class="form__header">
 				<div class="form__header-content">
-					<div class="form__title">{{title}}</div>
+					<div class="form__title">{{ title }}</div>
 					<slot name="header"></slot>
 				</div>
 				<div class="form__action">
@@ -16,11 +22,22 @@
 					<div @click="cancel()" class="form__cancel"></div>
 				</div>
 			</div>
-			<div class="form__body">	
+			<div class="form__body">
 				<slot name="body"></slot>
 			</div>
 			<div class="form__footer">
-				<slot name="footer"></slot>
+				<base-button
+					:method="hideForm"
+					:label="$resourcesVN.FORM.Close.Label"
+				/>
+				<div class="form__control">
+					<base-button :method="store" :label="$resourcesVN.FORM.Store.Label" />
+					<base-button
+						type="green"
+						:method="storeAndAdd"
+						:label="$resourcesVN.FORM.StoreAndAdd.Label"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -28,15 +45,20 @@
 <script>
 	// LIBRARY
 	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
+	// COMPONENTS
+	import BaseButton from "../../Base/Button/BaseButton.vue"
 
 	export default {
 		name: "BaseForm",
 		mixins: [globalComponents],
+		components: {
+			BaseButton
+		},
 		props: {
 			title: {
 				type: String,
-				default: ''
-			}
+				default: "",
+			},
 		},
 		data() {
 			return {
@@ -66,7 +88,7 @@
 					},
 					// Khi trong mode drag thì tìm ra offset và đặt position
 					mousemove: (event) => {
-						if (this.dragState) {	
+						if (this.dragState) {
 							// Gán vị trí mới
 							dragXEnd = event.clientX;
 							dragYEnd = event.clientY;
@@ -90,18 +112,34 @@
 			 * CreatedBy: NTDUNG (02/10/2021)
 			 */
 			help() {
-				this.callDialog(this.$enum.DIALOG_TYPE.Warn, this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+				this.callDialog(
+					this.$enum.DIALOG_TYPE.Warn,
+					this.$resourcesVN.NOTIFY.FeatureNotAvaiable
+				);
 			},
 			/**
 			 * Huỷ
 			 * CreatedBy: NTDUNG (02/10/2021)
 			 */
-			cancel() {
-				this.$emit('hideForm');
+			hideForm() {
+				this.$emit("hideForm");
+			},
+			/**
+			 * Cất
+			 * CreatedBy: NTDUNG (02/10/2021)
+			 */
+			store() {
+				this.$emit('store');
+			},
+			/**
+			 * Cất và thêm
+			 */
+			storeAndAdd() {
+				this.$emit('storeAndAdd');
 			}
-		}
+		},
 	};
 </script>
 <style>
-	@import url('../../../css/base/form/form.css');
+	@import url("../../../css/base/form/form.css");
 </style>

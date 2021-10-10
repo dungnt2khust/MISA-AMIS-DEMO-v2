@@ -1,6 +1,16 @@
 <template lang="">
 	<div class="formsmall__overlay">
-		<div class="formsmall" v-on="formListeners" :style="positionOfForm">
+		<!-- eslint-disable-->
+		<div
+			tabindex="0"
+			v-on:keydown.ctrl.83.stop.prevent="store"
+			v-on:keydown.ctrl.alt.83.stop.prevent="storeAndAdd"
+			v-on:keydown.27.stop.prevent="hideForm"
+			class="formsmall"
+			v-on="formListeners"
+			:style="positionOfForm"
+		>
+			<!-- eslint-enable-->
 			<div class="formsmall__header">
 				<h2 class="formsmall__header-title">{{ title }}</h2>
 				<div class="formsmall__header-close">
@@ -12,7 +22,11 @@
 				<slot name="body"></slot>
 			</div>
 			<div class="formsmall__footer fx-space-between">
-				<slot name="footer"></slot>
+				<base-button :method="hideForm" label="Huỷ" />
+				<div class="fx">
+					<base-button :method="store" label="Cất" class="mr-10" />
+					<base-button :method="storeAndAdd" type="green" label="Cất và Thêm" />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -23,6 +37,7 @@
 	// COMPONENTS
 	import BaseHelp from "./components/BaseHelp.vue";
 	import BaseCancel from "./components/BaseCancel.vue";
+	import BaseButton from "../Button/BaseButton.vue";
 
 	export default {
 		name: "BaseFormSmall",
@@ -30,6 +45,7 @@
 		components: {
 			BaseHelp,
 			BaseCancel,
+			BaseButton,
 		},
 		props: {
 			title: {
@@ -106,6 +122,20 @@
 			 */
 			hideForm() {
 				this.$emit("hideForm");
+			},
+			/**
+			 * Cất
+			 * CreatedBy: NTDUNG (02/10/2021)
+			 */
+			store() {
+				this.$emit("store");
+			},
+			/**
+			 * Cất và thêm
+			 * CreatedBy: NTDUNG (02/10/2021)
+			 */
+			storeAndAdd() {
+				this.$emit("storeAndAdd");
 			},
 		},
 	};

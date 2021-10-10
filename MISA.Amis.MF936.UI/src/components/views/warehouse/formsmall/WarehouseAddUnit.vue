@@ -4,6 +4,8 @@
 			:width="width"
 			title="Thêm Đơn vị tính"
 			@hideForm="hideForm()"
+			@store="store()"
+			@storeAndAdd="storeAndAdd()"
 		>
 			<template v-slot:body>
 				<div class="fx-wrap">
@@ -56,7 +58,6 @@
 	import BaseFormSmall from "../../../Base/Form/BaseFormSmall.vue";
 	import BaseInput from "../../../Base/BaseInput.vue";
 	import BaseTextArea from "../../../Base/Input/BaseTextArea.vue";
-	import BaseButton from "../../../Base/Button/BaseButton.vue";
 
 	export default {
 		name: "WarehouseAdd",
@@ -65,7 +66,6 @@
 			BaseFormSmall,
 			BaseInput,
 			BaseTextArea,
-			BaseButton,
 		},
 		props: {
 			width: {
