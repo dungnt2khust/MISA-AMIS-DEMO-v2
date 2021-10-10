@@ -129,7 +129,7 @@
 				type: String,
 				default: "",
 			},
-			default: {
+			defaultValue: {
 				type: Number,
 				default: null,
 			},
@@ -356,6 +356,14 @@
 				this.isError = false;
 				this.errorMsg = "";
 			},
+			defaultValue: {
+				handler(value) {
+					if (value && !this.value) {
+						this.$emit('input', value);
+					}
+				},
+				immediate: true
+			}
 		},
 	};
 </script>

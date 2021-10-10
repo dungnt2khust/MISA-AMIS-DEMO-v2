@@ -31,6 +31,7 @@
 				:value="currDate"
 				v-model="currDate"
 				:datePickerState="datePickerState"
+				:hasDefault="hasDefault"
 				:overtoday="overtoday"
 				@hideDatepicker="datePickerState = false"
 			/>
@@ -90,6 +91,10 @@
 				type: Object,
 				default: null,
 			},
+			hasDefault: {
+				type: Boolean,
+				default: false
+			}
 		},
 		data() {
 			return {

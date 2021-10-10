@@ -183,7 +183,7 @@ export default {
 							enable: true,
 							required: true,
 							format: "money",
-							default: 1
+							defaultValue: 1
 						},
 						{
 							name: "Đơn giá",
@@ -193,7 +193,8 @@ export default {
 							pos: TableDataStyle.POS.Right,
 							enable: true,
 							required: true,
-							format: "money"
+							format: "money",
+							defaultValue: 0
 						},
 						{
 							name: "Thành tiền",
@@ -202,7 +203,7 @@ export default {
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
 							total: true,
-							enable: true,
+							enable: false,
 							format: "money"
 						},
 						{

@@ -209,6 +209,7 @@
 						event.target.select();
 					},
 					input: () => {
+						this.$emit('input', null);
 						clearTimeout(this.inputTimeout);
 
 						this.inputTimeout = setTimeout(() => {

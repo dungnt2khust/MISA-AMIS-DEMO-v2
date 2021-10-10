@@ -67,6 +67,7 @@
 									:form="WAREHOUSE_TABLE.InWardDetail.OBJECT['form']"
 									:label="$resourcesVN.WAREHOUSE_DETAIL.Object"
 									:formName="name"
+									syncfield="AccountObject"
 								/>
 							</div>
 							<div class="fx-4/7 mb-10">
@@ -149,9 +150,10 @@
 									:range="{
 										from: {
 											Date: masterContent['voucher_date'],
-											Field: $resourcesVN.WAREHOUSE_DETAIL.VoucherDate
+											Field: $resourcesVN.WAREHOUSE_DETAIL.VoucherDate,
 										},
 									}"
+									:hasDefault="true"
 								/>
 							</div>
 							<div class="fx-1 mb-10">
@@ -161,7 +163,8 @@
 									:label="$resourcesVN.WAREHOUSE_DETAIL.VoucherDate"
 									:enable="enable"
 									:formName="name"
-									:required="true"	
+									:required="true"
+									:hasDefault="true"
 								/>
 							</div>
 							<div class="fx-1 mb-10">
@@ -518,7 +521,36 @@
 			this.$bus.$on("hideWarehouseDetail", () => {
 				this.formLargeState = false;
 			});
-			
+
+			/**
+			 * Sự kiện thay đổi đối tượng
+			 * @param {Number} index
+			 * @param {String} newId
+			 * @param {Array} data
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+
+			this.$bus.$on("changeAccountObject", (index, newId, data) => {
+				console.log(index, newId, data);
+				var foundIdx = data.findIndex((item) => {
+					return item["accountobject_id"] == newId;
+				});
+				this.$set(
+					this.masterContent,
+					"contact_address",
+					data[foundIdx]["contact_address"]
+				);
+				this.$set(
+					this.masterContent,
+					"employee_id",
+					data[foundIdx]["employee_id"]
+				);
+				this.$set(
+					this.masterContent,
+					"employee_name",
+					data[foundIdx]["employee_name"]
+				);
+			});
 			/**
 			 * Sự kiện thay đổi hàng hoá ở hàng tiền
 			 * @param {Number} index
@@ -539,7 +571,8 @@
 
 					this.tableInputData[index]["units"] = data[foundIdx]["units"];
 
-					this.tableInputData[index]["debit_amount"] = data[foundIdx]["debit_amount"];
+					this.tableInputData[index]["debit_amount"] =
+						data[foundIdx]["debit_amount"];
 
 					this.$set(
 						this.tableInputData[index],
@@ -711,32 +744,23 @@
 				};
 				this.needReload = false;
 
-				this.validateData();
-				setTimeout(() => {
-					if (!this.errorMsg) {
-						switch (this.mode) {
-							case this.$enum.FORM_MODE.Add:
-								if (!this.deepEqualObject(data, this.dataClone, ["is_mention"]))
-									this.addVoucher(data);
-								else this.enable = false;
-								break;
-							case this.$enum.FORM_MODE.Update:
-								if (!this.deepEqualObject(data, this.dataClone, ["is_mention"]))
-									this.updateVoucher(data);
-								else this.enable = false;
-								break;
-							case this.$enum.FORM_MODE.Replication:
+				if (this.validateData()) {
+					switch (this.mode) {
+						case this.$enum.FORM_MODE.Add:
+							if (!this.deepEqualObject(data, this.dataClone, ["is_mention"]))
 								this.addVoucher(data);
-								break;
-						}
-					} else {
-						this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
-							() => {
-								this.element.focus();
-							}
-						);
+							else this.enable = false;
+							break;
+						case this.$enum.FORM_MODE.Update:
+							if (!this.deepEqualObject(data, this.dataClone, ["is_mention"]))
+								this.updateVoucher(data);
+							else this.enable = false;
+							break;
+						case this.$enum.FORM_MODE.Replication:
+							this.addVoucher(data);
+							break;
 					}
-				}, 300);
+				} 
 			},
 			/**
 			 * Thêm mới phiếu nhập kho
@@ -815,12 +839,12 @@
 						// Tắt chỉnh sửa
 						this.enable = false;
 						// Bind id detail
-						this.tableInputData.forEach((item, index) => {
-							if (item['state'] == VoucherDetailState.DELETE) {
-								this.tableInputData.splice(index, 1);
-							}
-						})
-						res.data.Data['newDetailIds'].forEach((item, index) => {
+						var newData = this.tableInputData.filter((item) => {
+							return item["state"] != VoucherDetailState.DELETE;
+						});
+						this.tableInputData = newData;
+
+						res.data.Data["newDetailIds"].forEach((item, index) => {
 							this.$set(
 								this.tableInputData[index],
 								"accountvoucherdetail_id",
@@ -921,10 +945,44 @@
 				this.errorMsg = "";
 				this.$bus.$emit("validate" + this.name);
 
-				// // Validate
-				// var requiredFields = [''];
-				// for(var ())
-				// return true;
+				// Validate
+				var formValid = true;
+				//#region Kiểm tra required master
+				var requiredMasterFields = [
+					"mathematics_date",
+					"voucher_date",
+					"voucher_code",
+				];
+				requiredMasterFields.forEach((item) => {
+					if (!this.masterContent[item]) formValid = false;
+				});
+				//#endregion
+				//#region Kiểm tra required detail
+				var requiredDetailFields = [
+					"commodity_id",
+					"commodity_name",
+					"warehouse_id",
+					"debit_account_id",
+					"credit_account_id",
+					"selected_unit_id",
+					"quantity",
+					"debit_amount",
+				];
+				this.tableInputData.forEach((row) => {
+					requiredDetailFields.forEach((requiredField) => {
+						if (!row[requiredField]) formValid = false;
+					});
+				});
+				//#endregion
+				//#region Kiểm tra đặc biệt
+				// 1. Ngày hoạch toán phải lớn hơn hoặc bằng ngày chứng từ
+				if (
+					new Date(this.masterContent["mathematics_date"]) <
+					new Date(this.masterContent["voucher_date"])
+				)
+					formValid = false;
+				//#endregion
+				return formValid;
 			},
 		},
 		watch: {
@@ -956,6 +1014,15 @@
 				},
 				deep: true,
 				immediate: true,
+			},
+			errorMsg: function(value) {
+				if (value) {
+					this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
+						() => {
+							this.element.focus();
+						}
+					);
+				}
 			}
 		},
 		destroyed() {

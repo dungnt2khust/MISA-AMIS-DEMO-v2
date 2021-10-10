@@ -147,7 +147,8 @@ module.exports = {
         UpdateSuccess: 'Chỉnh sửa thành công',
         FieldRequired: '{0} không được để trống',
         NoData: 'Không có dữ liệu hiển thị.',
-        MustThanDate: '<{0}> phải lớn hơn hoặc bằng <{1}>. Vui lòng kiểm tra lại.'
+        MustThanDate: '<{0}> phải lớn hơn hoặc bằng <{1}>. Vui lòng kiểm tra lại.',
+        ConfirmDeleteAll: 'Bạn có thực sự muốn xoá tất cả các dòng đã nhập không?'
     },
     //#endregion
     

@@ -14,7 +14,7 @@
 						class="datepicker__year-item"
 						:class="{
 							'year--selected':
-								(Math.floor(currYear / 3) - 1) * 3 + index == selected.year,	
+								(Math.floor(currYear / 3) - 1) * 3 + index == selected.year,
 						}"
 						:key="index"
 					>
@@ -103,6 +103,10 @@
 				type: Boolean,
 				default: false,
 			},
+			hasDefault: {
+				type: Boolean,
+				default: false
+			}
 		},
 		data() {
 			return {
@@ -267,25 +271,29 @@
 			 * @param {String} newValue
 			 * CreatedBy: NTDUNG (01/09/2021)
 			 */
-			value: function(newValue) {
-				if (newValue) {
-					// Chuyển về dạng ngày
-					var newDate = new Date(newValue);
-					var date = newDate.getDate();
-					var month = newDate.getMonth() + 1;
-					var year = newDate.getFullYear();
+			value: {
+				handler(newValue) {
+					if (newValue) {
+						// Chuyển về dạng ngày
+						var newDate = new Date(newValue);
+						var date = newDate.getDate();
+						var month = newDate.getMonth() + 1;
+						var year = newDate.getFullYear();
 
-					// Gán vào ngày hiện tại
-					this.$set(this.curr, "month", month);
-					this.$set(this.curr, "year", year);
-					this.currYear = year;
+						// Gán vào ngày hiện tại
+						this.$set(this.curr, "month", month);
+						this.$set(this.curr, "year", year);
+						this.currYear = year;
 
-					this.$set(this.selected, "date", date);
-					this.$set(this.selected, "month", month);
-					this.$set(this.selected, "year", year);
-				} else {
-					this.todayOnClick();
-				}
+						this.$set(this.selected, "date", date);
+						this.$set(this.selected, "month", month);
+						this.$set(this.selected, "year", year);
+					} else {
+						if (this.hasDefault)
+							this.todayOnClick();
+					}
+				},
+				immediate: true,
 			},
 		},
 	};

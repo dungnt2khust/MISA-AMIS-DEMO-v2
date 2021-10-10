@@ -1,7 +1,7 @@
 <template lang="">
 	<div class="tableinput-wrapper" @scroll="scrollTable()">
 		<div class="tableinput__title">Hàng tiền</div>
-		<table class="tableinput" :class="{'tableinput--disable': !enable}">
+		<table class="tableinput" :class="{ 'tableinput--disable': !enable }">
 			<thead>
 				<tr>
 					<th class="fx-center">#</th>
@@ -19,10 +19,10 @@
 			<tbody>
 				<tr
 					v-for="(itemData, indexData) in tableData"
-					v-show="itemData['state'] != 2"	
+					v-show="itemData['state'] != 2"
 					:key="indexData"
 				>
-					<td class="fx-center" >{{tableDisplay.indexOf(itemData) + 1}}</td>
+					<td class="fx-center">{{ tableDisplay.indexOf(itemData) + 1 }}</td>
 					<td
 						v-for="(itemStyle, indexStyle) in tableStyle"
 						:class="positionOfRecord(itemStyle)"
@@ -30,8 +30,8 @@
 					>
 						<base-combobox-advance
 							v-if="
-								(itemStyle.type == TableDataStyle.TYPE.Combobox ||
-									itemStyle.type == TableDataStyle.TYPE.ComboboxNotAdd)
+								itemStyle.type == TableDataStyle.TYPE.Combobox ||
+									itemStyle.type == TableDataStyle.TYPE.ComboboxNotAdd
 							"
 							:controller="itemStyle['controller']"
 							v-model="itemData[itemStyle['vmodel']]"
@@ -59,7 +59,7 @@
 							:escapeValue="escapeValue"
 						/>
 						<base-input
-							v-if="(itemStyle.type == TableDataStyle.TYPE.Input)"
+							v-if="itemStyle.type == TableDataStyle.TYPE.Input"
 							:value="itemData[itemStyle['field']]"
 							v-model="itemData[itemStyle['field']]"
 							:pos="itemStyle.pos"
@@ -70,10 +70,10 @@
 							:required="itemStyle['required']"
 							:name="itemStyle['name']"
 							:format="itemStyle['format']"
-							:default="itemStyle['default']"
+							:defaultValue="itemStyle['defaultValue']"
 						/>
 						<base-input-date
-							v-if="(itemStyle.type == TableDataStyle.TYPE.InputDate)"
+							v-if="itemStyle.type == TableDataStyle.TYPE.InputDate"
 							:value="itemData[itemStyle['field']]"
 							v-model="itemData[itemStyle['field']]"
 							:overtoday="itemStyle['overtoday']"
@@ -84,7 +84,10 @@
 						/>
 					</td>
 					<td>
-						<div @click="deleteOneRecord(indexData)" class="tableinput__delete"></div>
+						<div
+							@click="deleteOneRecord(indexData)"
+							class="tableinput__delete"
+						></div>
 					</td>
 				</tr>
 			</tbody>
@@ -95,12 +98,23 @@
 						{{ footerValue(item) }}
 					</th>
 					<th :key="101"></th>
-				</tr>	
+				</tr>
 			</tfoot>
 		</table>
 		<div class="tableinput__function mt-20 mb-20">
-			<base-button :method="addRecord" :enable="enable" label="Thêm dòng" type="small" />
-			<base-button :method="addNote" :enable="enable" class="ml-10" label="Thêm ghi chú" type="small" />
+			<base-button
+				:method="addRecord"
+				:enable="enable"
+				label="Thêm dòng"
+				type="small"
+			/>
+			<base-button
+				:method="addNote"
+				:enable="enable"
+				class="ml-10"
+				label="Thêm ghi chú"
+				type="small"
+			/>
 			<base-button
 				:method="deleteAllRecords"
 				class="ml-10"
@@ -109,21 +123,21 @@
 				type="small"
 			/>
 		</div>
-		<base-attach :enable="enable"/>
+		<base-attach :enable="enable" />
 	</div>
 </template>
 <script>
 	// LIBRARY
 	import TableDataStyle from "../../../js/enum/tableDataStyle";
 	import VoucherDetailState from "../../../js/enum/voucherDetailState";
-	import globalComponents from "../../../mixins/globalComponents/globalComponents.js"
-	import methods from "../../../mixins/methods"
+	import globalComponents from "../../../mixins/globalComponents/globalComponents.js";
+	import methods from "../../../mixins/methods";
 	// COMPONENTS
 	import BaseInput from "../BaseInput.vue";
 	import BaseInputDate from "../BaseInputDate.vue";
 	import BaseComboboxAdvance from "../Select/BaseComboboxAdvance.vue";
 	import BaseButton from "../Button/BaseButton.vue";
-	import BaseAttach from "../Form/components/BaseAttach.vue"
+	import BaseAttach from "../Form/components/BaseAttach.vue";
 
 	export default {
 		name: "BaseTableInput",
@@ -133,7 +147,7 @@
 			BaseComboboxAdvance,
 			BaseButton,
 			BaseInputDate,
-			BaseAttach
+			BaseAttach,
 		},
 		props: {
 			tableStyle: {
@@ -151,21 +165,21 @@
 			defaultBind: {
 				type: Object,
 				default: function() {
-					return {}
-				}
+					return {};
+				},
 			},
 			enable: {
 				type: Boolean,
-				default: true
+				default: true,
 			},
 			formName: {
-				type: String, 
-				defautl: ''
+				type: String,
+				defautl: "",
 			},
 			escapeValue: {
 				type: [String, Array],
-				default: null
-			}
+				default: null,
+			},
 		},
 		data() {
 			return {
@@ -178,11 +192,11 @@
 			 * CreatedBy: NTDUNG (08/10/2021)
 			 */
 			tableDisplay() {
-				var tableData = this.tableData.filter(item => {
-					return item['state'] != VoucherDetailState.DELETE;
+				var tableData = this.tableData.filter((item) => {
+					return item["state"] != VoucherDetailState.DELETE;
 				});
 				return tableData;
-			}
+			},
 		},
 		methods: {
 			/**
@@ -214,26 +228,49 @@
 				this.tableStyle.forEach((item) => {
 					rowEmpty[item["field"]] = null;
 				});
-				rowEmpty["state"] = VoucherDetailState.ADD;
-				rowEmpty[this.defaultBind['name']] = this.defaultBind['value'];
+
+				var newRecord;
+				if (this.tableDisplay.length) {
+					newRecord = {};
+					var lastRecord = this.tableDisplay[this.tableDisplay.length - 1];
+					newRecord = { ...lastRecord };
+				} else {
+					newRecord = rowEmpty;
+				}
+
+				newRecord["state"] = VoucherDetailState.ADD;
+				newRecord[this.defaultBind["name"]] = this.defaultBind["value"];
+
+				this.tableStyle.forEach((item) => {
+					if (item.defaultValue !== null && item.defaultValue !== undefined) {
+						newRecord[item.field] = item.defaultValue;
+					}
+				});
 				var tableData = this.tableData;
-				tableData.push(rowEmpty);
-				this.changeTableData(tableData);	
+				tableData.push(newRecord);
+				this.changeTableData(tableData);
 			},
 			/**
 			 * Xoá tất cả các bản ghi
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
 			deleteAllRecords() {
-				var tableData = this.tableData;
-				tableData.forEach((item, index) => {	
-					if (item['state'] == VoucherDetailState.ADD)  
-						tableData.splice(index, 1);
-					else 
-						item["state"] = VoucherDetailState.DELETE;
-				});
+				this.callDialog(
+					this.$enum.DIALOG_TYPE.Confirm,
+					this.$resourcesVN.NOTIFY.ConfirmDeleteAll
+				).then((answer) => {
+					if (answer == this.$enum.DIALOG_RESULT.Yes) {
+						var tableData = this.tableData;
+						tableData = tableData.filter(item => {
+							return item["state"] != VoucherDetailState.ADD;
+						});
+						tableData.forEach(item => {
+							item["state"] = VoucherDetailState.DELETE;
+						});
 
-				this.changeTableData(tableData);
+						this.changeTableData(tableData);
+					}
+				});
 			},
 			/**
 			 * Xoá một bản ghi
@@ -243,12 +280,11 @@
 			deleteOneRecord(indexData) {
 				if (this.enable) {
 					var tableData = this.tableData;
-					if (tableData[indexData]['state'] == VoucherDetailState.ADD)
+					if (tableData[indexData]["state"] == VoucherDetailState.ADD)
 						tableData.splice(indexData, 1);
-					else
-						tableData[indexData]['state'] = VoucherDetailState.DELETE;
+					else tableData[indexData]["state"] = VoucherDetailState.DELETE;
 					this.changeTableData(tableData);
-				}	
+				}
 			},
 			/**
 			 * Thay đổi dữ liệu trong bảng
@@ -268,20 +304,20 @@
 			/**
 			 * Giá trị bind vào footer
 			 * @param {Object} item
-			 * CreatedBy: NTDUNG (01/10/2021) 
+			 * CreatedBy: NTDUNG (01/10/2021)
 			 */
 			footerValue(item) {
 				if (item["total"]) {
 					var total = 0;
-					this.tableData.forEach(data=> {
-						if (data['state'] != VoucherDetailState.DELETE)
-							total += Number(data[item['field']] ? data[item['field']] : 0);
+					this.tableData.forEach((data) => {
+						if (data["state"] != VoucherDetailState.DELETE)
+							total += Number(data[item["field"]] ? data[item["field"]] : 0);
 					});
 					return this.formatMoney(total);
 				}
 			},
 			scrollTable() {
-				this.$bus.$emit('hideListGrid');
+				this.$bus.$emit("hideListGrid");
 			},
 		},
 	};
