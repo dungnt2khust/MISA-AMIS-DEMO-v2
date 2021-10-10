@@ -151,8 +151,10 @@ namespace Misa.ApplicationCore.Services
 
                 // AccountObject
                 var accountObject = new AccountObject();
-                accountObject.accountobject_id = (Guid)accountVoucher.accountobject_id;
-                accountObject.employee_id = accountVoucher.employee_id;
+                if (accountVoucher.accountobject_id != null) 
+                    accountObject.accountobject_id = (Guid)accountVoucher.accountobject_id;
+                if (accountVoucher.employee_id != null)
+                    accountObject.employee_id = accountVoucher.employee_id;
 
                 // AccountVoucherDetails
                 var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);

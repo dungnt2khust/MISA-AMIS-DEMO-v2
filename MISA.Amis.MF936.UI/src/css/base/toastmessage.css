@@ -4,12 +4,12 @@
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: #2CA01C;
-    color: #fff;
+    background: #FFF;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 16px;
+    border: 1px solid #2CA01C;
     border-radius: 8px;
     animation: 0.4s ease toastMessageFadeIn;
 }
@@ -22,13 +22,14 @@
             .toast-message__check::before {
                 display: block;
                 content: "";
-                background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1290px -409px;
-                width: 14px;
-                height: 14px;
+                background: url('../../assets/img/Sprites.6114dba8.svg') no-repeat -990px -462px;
+                width: 36px;
+                height: 36px;
+                transform: scale(0.8);
             }
         .toast-message__content {
             font-size: 16px;
-            color: #fff;
+            color: #111;
             padding-left: 10px;
         }
     .toast-message__cancel {

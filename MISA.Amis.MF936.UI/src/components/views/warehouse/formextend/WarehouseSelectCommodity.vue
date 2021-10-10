@@ -133,7 +133,7 @@
 				name: "Commodity",
 				errorMsg: "",
 				element: null,
-				baseAPI: new baseAPI("Commoditys")
+				baseAPI: new baseAPI("Commoditys"),
 			};
 		},
 		created() {
@@ -200,8 +200,7 @@
 					else
 						this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
 							() => {
-								if (this.element)
-									this.element.focus();
+								if (this.element) this.element.focus();
 							}
 						);
 				}, 100);
@@ -248,11 +247,13 @@
 							"commodity_code",
 							res.data
 						);
-						setTimeout(() => {
+
+						this.$nextTick(() => {
+							this.$el.querySelector("input").focus();
 							this.cloneData();
-						}, 500);
+						});
 					});
-					
+
 					this.$bus.$on("catchError" + this.name, (msg, element) => {
 						if (!this.errorMsg) {
 							this.errorMsg = msg;

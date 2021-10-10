@@ -68,6 +68,7 @@
 									:label="$resourcesVN.WAREHOUSE_DETAIL.Object"
 									:formName="name"
 									syncfield="AccountObject"
+									ref="inputFocus"
 								/>
 							</div>
 							<div class="fx-4/7 mb-10">
@@ -325,12 +326,19 @@
 			};
 		},
 		created() {
+			/**
+			 * Bắt lỗi trả về từ các components
+			 * @param {String} msg: Nội dung lỗi
+			 * @param {Element} element: Component lỗi
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
 			this.$bus.$on("catchError" + this.name, (msg, element) => {
 				if (!this.errorMsg && element) {
 					this.errorMsg = msg;
 					this.element = element;
 				}
 			});
+
 			/**
 			 * Sự kiện bật form
 			 * @param {Object} data
@@ -522,6 +530,7 @@
 				this.formLargeState = false;
 			});
 
+			//#region Đồng bộ dữ liệu
 			/**
 			 * Sự kiện thay đổi đối tượng
 			 * @param {Number} index
@@ -688,6 +697,56 @@
 					this.$set(this.tableInputData[index], "debit_amount", 0);
 				}
 			});
+
+			/**
+			 * Sự kiện thay đổi số lượng ở hàng tiền
+			 * @param {Number} index
+			 * @param {String} type
+			 * @param {Array} data
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			this.$bus.$on("changeQuantity", (index, type, data) => {
+				if (type == "INPUT") {
+					var debitAmount = Number(
+						this.tableInputData[index]["debit_amount"]
+							? this.tableInputData[index]["debit_amount"]
+							: 0
+					);
+					var quantity = Number(data ? data : 0);
+					this.$set(
+						this.tableInputData[index],
+						"total_price",
+						debitAmount * quantity
+					);
+					this.syncTotalPrice();
+				}
+			});
+			/**
+			 * Sự kiện thay đổi đơn giá ở hàng tiền
+			 * @param {Number} index
+			 * @param {String} type
+			 * @param {Array} data
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			this.$bus.$on("changeDebitAmount", (index, type, data) => {
+				if (type == "INPUT") {
+					var debitAmount = Number(data ? data : 0);
+
+					var quantity = Number(
+						this.tableInputData[index]["quantity"]
+							? this.tableInputData[index]["quantity"]
+							: 0
+					);
+					this.$set(
+						this.tableInputData[index],
+						"total_price",
+						debitAmount * quantity
+					);
+
+					this.syncTotalPrice();
+				}
+			});
+			//#endregion
 		},
 		methods: {
 			/**
@@ -760,7 +819,7 @@
 							this.addVoucher(data);
 							break;
 					}
-				} 
+				}
 			},
 			/**
 			 * Thêm mới phiếu nhập kho
@@ -984,6 +1043,18 @@
 				//#endregion
 				return formValid;
 			},
+			/**
+			 * Đồng bộ tổng tiền
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			syncTotalPrice() {
+				var totalPrice = 0;
+				this.tableInputData.forEach((item) => {
+					if (item["state"] != VoucherDetailState.DELETE)
+						totalPrice += Number(item["total_price"]);
+				});
+				this.$set(this.masterContent, "total_price", totalPrice);
+			},
 		},
 		watch: {
 			/**
@@ -995,26 +1066,7 @@
 				this.masterContent["description"] =
 					"Nhập kho từ " +
 					this.voucherTypeData[Number(value)]["name"].substring(3);
-			},
-			/**
-			 * Khi dữ liệu thay đổi
-			 * CreatedBy: NTDUNG (29/09/2021)
-			 */
-			tableInputData: {
-				handler(newVal) {
-					var totalPrice = 0;
-					newVal.forEach((item, index) => {
-						this.tableInputData[index]["total_price"] =
-							Number(item["debit_amount"] ? item["debit_amount"] : 0) *
-							Number(item["quantity"] ? item["quantity"] : 0);
-						if (item["state"] != VoucherDetailState.DELETE)
-							totalPrice += Number(item["total_price"]);
-					});
-					this.$set(this.masterContent, "total_price", totalPrice);
-				},
-				deep: true,
-				immediate: true,
-			},
+			},	
 			errorMsg: function(value) {
 				if (value) {
 					this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
@@ -1023,7 +1075,21 @@
 						}
 					);
 				}
-			}
+			},
+			enable: function(value) {
+				if (value) {
+					this.$nextTick(() => {
+						this.$refs.inputFocus.$el.querySelector("input").focus();
+					});
+				}
+			},
+			formLargeState: function(value) {
+				if (value && this.enable) {
+					this.$nextTick(() => {
+						this.$refs.inputFocus.$el.querySelector("input").focus();
+					});
+				}
+			},
 		},
 		destroyed() {
 			this.$bus.$off("showWarehouseDetail");

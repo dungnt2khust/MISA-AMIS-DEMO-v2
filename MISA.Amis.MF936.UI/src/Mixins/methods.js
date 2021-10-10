@@ -1,17 +1,17 @@
 export default {
 	methods: {
 		/**
-         * format string
+		 * format string
 		 * @param {ListString}
-         * @returns {String}
-         * CreatedBy: NTDUNG (03/09/2021)
-         */
-        formatString(targetString, ...strings) {
-            for (let i = 0; i < strings.length; i++) {
-                targetString = targetString.replace("{" + i + "}", strings[i]);
-            }
-            return targetString;
-        },
+		 * @returns {String}
+		 * CreatedBy: NTDUNG (03/09/2021)
+		 */
+		formatString(targetString, ...strings) {
+			for (let i = 0; i < strings.length; i++) {
+				targetString = targetString.replace("{" + i + "}", strings[i]);
+			}
+			return targetString;
+		},
 		/**
 		 * Tính toán vị trí hợp lý cho popup
 		 * @param {DOMRect} button
@@ -20,7 +20,7 @@ export default {
 		positionPopup(button) {
 			var position = {
 				top: button.top + button.height + 10,
-				left: button.left
+				left: button.left,
 			};
 
 			return position;
@@ -80,56 +80,57 @@ export default {
 			return duplicate;
 		},
 		/**
-         * Kiểm tra phải object không
-         * @param {object} object: object cần kiểm tra
-         * CreatedBY: NTDUNG(01/10/2021) - Referenced
-         */
-        isObject(object) {
-            return object != null && typeof object === 'object';
-        },
+		 * Kiểm tra phải object không
+		 * @param {object} object: object cần kiểm tra
+		 * CreatedBY: NTDUNG(01/10/2021) - Referenced
+		 */
+		isObject(object) {
+			return object != null && typeof object === "object";
+		},
 		/**
 		 * So sánh sâu 2 object
-		 * @param {Object} object1 
-		 * @param {Object} object2 
+		 * @param {Object} object1
+		 * @param {Object} object2
 		 * @param {Array} escapeFields
 		 * @returns {Boolean}
 		 * CreatedBy: NTDUNG(01/10/2021) - Referenced
 		 */
 		deepEqualObject(object1, object2, escapeFields = []) {
 			const keys1 = Object.keys(object1);
-            const keys2 = Object.keys(object2);
-            if (keys1.length !== keys2.length) {
-                return false;
-            }
-            for (const key of keys1) {
-                const val1 = object1[key];
-                const val2 = object2[key];
-                const areObjects = this.isObject(val1) && this.isObject(val2);
-                if (
-                    areObjects && !this.deepEqualObject(val1, val2, escapeFields) ||
-                    !areObjects
-                ) {
-					if (escapeFields.indexOf(key) == -1) 
-						if (key.includes('date')) {
+			const keys2 = Object.keys(object2);
+			if (keys1.length !== keys2.length) {
+				return false;
+			}
+			for (const key of keys1) {
+				const val1 = object1[key];
+				const val2 = object2[key];
+				const areObjects = this.isObject(val1) && this.isObject(val2);
+				if (
+					(areObjects && !this.deepEqualObject(val1, val2, escapeFields)) ||
+					!areObjects
+				) {
+					if (escapeFields.indexOf(key) == -1)
+						if (key.includes("date")) {
 							if (val1 && val2)
 								if (val1.substring(0, 10) != val2.substring(0, 10)) {
-									console.log(key)
+									console.log(key);
+									return false;
+								} else if (val1 && !val2) {
+									console.log(key);
+									return false;
+								} else if (!val1 && val2) {
+									console.log(key);
 									return false;
 								}
-							else if (val1 && !val2) 
-								return false;
-							else if (!val1 && val2)
-								return false;
-						}
-						else {
+						} else {
 							if (val1 != val2) {
-								console.log(key)
+								console.log(key);
 								return false;
 							}
 						}
-                }
-            }
-            return true;
+				}
+			}
+			return true;
 		},
 		/**
 		 * Hàm tính ra element cha chứa lớp được truyền vào
@@ -207,7 +208,7 @@ export default {
 		 * CreatedBy: NTDUNG (04/09/2021)
 		 */
 		showError(res) {
-			console.log(res)
+			console.log(res);
 			if (res.response)
 				this.callDialog(this.$enum.DIALOG_TYPE.Warn, res.response.data.Msg);
 		},

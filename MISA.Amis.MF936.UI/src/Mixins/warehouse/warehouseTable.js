@@ -183,7 +183,8 @@ export default {
 							enable: true,
 							required: true,
 							format: "money",
-							defaultValue: 1
+							defaultValue: 1,
+							syncfield: "Quantity"
 						},
 						{
 							name: "Đơn giá",
@@ -194,7 +195,8 @@ export default {
 							enable: true,
 							required: true,
 							format: "money",
-							defaultValue: 0
+							defaultValue: 0, 
+							syncfield: "DebitAmount"
 						},
 						{
 							name: "Thành tiền",

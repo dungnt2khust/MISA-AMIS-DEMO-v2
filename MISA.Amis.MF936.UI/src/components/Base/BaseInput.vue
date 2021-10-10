@@ -352,18 +352,26 @@
 			formState: function(state) {
 				if (state) this.isError = false;
 			},
-			value: function() {
+			value: function(value) {
 				this.isError = false;
 				this.errorMsg = "";
+				// Emit dữ liệu để đồng bộ
+				if (this.syncfield)
+					this.$bus.$emit(
+						"change" + this.syncfield,
+						this.index,
+						"INPUT",
+						value
+					);
 			},
 			defaultValue: {
 				handler(value) {
 					if (value && !this.value) {
-						this.$emit('input', value);
+						this.$emit("input", value);
 					}
 				},
-				immediate: true
-			}
+				immediate: true,
+			},
 		},
 	};
 </script>

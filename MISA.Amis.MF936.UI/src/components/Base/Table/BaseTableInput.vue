@@ -221,9 +221,10 @@
 			},
 			/**
 			 * Thêm một bản ghi rỗng vào trong bảng
+			 * @param {Number} mode: nếu có mode thì bỏ qua focus
 			 * CreatedBy: NTDUNG (29/09/2021)
 			 */
-			addRecord() {
+			addRecord(mode) {
 				var rowEmpty = {};
 				this.tableStyle.forEach((item) => {
 					rowEmpty[item["field"]] = null;
@@ -249,6 +250,12 @@
 				var tableData = this.tableData;
 				tableData.push(newRecord);
 				this.changeTableData(tableData);
+				if (!mode) {
+					this.$nextTick(() => {
+						var listTr = this.$el.querySelectorAll("tr");
+						listTr[listTr.length - 2].querySelector("input").focus();
+					});
+				}
 			},
 			/**
 			 * Xoá tất cả các bản ghi
@@ -261,10 +268,10 @@
 				).then((answer) => {
 					if (answer == this.$enum.DIALOG_RESULT.Yes) {
 						var tableData = this.tableData;
-						tableData = tableData.filter(item => {
+						tableData = tableData.filter((item) => {
 							return item["state"] != VoucherDetailState.ADD;
 						});
-						tableData.forEach(item => {
+						tableData.forEach((item) => {
 							item["state"] = VoucherDetailState.DELETE;
 						});
 
@@ -318,6 +325,18 @@
 			},
 			scrollTable() {
 				this.$bus.$emit("hideListGrid");
+			},
+		},
+		watch: {
+			tableData: {
+				handler(value) {
+					console.log(value.length, this.enable);
+					if (!value.length && this.enable) {
+						this.addRecord(1);
+					}
+				},
+				immediate: true,
+				deep: true,
 			},
 		},
 	};
