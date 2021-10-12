@@ -23,7 +23,7 @@ const routes = [
 		component: WarehousePage,
 		children: [
 			{ path: "/warehouse/process", component: WarehouseProcess },
-			{ path: "/warehouse/InwardOutwardList/:mode", component: WarehouseInwardOutwardList },
+			{ path: "/warehouse/InwardOutwardList", component: WarehouseInwardOutwardList },
 			{ path: "/warehouse/report", component: WarehouseReport },
 		],
 	},

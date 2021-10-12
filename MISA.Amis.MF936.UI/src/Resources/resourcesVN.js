@@ -108,7 +108,10 @@ module.exports = {
 
     //#region FORM
     FORM: {
-        Cancel: 'Huỷ (Esc)',
+        Cancel: {
+            Label: 'Huỷ',
+            Tooltip: 'Huỷ'
+        },
         Store: {
             Label: 'Cất',
             Tooltip: 'Cất (Ctrl + S)'
@@ -139,7 +142,8 @@ module.exports = {
         UnMention: {
             Label: 'Bỏ ghi',
             Tooltip: 'Bỏ ghi (Ctrl + B)'
-        }
+        },
+        Add: 'Thêm mới (F9)'
     },
     //#endregion
 
@@ -150,7 +154,7 @@ module.exports = {
         DeleteSuccess: 'Xoá thành công',
         AddSuccess: 'Thêm mới thành công',
         UpdateSuccess: 'Chỉnh sửa thành công',
-        FieldRequired: '{0} không được để trống',
+        FieldRequired: '<{0}> không được để trống',
         NoData: 'Không có dữ liệu hiển thị.',
         MustThanDate: '<{0}> phải lớn hơn hoặc bằng <{1}>. Vui lòng kiểm tra lại.',
         ConfirmDeleteAll: 'Bạn có thực sự muốn xoá tất cả các dòng đã nhập không?'
@@ -173,7 +177,19 @@ module.exports = {
         TotalPrice: 'Tổng tiền',
         Reference: 'Tham chiếu',
         AttachFile: 'Đính kèm',
-        RequiredVoucherDetail: "Bạn phải nhập chứng từ chi tiết."
+        RequiredVoucherDetail: "Bạn phải nhập chứng từ chi tiết.",
+        StoreAndAdd: {
+            Label: 'Cất và Thêm',
+            Tooltip: 'Cất và Thêm (Ctrl + Shift + S)'
+        },
+        StoreAndPrint: {
+            Label: 'Cất và In',
+            Tooltip: 'Cất và In (Ctrl + Shift + P)'
+        },
+        StoreAndClose: {
+            Label: 'Cất và Đóng',
+            Tooltip: 'Cất và Đóng (Ctrl + Q)'
+        }, 
     },
     //#endregion
 

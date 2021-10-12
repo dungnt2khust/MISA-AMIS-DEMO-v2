@@ -146,12 +146,13 @@ namespace Misa.ApplicationCore.Services
         {
             try
             {
-                // AccountVoucher
+                // I. Lấy dữ liệu
                 var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
  
-                // AccountVoucherDetails
                 var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
-                // Validate 
+
+                // II. Validate data
+                // 1. Validate master
                 var serviceResult = _accountVoucherService.ValidateData(accountVoucher, "ADD");
 
                 if (!serviceResult.IsValid)
@@ -159,12 +160,7 @@ namespace Misa.ApplicationCore.Services
                     return serviceResult;
                 }
 
-                //serviceResult = _accountObjectService.ValidateData(accountObject, "UPDATE");
-                //if (!serviceResult.IsValid)
-                //{
-                //    return serviceResult;
-                //}
-
+                // 2. Validate detail
                 foreach (AccountVoucherDetail accountVoucherDetail in accountVoucherDetails)
                 {
                     serviceResult = _accountVoucherDetailService.ValidateData(accountVoucherDetail, "ADD");
@@ -173,7 +169,8 @@ namespace Misa.ApplicationCore.Services
                         return serviceResult;
                     }
                 }
-
+                
+                // III. Thêm mới vào Database
                 serviceResult.IsValid = true;
                 serviceResult.Data = _accountVoucherRepository.addAccountVoucher(accountVoucher, accountVoucherDetails); 
                 serviceResult.Msg = Resources.ResourceVN.Success_Insert;
@@ -197,11 +194,13 @@ namespace Misa.ApplicationCore.Services
         {
             try
             {
+                // I. Lấy dữ liệu
                 var accountVoucher = (AccountVoucher)data.GetType().GetProperty("in_inward").GetValue(data, null);
                 
                 var accountVoucherDetails = (List<AccountVoucherDetail>)data.GetType().GetProperty("in_inward_detail").GetValue(data, null);
 
-                // Validate data
+                // II. Validate data
+                // 1. Validate master
                 var serviceResult = _accountVoucherService.ValidateData(accountVoucher, "UPDATE");
 
                 if (!serviceResult.IsValid)
@@ -209,12 +208,7 @@ namespace Misa.ApplicationCore.Services
                     return serviceResult;
                 }
 
-                //serviceResult = _accountObjectService.ValidateData(accountObject, "UPDATE");
-                //if (!serviceResult.IsValid)
-                //{
-                //    return serviceResult;
-                //}
-
+                // 2. Validate detail
                 foreach (AccountVoucherDetail accountVoucherDetail in accountVoucherDetails)
                 {
                     serviceResult = _accountVoucherDetailService.ValidateData(accountVoucherDetail, "ADD");
@@ -224,7 +218,7 @@ namespace Misa.ApplicationCore.Services
                     }
                 }
 
-
+                // III. Cập nhật vào Database
                 serviceResult.IsValid = true;
                 serviceResult.Data = _accountVoucherRepository.updateAccountVoucher(accountVoucher, accountVoucherDetails);
                 serviceResult.Msg = Resources.ResourceVN.Success_Update;
@@ -233,7 +227,6 @@ namespace Misa.ApplicationCore.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
         }        

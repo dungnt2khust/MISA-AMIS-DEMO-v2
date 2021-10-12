@@ -80,9 +80,9 @@
 		created() {
 			this.$bus.$on("showAccountObjectGroupDetail", () => {
 				this.formState = true;
-				
+
 				// Bind dữ liệu
-				this.bindData();	
+				this.bindData();
 			});
 
 			this.$bus.$on("catchError" + this.name, (msg, element) => {
@@ -121,7 +121,7 @@
 			 * Cất
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
-			store() {
+			store(mode) {
 				this.validateData();
 				setTimeout(() => {
 					if (!this.errorMsg)
@@ -137,7 +137,8 @@
 										message: this.$resourcesVN.NOTIFY.AddSuccess,
 										duration: 2000,
 									});
-									this.formState = false;
+									if (!mode) this.formState = false;
+									else this.bindData();
 								})
 								.catch((res) => {
 									this.showError(res);
@@ -152,13 +153,13 @@
 							}
 						);
 				}, 100);
-			},	
+			},
 			/**
 			 * Cất và thêm
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			storeAndAdd() {
-				console.log(this.data);
+				this.store(1);
 			},
 			/**
 			 * Clone data
@@ -180,9 +181,9 @@
 			 * CreatedBy: NTDUNG (07/10/2021)
 			 */
 			bindData() {
+				this.data = {};
 				// Lấy mã đơn vị tính
 				this.accountObjectGroupAPI.getNewCode().then((res) => {
-					this.data = {};
 					this.$set(this.data, "account_object_group_code", res.data);
 					this.$nextTick(() => {
 						this.$refs.inputFocus.$el.querySelector("input").focus();

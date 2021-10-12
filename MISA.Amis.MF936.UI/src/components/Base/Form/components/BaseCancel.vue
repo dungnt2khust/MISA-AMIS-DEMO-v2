@@ -1,6 +1,6 @@
 <template lang="">
 	<div
-		v-on="tooltipListeners($resourcesVN.FORM.Cancel)"
+		v-on="tooltipListeners($resourcesVN.FORM.Close.Tooltip)"
 		@click="method()"
 		class="form__cancel fx-center"
 	></div>

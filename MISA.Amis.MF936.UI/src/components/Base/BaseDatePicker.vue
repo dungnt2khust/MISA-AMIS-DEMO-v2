@@ -103,10 +103,6 @@
 				type: Boolean,
 				default: false,
 			},
-			hasDefault: {
-				type: Boolean,
-				default: false
-			}
 		},
 		data() {
 			return {
@@ -288,10 +284,10 @@
 						this.$set(this.selected, "date", date);
 						this.$set(this.selected, "month", month);
 						this.$set(this.selected, "year", year);
-					} else {
-						if (this.hasDefault)
-							this.todayOnClick();
-					}
+					} 
+					// else {
+					// 		this.todayOnClick();
+					// }
 				},
 				immediate: true,
 			},

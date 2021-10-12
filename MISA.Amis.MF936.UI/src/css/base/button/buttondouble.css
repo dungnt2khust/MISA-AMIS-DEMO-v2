@@ -1,5 +1,14 @@
 .button-double {
     display: flex;
+    position: relative;
+}
+.button-double.button-double--square .button--half-left {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.button-double.button-double--square .button--half-right {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
     .button.button--half-left {
         border-radius: 0;
@@ -20,6 +29,7 @@
         border-radius: 0;
         border-top-right-radius: 36px;
         border-bottom-right-radius: 36px;
+        padding: 0 16px;
     }
         .button.button--half-right::after {
             display: block;
@@ -28,3 +38,28 @@
             width: 8px;
             height: 5px;
         }
+        .button-double__list {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: #fff;
+            padding: 2px 1px;
+            border-radius: 2px;
+            border: 1px solid #babec5;
+            list-style: none;
+        }
+            .button-double__item {
+                background: inherit!important;
+                color: inherit!important;
+                cursor: pointer;
+                transition: all .2s ease;
+                padding: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
+                width: 100%;
+                font-size: 13px;
+            }
+            .button-double__item:hover {
+                background-color: #E8E9EC !important;
+                color: #31C644 !important;
+            }

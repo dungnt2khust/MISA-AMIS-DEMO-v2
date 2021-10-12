@@ -97,7 +97,6 @@ namespace Misa.ApplicationCore.Entities
         /// <summary>
         /// Id nhân viên
         /// </summary>
-        [MisaNotMap]
         public Guid? employee_id { get; set; }
 
         /// <summary>

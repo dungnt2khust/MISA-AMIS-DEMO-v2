@@ -75,6 +75,10 @@ export default {
         enable: {
             type: Boolean,
             default: true
+        },
+        syncfield: {
+            type: String, 
+            default: ''
         }
     },
     data() {
@@ -121,6 +125,8 @@ export default {
          */
         comboboxItemOnClick(index) {
             this.$emit('input', index);
+            if (this.syncfield)
+                this.$bus.$emit('change' + this.syncfield, index);
             this.comboboxState = false;
         },
         /**

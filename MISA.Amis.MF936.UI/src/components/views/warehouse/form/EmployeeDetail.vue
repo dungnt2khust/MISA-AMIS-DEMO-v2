@@ -39,6 +39,7 @@
 							:value="data['employee_name']"
 							v-model="data['employee_name']"
 							:formName="name"
+							:showRequired="true"
 							class="fx-3/5"
 						/>
 
@@ -63,6 +64,8 @@
 								:form="WAREHOUSE_TABLE.InWardDetail.DEPARTMENT['form']"
 								type="small"
 								:formName="name"
+								:required="true"
+								:showRequired="true"
 							/>
 						</div>
 						<base-input
@@ -248,7 +251,7 @@
 			 * Cất
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
-			store() {
+			store(mode) {
 				this.validateData();
 				setTimeout(() => {
 					if (!this.errorMsg)
@@ -264,7 +267,10 @@
 										message: this.$resourcesVN.NOTIFY.AddSuccess,
 										duration: 2000,
 									});
-									this.formState = false;
+									if (!mode)
+										this.formState = false;
+									else 
+										this.bindData();
 								})
 								.catch((res) => {
 									this.showError(res);
@@ -285,7 +291,7 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			storeAndAdd() {
-				console.log(this.data);
+				this.store(1);
 			},
 			/**
 			 * Clone data

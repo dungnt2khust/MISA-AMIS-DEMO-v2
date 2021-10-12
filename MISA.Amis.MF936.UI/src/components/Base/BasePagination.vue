@@ -44,7 +44,6 @@
 <script>
 	// COMPONENTS
 	import BaseComboboxOld from "./Old/BaseComboboxOld.vue";
-
 	export default {
 		name: "BasePagination",
 		components: {
@@ -90,7 +89,6 @@
 			displayItems(index) {
 				// Làm tròn
 				var idxDisplay = Math.ceil(this.currPageTranfer / this.numDisplayPage);
-
 				if (this.totalPage - this.currPage <= this.numDisplayPage - 1) {
 					return (
 						index <= this.totalPage &&

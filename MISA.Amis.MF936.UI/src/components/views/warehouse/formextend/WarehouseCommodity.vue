@@ -79,6 +79,7 @@
 						:pos="$enum.POS.Right"
 						:required="true"
 						:formName="formName"
+						format="money"
 					/>
 					<base-text-area
 						label="Mô tả"
@@ -119,7 +120,6 @@
 							:display="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['display']"
 							:listGridStyle="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['style']"
 							:form="WAREHOUSE_TABLE.InWardDetail.WAREHOUSE['form']"
-							:required="true"
 							:formName="formName"
 						/>
 						<base-combobox-advance
@@ -166,6 +166,7 @@
 							:pos="$enum.POS.Right"
 							v-model="data['dataMaster']['debit_amount']"
 							:value="data['dataMaster']['debit_amount']"
+							format="money"
 						/>
 					</div>
 					<div class="fx">

@@ -10,7 +10,7 @@ export default {
 						name: "Ngày hạch toán",
 						field: "mathematics_date",
 						type: TableDataStyle.TYPE.Text,
-						pos: TableDataStyle.POS.Left,
+						pos: TableDataStyle.POS.Center,
 					},
 					{
 						name: "Số chứng từ",
@@ -42,7 +42,7 @@ export default {
 						name: "Ngày chứng từ",
 						field: "voucher_date",
 						type: TableDataStyle.TYPE.Text,
-						pos: TableDataStyle.POS.Left,
+						pos: TableDataStyle.POS.Center,
 						color: TableDataStyle.COLOR.AllGreen,
 					},
 					{
@@ -55,7 +55,7 @@ export default {
 						name: "Ngày tạo",
 						field: "created_date",
 						type: TableDataStyle.TYPE.Text,
-						pos: TableDataStyle.POS.Left,
+						pos: TableDataStyle.POS.Center,
 					},
 					{
 						name: "Người tạo",
@@ -67,7 +67,7 @@ export default {
 						name: "Ngày chỉnh sửa",
 						field: "modified_date",
 						type: TableDataStyle.TYPE.Text,
-						pos: TableDataStyle.POS.Left,
+						pos: TableDataStyle.POS.Center,
 					},
 					{
 						name: "Người chỉnh sửa",
@@ -205,8 +205,17 @@ export default {
 							type: TableDataStyle.TYPE.Input,
 							pos: TableDataStyle.POS.Right,
 							total: true,
-							enable: false,
-							format: "money"
+							enable: true,
+							format: "money",
+							syncfield: "TotalPrice",
+							defaultValue: 0
+						},
+						{
+							name: "Số lô",
+							field: "lot_number",
+							enable: true,
+							width: "150px",
+							type: TableDataStyle.TYPE.Input,
 						},
 						{
 							name: "Hạn sử dụng",
@@ -380,6 +389,7 @@ export default {
 							syncfield: "ConversionUnitDetail",
 							enable: true,
 							required: true,
+							format: "money"
 						},
 						{
 							name: "Mô tả",

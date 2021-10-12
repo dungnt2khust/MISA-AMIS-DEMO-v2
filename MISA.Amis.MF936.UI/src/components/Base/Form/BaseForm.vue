@@ -3,9 +3,9 @@
 		<!-- eslint-disable -->
 		<div
 			tabindex="0"
-			v-on:keydown.ctrl.83.prevent="store"
-			v-on:keydown.ctrl.alt.83.prevent="storeAndAdd"
-			v-on:keydown.27.prevent="hideForm"
+			v-on:keydown.ctrl.83.stop.prevent.exact="store"
+			v-on:keydown.ctrl.shift.83.stop.prevent.exact="storeAndAdd"
+			v-on:keydown.27.stop.prevent="hideForm"
 			ref="form"
 			v-on="formListeners"
 			:style="positionOfForm"

@@ -224,9 +224,13 @@
 					},
 					blur: () => {
 						this.focusState = false;
-						this.timeoutBlur = setTimeout(() => {
-							if (this.type == "small" && !this.focusState)
-								this.dropdownButtonState = false;
+						this.timeoutBlur = setTimeout(() => {	
+							if (!this.focusState) {
+								this.showList = false;
+								this.$bus.$emit('hideListGrid');
+								if (this.type == "small")
+									this.dropdownButtonState = false;
+							}
 						}, 100);
 					},
 				});
@@ -333,24 +337,8 @@
 					this.baseAPI
 						.getFilterPaging(this.filterString, 1, 20)
 						.then((res) => {
-							console.log(res);
 							this.listGridData = res.data[this.controller];
 							this.showListGrid();
-							// if (this.escapeValue) {
-							// 	if (!Array.isArray(this.escapeValue)) {
-							// 		var foundIdx = this.listGridData.findIndex((item) => {
-							// 			return item[this.vmodelField] == this.escapeValue;
-							// 		});
-							// 		this.listGridData.splice(foundIdx, 1);
-							// 	} else {
-							// 		this.escapeValue.forEach((item) => {
-							// 			var foundIdx = this.listGridData.findIndex((subItem) => {
-							// 				return subItem[this.vmodelField] == item;
-							// 			});
-							// 			this.listGridData.splice(foundIdx, 1);
-							// 		});
-							// 	}
-							// }
 						})
 						.catch((res) => {
 							console.log(res);
@@ -366,6 +354,7 @@
 			 */
 			showListGrid() {
 				var size = this.$refs.comboboxadvance.getBoundingClientRect();
+				this.showList = true;
 				this.size = {
 					top: size.top,
 					left: size.left,
@@ -390,13 +379,19 @@
 					form: this.form
 				});
 			},
+			/**
+			 * Bật tắt grid
+			 * CreatedBy: NTDUNG (29/09/2021)
+			 */
 			toggleListGrid() {
 				this.$refs.comboboxInput.focus();
 				clearTimeout(this.timeoutBlur);
 				if (this.showList) {
+					console.log('hide');
 					this.showList = false;
 					this.$bus.$emit("hideListGrid");
 				} else {
+					console.log('show');
 					this.filterString = "";
 					this.loadData();
 					this.showList = true;

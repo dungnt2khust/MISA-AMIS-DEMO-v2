@@ -182,7 +182,7 @@
 			},
 			formMode: {
 				type: Number,
-				defautl: null,
+				default: null
 			},
 		},
 		data() {
@@ -334,14 +334,10 @@
 		watch: {
 			formMode: {
 				handler(value) {
-					if (value === this.$enum.FORM_MODE.Add) {
-						if (!this.tableData.length && this.enable) {
-							this.addRecord(1);
-						}
-					}
+					if (value === this.$enum.FORM_MODE.Add) this.addRecord(1);
 				},
 				immediate: true,
-			},
+			}
 		},
 	};
 </script>

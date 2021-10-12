@@ -1,5 +1,25 @@
 export default {
 	methods: {
+		getToday() {
+			var newDate = new Date();
+			var date = newDate.getDate();
+			date = date < 10 ? "0" + date : date;
+			var month = newDate.getMonth() + 1;
+			month = month < 10 ? "0" + month : month;
+			var year = newDate.getFullYear();
+			return `${year}-${month}-${date}T00:00:00`;
+		},
+		/**
+		 * Đổi ký tự tại index thành một ký tự khác
+		 * @param {Number} index
+		 * @param {String} newCharacter
+		 * CreatedBy: NTDUNG (01/09/2021)
+		 */
+		replaceCharacterByIndex(originalString, index, newCharacter) {
+			var string1 = originalString.substring(0, index);
+			var string2 = originalString.substring(index + 1);
+			return string1 + newCharacter + string2;
+		},
 		/**
 		 * format string
 		 * @param {ListString}
@@ -173,19 +193,47 @@ export default {
 			}
 			return null;
 		},
+		dateReverse(value) {
+			if (value.length == 10) {
+				var date = value.substring(0, 2);
+				var month = value.substring(3, 5);
+				var year = value.substring(6);
+				var newDate = `${year}-${month}-${date}`;
+				if (new Date(newDate)) {
+					return newDate;
+				}
+				return null;
+			} else return null;
+		},
 		/**
 		 * Format tiền tệ
 		 * @param {Number} value
 		 * @returns {String}
 		 */
 		formatMoney(value) {
-			if (value) {
-				var number = Number(value);
-				return number.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-			} else {
-				var zero = 0;
-				return zero.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-			}
+			let inputValue = 0;
+			if (value) inputValue = value;
+			var number = Number(inputValue);
+			let tempFormat = number.toFixed(1).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+			let indexDot = tempFormat.indexOf(".");
+			tempFormat = tempFormat.replaceAll(",", ".");
+			let result = this.replaceAt(tempFormat, indexDot, ",");
+			return result;
+		},
+		/**
+		 * thay thế kí tụ ở vị trí index
+		 * @param {string} str
+		 * @param {number} index
+		 * @param {character} replacement
+		 * @returns
+		 * CreatedBy: NTDUNG(10/10/2021)
+		 */
+		replaceAt(str, index, replacement) {
+			return (
+				str.substr(0, index) +
+				replacement +
+				str.substr(index + replacement.length)
+			);
 		},
 		/**
 		 * Format chuỗi hiển thị trên input thành date

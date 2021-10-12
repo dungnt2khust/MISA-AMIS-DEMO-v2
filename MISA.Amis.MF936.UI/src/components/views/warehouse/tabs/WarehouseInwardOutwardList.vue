@@ -7,8 +7,8 @@
 			<div class="fx">
 				<base-tutorial class="mr-20" />
 				<base-button-double
-					:label="$resourcesVN.WAREHOUSE_ADD"
-					:method="addRecord"
+					:listMethods="[{Label: $resourcesVN.WAREHOUSE_ADD, Method: addRecord}]"
+					:hideList="true"
 				/>
 			</div>
 		</div>
@@ -44,7 +44,7 @@
 			/>
 		</div>
 		<account-object-detail />
-		<employee-detail/>	
+		<employee-detail />
 		<account-object-group-detail />
 	</div>
 </template>
@@ -65,9 +65,9 @@
 	import BaseFilter from "../../../Base/BaseFilter.vue";
 	import BaseButtonDouble from "../../../Base/Button/BaseButtonDouble.vue";
 	import BaseTab2 from "../../../Base/Tab/BaseTab2.vue";
-	import EmployeeDetail from "../../../views/warehouse/form/EmployeeDetail.vue"
-	import AccountObjectDetail from "../../../views/warehouse/form/AccountObjectDetail.vue"
-	import AccountObjectGroupDetail from "../../../views/warehouse/formsmall/AccountObjectGroupDetail.vue"
+	import EmployeeDetail from "../../../views/warehouse/form/EmployeeDetail.vue";
+	import AccountObjectDetail from "../../../views/warehouse/form/AccountObjectDetail.vue";
+	import AccountObjectGroupDetail from "../../../views/warehouse/formsmall/AccountObjectGroupDetail.vue";
 
 	export default {
 		name: "WarehouseInwardOutwardList",
@@ -83,7 +83,7 @@
 			BaseTab2,
 			EmployeeDetail,
 			AccountObjectDetail,
-			AccountObjectGroupDetail
+			AccountObjectGroupDetail,
 		},
 		props: {
 			warehouseDetailState: {
@@ -162,16 +162,11 @@
 			},
 		},
 		created() {
-			this.$bus.$emit('showLoading');
-			this.$bus.$on('reloadData', () => {
+			this.$bus.$emit("showLoading");
+			this.$bus.$on("reloadData", () => {
 				this.getData();
 			});
-		},
-		mounted() {
-			if (this.$route.params.mode == 'Add') {
-				this.addRecord();
-			}
-		},
+		},	
 		methods: {
 			/**
 			 * Chức năng trên bảng dữ liệu
@@ -240,11 +235,11 @@
 						this.totalRecord = res.data["TotalRecord"];
 						this.totalPrices = res.data["TotalPrices"];
 						this.tableLoading = false;
-						this.$bus.$emit('hideLoading');
+						this.$bus.$emit("hideLoading");
 					})
 					.catch((res) => {
 						console.log(res);
-						this.$bus.$emit('hideLoading');
+						this.$bus.$emit("hideLoading");
 					});
 			},
 			/**
@@ -252,7 +247,9 @@
 			 * CreatedBy: NTDUNG (17/09/2021)
 			 */
 			addRecord() {
-				this.$bus.$emit("showWarehouseDetail", {mode: this.$enum.FORM_MODE.Add});
+				this.$bus.$emit("showWarehouseDetail", {
+					mode: this.$enum.FORM_MODE.Add,
+				});
 			},
 			/**
 			 * Xử lý khi pagination thay đổi
@@ -271,7 +268,7 @@
 			 */
 			mention(id) {
 				if (id) {
-					var data = { ...this.findDataWidthId(id) };
+					var data = { ...this.findDataWithId(id) };
 					data["is_mention"] = 1;
 					console.log(data);
 					voucherAPI
@@ -279,8 +276,11 @@
 						.then(() => this.getData())
 						.catch((res) => console.log(res));
 				} else {
+					var selected = this.selectedRows.filter((item) => {
+						return this.findDataWithId(item)["is_mention"] == 0;
+					});
 					voucherAPI
-						.mentionMany(this.selectedRows)
+						.mentionMany(selected)
 						.then(() => {
 							this.getData();
 						})
@@ -294,15 +294,18 @@
 			 */
 			unMention(id) {
 				if (id) {
-					var data = { ...this.findDataWidthId(id) };
+					var data = { ...this.findDataWithId(id) };
 					data["is_mention"] = 0;
 					voucherAPI
 						.put(id, data)
 						.then(() => this.getData())
 						.catch((res) => console.log(res));
 				} else {
+					var selected = this.selectedRows.filter((item) => {
+						return this.findDataWithId(item)["is_mention"] == 1;
+					});
 					voucherAPI
-						.unMentionMany(this.selectedRows)
+						.unMentionMany(selected)
 						.then(() => {
 							this.getData();
 						})
@@ -316,7 +319,7 @@
 			 */
 			delete(id) {
 				if (id) {
-					var data = { ...this.findDataWidthId(id) };
+					var data = { ...this.findDataWithId(id) };
 					this.callDialog(
 						"confirm",
 						`Bạn có muốn xoá ${data["voucher_code"]} ?`
@@ -331,25 +334,33 @@
 						}
 					});
 				} else {
-					this.callDialog("confirm", `Bạn có muốn xoá không ?`).then(
-						(answer) => {
-							if (answer == "YES") {
+					var selected = this.selectedRows.filter((item) => {
+						return this.findDataWithId(item)["is_mention"] == 0;
+					});
+					this.callDialog(
+						"confirm",
+						`<${selected.length} chứng từ chưa ghi sổ> và <${this
+							.selectedRows.length -
+							selected.length} chứng từ đã ghi sổ>. Xoá những chứng từ chưa được ghi sổ?`
+					).then((answer) => {
+						if (answer == "YES") {
+							if (selected.length)
 								voucherAPI
-									.deleteMany(this.selectedRows)
+									.deleteMany(selected)
 									.then(() => {
 										this.getData();
 									})
 									.catch((res) => console.log(res));
-							}
 						}
-					);
+					});
 				}
 			},
 			/**
 			 * Nhân bản theo id
 			 * @param {String} id
 			 *  CreatedBy: NTDUNG (28/09/2021)
-			 */	
+			 */
+
 			replication(id) {
 				this.$bus.$emit("showLoading");
 				voucherAPI
@@ -371,7 +382,7 @@
 			 * @param {String} id
 			 * CreatedBy: NTDUNG (27/09/2021)
 			 */
-			findDataWidthId(id) {
+			findDataWithId(id) {
 				var foundIdx = this.tableData.findIndex((item) => {
 					return item[this.tableId] == id;
 				});
@@ -414,7 +425,7 @@
 				this.mentionState = value["mention"];
 				this.startDate = value["formDate"];
 				this.endDate = value["toDate"];
-				this.voucherType = value["type"] != -1 ? value["type"] : '';
+				this.voucherType = value["type"] != -1 ? value["type"] : "";
 				this.currPage = 1;
 				this.getData();
 			},

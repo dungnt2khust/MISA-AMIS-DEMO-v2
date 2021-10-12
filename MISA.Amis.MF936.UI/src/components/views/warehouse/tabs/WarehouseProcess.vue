@@ -31,7 +31,6 @@
 				<div class="warehouse__tutorial-function">
 					<div
 						v-for="(item, index) in WarehouseProcessFunction"
-						@click="processFunction(index)"
 						class="warehouse__tutorial-function-item"
 						:key="index"
 					>
@@ -86,22 +85,8 @@
 			 * CreatedBy: NTDUNG (02/10/2021)
 			 */
 			importInventory() {
-				this.$router.push({
-					path: "InwardOutwardList/Add"
-				});
+				this.$bus.$emit("showWarehouseDetail", {mode: this.$enum.FORM_MODE.Add});
 			},
-			/**
-			 * Đường dẫn chức năng
-			 * @param {Number} index
-			 * CreatedBy: NTDUNG (01/10/2021)
-			 */
-			processFunction(index) {
-				if (index == 0) {
-					this.$router.push({
-						path: "InwardOutwardList/Normal"
-					});
-				}
-			}
 		},
 	};
 </script>

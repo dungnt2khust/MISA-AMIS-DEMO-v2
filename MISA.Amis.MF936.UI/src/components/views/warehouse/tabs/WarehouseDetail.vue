@@ -12,11 +12,13 @@
 	<!-- eslint-disable -->
 	<div
 		tabindex="0"
-		v-on:keydown.ctrl.83.stop.prevent="store"
-		v-on:keydown.ctrl.alt.80.stop.prevent="storeAndPrint"
-		v-on:keydown.ctrl.71.stop.prevent="mention"
-		v-on:keydown.ctrl.66.stop.prevent="unMention"
-		v-on:keydown.27.prevent="hideForm"
+		v-on:keydown.ctrl.83.stop.prevent.exact="store"
+		v-on:keydown.ctrl.alt.80.stop.prevent.exact="storeAndPrint"
+		v-on:keydown.ctrl.shift.83.stop.prevent.exact="storeAndAdd"
+		v-on:keydown.native.ctrl.81.stop.prevent.exact="storeAndClose"
+		v-on:keydown.ctrl.71.stop.prevent.exact="mention"
+		v-on:keydown.ctrl.66.stop.prevent.exact="unMention"
+		v-on:keydown.27.prevent.exact="hideForm"
 		v-if="formLargeState"
 		class="warehousedetail"
 	>
@@ -37,6 +39,7 @@
 						:currIdx="masterContent['voucher_type']"
 						:enable="enable"
 						v-model="masterContent['voucher_type']"
+						syncfield="VoucherType"
 						class="mr-16"
 					/>
 				</div>
@@ -211,9 +214,9 @@
 			</template>
 			<template v-slot:footer>
 				<base-button
-					:label="$resourcesVN.FORM.Close.Label"
-					:tooltip="$resourcesVN.FORM.Close.Tooltip"
-					:method="hideForm"
+					:label="$resourcesVN.FORM.Cancel.Label"
+					:tooltip="$resourcesVN.FORM.Cancel.Tooltip"
+					:method="cancelForm"
 					type="dark"
 				/>
 				<div class="formlarge__store fx">
@@ -225,12 +228,10 @@
 						type="dark"
 						class="mr-8"
 					/>
-					<base-button
-						@click.native="storeAndPrint()"
-						:label="$resourcesVN.FORM.StoreAndPrint.Label"
-						:tooltip="$resourcesVN.FORM.StoreAndPrint.Tooltip"
+					<base-button-double
+						type="square"
+						:listMethods="listStores"
 						v-if="enable"
-						type="green"
 					/>
 					<base-button
 						class="mr-8"
@@ -285,6 +286,7 @@
 	import WarehouseAddCommodityGroup from "../formsmall/WarehouseAddCommodityGroup.vue";
 	import WarehouseAddUnit from "../formsmall/WarehouseAddUnit.vue";
 	import BaseButton from "../../../Base/Button/BaseButton.vue";
+	import BaseButtonDouble from "../../../Base/Button/BaseButtonDouble.vue";
 	import BaseListGrid from "../../../Base/Select/BaseListGrid.vue";
 
 	export default {
@@ -302,6 +304,7 @@
 			WarehouseAddCommodityGroup,
 			WarehouseAddUnit,
 			BaseButton,
+			BaseButtonDouble,
 			BaseListGrid,
 		},
 		data() {
@@ -337,6 +340,11 @@
 				if (!this.errorMsg && element) {
 					this.errorMsg = msg;
 					this.element = element;
+					this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
+						() => {
+							this.element.focus();
+						}
+					);
 				}
 			});
 
@@ -408,34 +416,7 @@
 						this.cloneData();
 						break;
 					case this.$enum.FORM_MODE.Add:
-						this.enable = true;
-						this.mode = this.$enum.FORM_MODE.Add;
-						this.masterContent = {};
-						this.tableInputData = [];
-						this.$bus.$emit("showLoading");
-						this.baseAPI
-							.getNewCode()
-							.then((res) => {
-								console.log(res);
-								this.$set(this.masterContent, "voucher_code", res.data);
-								setTimeout(() => {
-									this.cloneData();
-								}, 100);
-								this.$bus.$emit("hideLoading");
-							})
-							.catch((res) => {
-								console.log(res);
-								this.$bus.$emit("hideLoading");
-							});
-						this.$set(this.masterContent, "voucher_type", 0);
-						this.$set(
-							this.masterContent,
-							"description",
-							"Nhập kho từ " + this.voucherTypeData[1]["name"].substring(3)
-						);
-						setTimeout(() => {
-							this.cloneData();
-						}, 100);
+						this.bindAddMode();
 						break;
 					case this.$enum.FORM_MODE.Replication:
 						this.mode = this.$enum.FORM_MODE.Replication;
@@ -560,6 +541,21 @@
 					"employee_name",
 					data[foundIdx]["employee_name"]
 				);
+				this.$set(
+					this.masterContent,
+					"account_object_name",
+					data[foundIdx]["account_object_name"]
+				);
+				this.masterContent["description"] =
+					"Nhập kho từ " +
+					this.voucherTypeData[Number(this.masterContent["voucher_type"])][
+						"name"
+					].substring(3);
+				if (this.masterContent["account_object_name"]) {
+					this.masterContent[
+						"description"
+					] += ` của ${this.masterContent["account_object_name"]}`;
+				}
 			});
 			/**
 			 * Sự kiện thay đổi hàng hoá ở hàng tiền
@@ -747,9 +743,88 @@
 					this.syncTotalPrice();
 				}
 			});
+			/**
+			 * Sự kiện thay đổi đơn giá ở hàng tiền
+			 * @param {Number} index
+			 * @param {String} type
+			 * @param {Array} data
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			this.$bus.$on("changeTotalPrice", (index, type, data) => {
+				if (type == "INPUT") {
+					var totalPrice = Number(data ? data : 0);
+
+					var quantity = Number(
+						this.tableInputData[index]["quantity"]
+							? this.tableInputData[index]["quantity"]
+							: 0
+					);
+					this.$set(
+						this.tableInputData[index],
+						"debit_amount",
+						totalPrice / quantity
+					);
+
+					this.syncTotalPrice();
+				}
+			});
+
+			/**
+			 * Sự kiện thay đổi loại nhập
+			 * @param {Number} value
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			this.$bus.$on("changeVoucherType", (value) => {
+				this.masterContent["description"] =
+					"Nhập kho từ " +
+					this.voucherTypeData[Number(value)]["name"].substring(3);
+				if (this.masterContent["account_object_name"]) {
+					this.masterContent[
+						"description"
+					] += ` của ${this.masterContent["account_object_name"]}`;
+				}
+			});
 			//#endregion
 		},
+		computed: {
+			/**
+			 * Danh sách các store
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			listStores() {
+				return [
+					{
+						Label: this.$resourcesVN.WAREHOUSE_DETAIL.StoreAndAdd.Label,
+						Tooltip: this.$resourcesVN.WAREHOUSE_DETAIL.StoreAndAdd.Tooltip,
+						Method: () => {
+							this.storeAndAdd();
+						},
+					},
+					{
+						Label: this.$resourcesVN.WAREHOUSE_DETAIL.StoreAndClose.Label,
+						Tooltip: this.$resourcesVN.WAREHOUSE_DETAIL.StoreAndClose.Tooltip,
+						Method: () => {
+							this.storeAndClose();
+						},
+					},
+					{
+						Label: this.$resourcesVN.WAREHOUSE_DETAIL.StoreAndPrint.Label,
+						Tooltip: this.$resourcesVN.WAREHOUSE_DETAIL.StoreAndPrint.Tooltip,
+						Method: () => {
+							this.storeAndPrint();
+						},
+					},
+				];
+			},
+		},
 		methods: {
+			/**
+			 * Huỷ form
+			 * CreatedBy: NTDUNG(01/10/2021)
+			 */
+			cancelForm() {
+				this.formLargeState = false;
+			},
 			/**
 			 * Tham chiếU chứng từ
 			 * CreatedBy: NTDUNG (28/09/2021)
@@ -770,7 +845,7 @@
 					in_inward_detail: this.tableInputData,
 				};
 				// Kiểm tra đã thay đổi thì cảnh báo cất
-				if (this.deepEqualObject(data, this.dataClone, ["is_mention"])) {
+				if (this.deepEqualObject(data, this.dataClone)) {
 					if (this.needReload) this.$bus.$emit("reloadData");
 					this.formLargeState = false;
 				} else {
@@ -780,7 +855,7 @@
 					).then((answer) => {
 						switch (answer) {
 							case this.$enum.DIALOG_RESULT.Yes:
-								this.store();
+								this.store(this.$enum.STORE_MODE.StoreAndClose);
 								break;
 							case this.$enum.DIALOG_RESULT.No:
 								this.formLargeState = false;
@@ -796,25 +871,34 @@
 			 * Cất dữ liệu
 			 * CreatedBy: NTDUNG (30/09/2021)
 			 */
-			store() {
+			store(mode = this.$enum.STORE_MODE.Normal) {
 				this.masterContent["voucher_type"] += "";
+				this.$set(this.masterContent, "is_mention", 1);
+
 				var data = {
 					in_inward: this.masterContent,
 					in_inward_detail: this.tableInputData,
 				};
+
 				this.needReload = false;
 
 				if (this.validateData()) {
 					switch (this.mode) {
 						case this.$enum.FORM_MODE.Add:
-							if (!this.deepEqualObject(data, this.dataClone, ["is_mention"]))
-								this.addVoucher(data);
-							else this.enable = false;
+							if (!this.deepEqualObject(data, this.dataClone)) {
+								this.addVoucher(data, mode);
+							} else {
+								this.enable = false;
+								this.afterStore(mode);
+							}
 							break;
 						case this.$enum.FORM_MODE.Update:
-							if (!this.deepEqualObject(data, this.dataClone, ["is_mention"]))
-								this.updateVoucher(data);
-							else this.enable = false;
+							if (!this.deepEqualObject(data, this.dataClone)) {
+								this.updateVoucher(data, mode);
+							} else {
+								this.enable = false;
+								this.afterStore(mode);
+							}
 							break;
 						case this.$enum.FORM_MODE.Replication:
 							this.addVoucher(data);
@@ -827,7 +911,7 @@
 			 * @param {Object} data
 			 * CreatedBy: NTDUNG (01/10/2021)
 			 */
-			addVoucher(data) {
+			addVoucher(data, mode) {
 				data["in_inward"]["created_by"] = this.$resourcesVN.ACCOUNT_NAME;
 				this.$bus.$emit("showLoading");
 				voucherAPI
@@ -869,6 +953,8 @@
 						setTimeout(() => {
 							this.cloneData();
 						}, 100);
+						// Sau khi cất
+						this.afterStore(mode);
 					})
 					.catch((res) => {
 						this.showError(res);
@@ -880,13 +966,12 @@
 			 * @param {Object} data
 			 * CreatedBy: NTDUNG (01/10/2021)
 			 */
-			updateVoucher(data) {
+			updateVoucher(data, mode) {
 				data["in_inward"]["modified_by"] = this.$resourcesVN.ACCOUNT_NAME;
 				this.$bus.$emit("showLoading");
 				voucherAPI
 					.updateVoucher(data.in_inward.accountvoucher_id, data)
 					.then((res) => {
-						console.log(res);
 						// Thong báo thành công
 						this.$bus.$emit("showToastMessage", {
 							message: this.$resourcesVN.NOTIFY.UpdateSuccess,
@@ -920,6 +1005,8 @@
 						setTimeout(() => {
 							this.cloneData();
 						}, 100);
+						// Sau khi cất
+						this.afterStore(mode);
 					})
 					.catch((res) => {
 						this.showError(res);
@@ -927,11 +1014,25 @@
 					});
 			},
 			/**
+			 * Cất và thêm
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			storeAndAdd() {
+				this.store(this.$enum.STORE_MODE.StoreAndAdd);
+			},
+			/**
+			 * Cất và đóng
+			 * CreatedBy: NTDUNG (30/09/2021)
+			 */
+			storeAndClose() {
+				this.store(this.$enum.STORE_MODE.StoreAndClose);
+			},
+			/**
 			 * Cất và in
 			 * CreatedBy: NTDUNG (30/09/2021)
 			 */
 			storeAndPrint() {
-				this.callDialog("warn", this.$resourcesVN.NOTIFY.FeatureNotAvaiable);
+				this.store(this.$enum.STORE_MODE.StoreAndPrint);
 			},
 			/**
 			 * Bỏ ghi
@@ -947,6 +1048,7 @@
 							console.log(res);
 							this.$set(this.masterContent, "is_mention", 0);
 							this.$bus.$emit("reloadData");
+							this.cloneData();
 						})
 						.catch((res) => {
 							console.log(res);
@@ -968,6 +1070,7 @@
 							console.log(res);
 							this.$set(this.masterContent, "is_mention", 1);
 							this.$bus.$emit("reloadData");
+							this.cloneData();
 						})
 						.catch((res) => {
 							console.log(res);
@@ -1025,8 +1128,6 @@
 					"debit_account_id",
 					"credit_account_id",
 					"selected_unit_id",
-					"quantity",
-					"debit_amount",
 				];
 				this.tableInputData.forEach((row) => {
 					requiredDetailFields.forEach((requiredField) => {
@@ -1042,7 +1143,10 @@
 				)
 					formValid = false;
 				// 2. Phải có ít nhất một dòng trong bảng detail
-				if (this.tableInputData.length == 0) {
+				var records = this.tableInputData.filter(item => {
+					return item['state'] != VoucherDetailState.DELETE;
+				});
+				if (records.length == 0) {
 					formValid = false;
 					this.errorMsg = this.$resourcesVN.WAREHOUSE_DETAIL.RequiredVoucherDetail;
 				}
@@ -1061,27 +1165,75 @@
 				});
 				this.$set(this.masterContent, "total_price", totalPrice);
 			},
+			/**
+			 * Bind dữ liệu khi add
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			bindAddMode() {
+				this.enable = true;
+				this.$nextTick(() => {
+					this.mode = this.$enum.FORM_MODE.Add;
+				})
+				this.masterContent = {};
+				this.tableInputData = [];
+				this.$bus.$emit("showLoading");
+				this.baseAPI
+					.getNewCode()
+					.then((res) => {
+						console.log(res);
+						this.$set(this.masterContent, "voucher_code", res.data);
+						setTimeout(() => {
+							this.cloneData();
+						}, 100);
+						this.$bus.$emit("hideLoading");
+					})
+					.catch((res) => {
+						console.log(res);
+						this.$bus.$emit("hideLoading");
+					});
+				// Bind thông tin mặc định
+				this.$set(this.masterContent, "voucher_type", 2);
+				this.$set(
+					this.masterContent,
+					"description",
+					"Nhập kho từ " + this.voucherTypeData[2]["name"].substring(3)
+				);
+				this.$set(this.masterContent, "voucher_date", this.getToday());
+				this.$set(this.masterContent, "mathematics_date", this.getToday());
+				this.$nextTick(() => {
+					this.$refs.inputFocus.$el.querySelector("input").focus();
+				});
+				setTimeout(() => {
+					this.cloneData();
+				}, 100);
+			},
+			/**
+			 * Sau khi cất
+			 * @param {String} mode
+			 * CreatedBy: NTDUNG (01/10/2021)
+			 */
+			afterStore(mode) {
+				// this.mention(this.masterContent["accountvoucher_id"]);
+				switch (mode) {
+					case this.$enum.STORE_MODE.Normal:
+						break;
+					case this.$enum.STORE_MODE.StoreAndAdd:
+						this.bindAddMode();
+						break;
+					case this.$enum.STORE_MODE.StoreAndClose:
+						this.formLargeState = false;
+						break;
+					case this.$enum.STORE_MODE.StoreAndPrint:
+						this.callDialog(
+							this.$enum.DIALOG_TYPE.Warn,
+							this.$resourcesVN.NOTIFY.FeatureNotAvaiable
+						);
+						break;
+				}
+				this.$bus.$emit("reloadData");
+			},
 		},
 		watch: {
-			/**
-			 * Khi đổi loại chứng từ thì thay đổi mô tả
-			 * @param {Number} value
-			 * CreatedBy: NTDUNG (29/09/2021)
-			 */
-			"masterContent.voucher_type": function(value) {
-				this.masterContent["description"] =
-					"Nhập kho từ " +
-					this.voucherTypeData[Number(value)]["name"].substring(3);
-			},	
-			errorMsg: function(value) {
-				if (value) {
-					this.callDialog(this.$enum.DIALOG_TYPE.Error, this.errorMsg).then(
-						() => {
-							this.element.focus();
-						}
-					);
-				}
-			},
 			enable: function(value) {
 				if (value) {
 					this.$nextTick(() => {
@@ -1095,6 +1247,12 @@
 						this.$refs.inputFocus.$el.querySelector("input").focus();
 					});
 				}
+			},
+			tableInputData: {
+				handler() {
+					this.syncTotalPrice();
+				},
+				deep: true,
 			},
 		},
 		destroyed() {

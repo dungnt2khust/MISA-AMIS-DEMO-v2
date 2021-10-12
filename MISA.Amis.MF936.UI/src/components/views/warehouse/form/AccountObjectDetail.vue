@@ -344,7 +344,7 @@
 			 * Cất
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
-			store() {
+			store(mode) {
 				this.validateData();
 				setTimeout(() => {
 					if (!this.errorMsg)
@@ -360,7 +360,10 @@
 										message: this.$resourcesVN.NOTIFY.AddSuccess,
 										duration: 2000,
 									});
-									this.formState = false;
+									if (!mode)
+										this.formState = false;
+									else 
+										this.bindData();
 								})
 								.catch((res) => {
 									this.showError(res);
@@ -381,7 +384,7 @@
 			 * CreatedBy: NTDUNG (03/10/2021)
 			 */
 			storeAndAdd() {
-				console.log(this.data);
+				this.store(1);
 			},
 			/**
 			 * Clone data

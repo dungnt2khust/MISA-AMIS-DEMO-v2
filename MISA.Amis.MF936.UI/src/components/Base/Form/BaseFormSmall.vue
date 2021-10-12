@@ -3,8 +3,8 @@
 		<!-- eslint-disable-->
 		<div
 			tabindex="0"
-			v-on:keydown.ctrl.83.stop.prevent="store"
-			v-on:keydown.ctrl.alt.83.stop.prevent="storeAndAdd"
+			v-on:keydown.ctrl.83.stop.prevent.exact="store"
+			v-on:keydown.ctrl.shift.83.stop.prevent.exact="storeAndAdd"
 			v-on:keydown.27.stop.prevent="hideForm"
 			class="formsmall"
 			v-on="formListeners"

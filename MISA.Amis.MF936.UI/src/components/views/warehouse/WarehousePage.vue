@@ -26,7 +26,7 @@
 					},
 					{
 						name: this.$resourcesVN.WAREHOUSE_TABS.InwardOutwardList,
-						path: "/warehouse/InwardOutwardList/Normal",
+						path: "/warehouse/InwardOutwardList",
 					},
 					{
 						name: this.$resourcesVN.WAREHOUSE_TABS.Report,

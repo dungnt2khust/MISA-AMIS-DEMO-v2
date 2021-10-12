@@ -93,13 +93,15 @@
 						{ name: "Chưa ghi sổ" },
 					],
 					type: [
-						{ name: "Tất cả"},
+						{ name: "Tất cả" },
 						{ name: "Thành phần sản xuất" },
 						{ name: "Hàng bán bị trả lại" },
 						{ name: "Khác" },
 					],
 					period: [
-						{ name: "Năm nay", key: "year"},
+						{ name: "Tháng này", key: "month" },
+						{ name: "Tuần này", key: "week" },
+						{ name: "Năm nay", key: "year" },
 						{ name: "Hôm nay", key: "today" },
 						{ name: "Đầu năm đến hiện tại", key: "beginyeartocurr" },
 						{ name: "Sáu tháng đầu năm", key: "firsthalfyear" },
@@ -116,6 +118,7 @@
 						{ name: "Tháng 10", key: "oct" },
 						{ name: "Tháng 11", key: "nov" },
 						{ name: "Tháng 12", key: "dec" },
+						{ name: "Tuỳ chọn", key: "none"}
 					],
 				},
 			};
@@ -132,7 +135,7 @@
 				// var filterPopup = this.$refs.filterPopup;
 				this.$nextTick(() => {
 					var position = this.positionPopup(
-						filterButton.getBoundingClientRect(),
+						filterButton.getBoundingClientRect()
 						// filterPopup.getBoundingClientRect()
 					);
 					this.top = position.top;
@@ -173,7 +176,7 @@
 					mention: mention,
 					toDate: this.currToDate.substring(0, 10),
 					formDate: this.currFromDate.substring(0, 10),
-					type: this.currType - 1
+					type: this.currType - 1,
 				});
 			},
 			/**
@@ -182,12 +185,16 @@
 			 * CreatedBy: NTDUNG (27/09/2021)
 			 */
 			bindDate(value) {
-				var newDates = this.changeDatefromDropdown(
+				if (this.filterData.period[value]["key"] != "none") {
+					var newDates = this.changeDatefromDropdown(
 					this.filterData.period[value]["key"]
 				);
 				this.currFromDate = newDates[0];
 				this.currToDate = newDates[1];
+				}
+				
 			},
+			
 		},
 		watch: {
 			/**
@@ -197,7 +204,7 @@
 			 */
 			currPeriod: function(value) {
 				this.bindDate(value);
-			},
+			},	
 		},
 	};
 </script>

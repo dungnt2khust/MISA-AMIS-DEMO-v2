@@ -8,7 +8,6 @@
 			left: left ? left + 'px' : 'unset',
 			bottom: bottom ? bottom + 'px' : 'unset',
 		}"
-		v-on="listGridListeners"
 	>
 		<thead class="listgrid__header">
 			<tr>
@@ -50,7 +49,7 @@
 		<div v-if="hasFooter" class="listgrid__footer">
 			<div @click="showForm()" class="comboboxadvance__add">
 				<div class="comboboxadvance__icon"></div>
-				Thêm mới (F9)
+				{{ $resourcesVN.FORM.Add }}
 			</div>
 		</div>
 	</div>
@@ -85,6 +84,7 @@
 		},
 		created() {
 			this.$bus.$on("showListGrid", (data) => {
+				// 1. Bind dữ liệu
 				this.type = data["type"];
 				this.listSelected = data["listSelected"];
 				this.listGridStyle = data["listGridStyle"];
@@ -100,8 +100,10 @@
 				this.enable = data["enable"];
 				this.index = data["index"];
 
+				// 2. Show grid
 				this.listGridState = true;
 
+				// 3. Tìm vị trí đang được chọn
 				this.currIdx = this.listGridData.findIndex((item) => {
 					if (this.subfield) {
 						return item[this.subfield] == this.valueBind;
@@ -110,13 +112,19 @@
 					}
 				});
 
-				this.$nextTick(() => {
-					this.$el.querySelector(".listgrid--selected").scrollIntoView({
-						block: "center",
-						behaviour: "smooth",
-					});
+				// 4. Scroll đến vị trí đang được chọn
+				let interval = setInterval(() => {
+					if (this.$el.querySelector(".listgrid--selected")) {
+						this.$el.querySelector(".listgrid--selected").scrollIntoView({
+							block: "center",
+							behaviour: "smooth",
+						});
+
+						clearInterval(interval);
+					}
 				});
 
+				// 5. Gán vị trí cho grid
 				this.left = this.size.left;
 
 				if (this.size.bottom + 200 + 60 > window.innerHeight) {
@@ -139,13 +147,6 @@
 				} else {
 					return "200px";
 				}
-			},
-			listGridListeners() {
-				return Object.assign({}, this.$listener, {
-					keydown: (event) => {
-						console.log(event);
-					},
-				});
 			},
 		},
 		methods: {

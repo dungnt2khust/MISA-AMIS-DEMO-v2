@@ -31,7 +31,6 @@
 				:value="currDate"
 				v-model="currDate"
 				:datePickerState="datePickerState"
-				:hasDefault="hasDefault"
 				:overtoday="overtoday"
 				@hideDatepicker="datePickerState = false"
 			/>
@@ -41,12 +40,13 @@
 <script>
 	// LIBRARY
 	import methods from "../../mixins/methods";
+	import globalComponents from "../../mixins/globalComponents/globalComponents.js";
 	// COMPONENTS
 	import BaseDatePicker from "./BaseDatePicker.vue";
 
 	export default {
 		name: "BaseInputDate",
-		mixins: [methods],
+		mixins: [methods, globalComponents],
 		components: {
 			BaseDatePicker,
 		},
@@ -91,10 +91,6 @@
 				type: Object,
 				default: null,
 			},
-			hasDefault: {
-				type: Boolean,
-				default: false
-			}
 		},
 		data() {
 			return {
@@ -123,18 +119,44 @@
 							this.firstFocus = true;
 						}
 					},
+					input: () => {
+						this.currDate = null;
+						// var type = event.inputType;
+						// if (type == "deleteContentBackward")
+						// {
+						// 	event.preventDefault();
+						// 	this.formatInputDate(type);
+						// } else {
+						// 	this.formatInputDate();
+						// }
+					},
+					keydown: (event) => {
+						var charCode = event.key.charCodeAt(0);
+						var key = event.key;
+						if (
+							(charCode < 48 || charCode > 57) &&
+							key != "Backspace" &&
+							key != "F1" &&
+							key != "Tab" &&
+							key != "Shift"
+						) {
+							event.preventDefault();
+						}
+					},
 				});
 			},
 		},
 		created() {
 			this.$bus.$on("validate" + this.formName, () => {
 				this.validateInput();
-				if (this.errorMsg)
+				if (this.errorMsg) {
+					console.log("send error");
 					this.$bus.$emit(
 						"catchError" + this.formName,
 						this.errorMsg,
 						this.$refs.inputDate
 					);
+				}
 			});
 		},
 		methods: {
@@ -164,7 +186,7 @@
 			validateInput() {
 				this.errorMsg = "";
 				if (this.required) {
-					if (!this.inputValue)
+					if (!this.value)
 						if (this.label)
 							this.errorMsg = this.formatString(
 								this.$resourcesVN.NOTIFY.FieldRequired,
@@ -190,7 +212,32 @@
 						}
 					}
 				}
+				// var newDate = this.dateReverse(this.inputValue);
+				// if (newDate) {
+				// 	this.currDate = newDate;
+				// }
 			},
+			// /**
+			//  * Định dạng lại text trên input
+			//  * CreatedBy: NTDUNG (29/09/2021)
+			//  */
+			// formatInputDate(type) {
+			// 	var input = this.inputValue.replaceAll('/', '');
+			// 	input = input.replaceAll('_', '');
+			// 	if (input.length > 8) input = input.slice(0, -1);
+			// 	console.log(input);
+			// 	if (type == "deleteContentBackward" && input && input.length <= 7) input = input.slice(0, -1);
+			// 	var formatedInput = '__/__/____';
+			// 	input[0] ? formatedInput = this.replaceCharacterByIndex(formatedInput, 0, input[0]) : '';
+			// 	input[1] ? formatedInput = this.replaceCharacterByIndex(formatedInput, 1, input[1]) : '';
+			// 	input[2] ? formatedInput = this.replaceCharacterByIndex(formatedInput, 3, input[2]) : '';
+			// 	input[3] ? formatedInput = this.replaceCharacterByIndex(formatedInput, 4, input[3]) : '';
+			// 	input[4] ? formatedInput = this.replaceCharacterByIndex(formatedInput, 6, input[4]) : '';
+			// 	input[5] ? formatedInput = this.replaceCharacterByIndex(formatedInput, 7, input[5]) : '';
+			// 	input[6] ? formatedInput = this.replaceCharacterByIndex(formatedInput, 8, input[6]) : '';
+			// 	input[7] ? formatedInput = this.replaceCharacterByIndex(formatedInput, 9, input[7]) : '';
+			// 	this.inputValue = formatedInput;
+			// }
 		},
 		watch: {
 			/**
@@ -199,7 +246,9 @@
 			 * CreatedBy: NTDUNG (02/09/2021)
 			 */
 			currDate: function(newDate) {
-				if (newDate) this.$emit("input", `${newDate}T00:00:00`);
+				if (newDate) {
+					this.$emit("input", `${newDate}T00:00:00`);
+				} else this.$emit("input", null);
 			},
 			/**
 			 * Bắt sự kiện thay đổi value thì cập nhật ngày hiện tại

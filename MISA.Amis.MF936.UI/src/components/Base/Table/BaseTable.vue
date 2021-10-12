@@ -8,6 +8,7 @@
 				<th
 					v-for="(item, index) in tableStyle"
 					:style="{ 'min-width': item['width'] }"
+					:class="recordStyle(item, 1)"
 					:key="index"
 				>
 					{{ item["name"] }}
@@ -133,12 +134,14 @@
 			 * @param {Object} itemStyle kiểu được lưu trong object
 			 * CreatedBy: NTDUNG (17/09/2021)
 			 */
-			recordStyle(itemStyle) {
+			recordStyle(itemStyle, mode) {
 				var styleClass = { "table--loading": this.tableLoading };
+				if (mode) styleClass = {};
 				// Kiểu text đặc biệT
 				switch (itemStyle["color"]) {
 					case TableDataStyle.COLOR.Blue:
-						styleClass["text-blue"] = true;
+						if (!mode)
+							styleClass["text-blue"] = true;
 						break;
 				}
 				// Vị trí cho dữ liệu trong ô
